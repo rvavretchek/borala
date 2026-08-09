@@ -2,7 +2,7 @@
 
 O Bora Lá ajuda grupos a transformar a intenção dispersa de fazer um happy hour em um encontro reconhecido como real — sem substituir o WhatsApp, controlar a conversa ou impor como amigos devem decidir.
 
-> Status: Brief, PRD, SPEC e arquitetura concluídos; UX em revisão antes do handoff; MVP ainda não implementado.
+> Status: Brief, PRD, SPEC, UX e arquitetura concluídos e validados para handoff; MVP ainda não implementado.
 
 ## Proposta
 
@@ -22,8 +22,8 @@ O princípio central é **organizar sem governar**.
 
 - [Product Brief](./_bmad-output/planning-artifacts/briefs/brief-borala-2026-08-06/brief.md) — problema, público, proposta e visão.
 - [PRD](./_bmad-output/planning-artifacts/prds/prd-borala-2026-08-06/prd.md) — requisitos funcionais e não funcionais, métricas, riscos e escopo.
-- [Experiência UX](./_bmad-output/planning-artifacts/ux-designs/ux-borala-2026-08-06/EXPERIENCE.md) e [Design](./_bmad-output/planning-artifacts/ux-designs/ux-borala-2026-08-06/DESIGN.md) — jornadas, padrões de interação e direção visual em revisão.
-- [Relatório de validação de UX](./_bmad-output/planning-artifacts/ux-designs/ux-borala-2026-08-06/validation-report.md) — bloqueadores que precisam ser resolvidos antes do handoff.
+- [Experiência UX](./_bmad-output/planning-artifacts/ux-designs/ux-borala-2026-08-06/EXPERIENCE.md) e [Design](./_bmad-output/planning-artifacts/ux-designs/ux-borala-2026-08-06/DESIGN.md) — jornadas, padrões de interação e direção visual aprovados para handoff.
+- [Relatório de validação de UX](./_bmad-output/planning-artifacts/ux-designs/ux-borala-2026-08-06/validation-report.md) — gate aprovado nas três lentes, sem achados críticos, altos ou médios.
 - [Architecture Spine](./_bmad-output/planning-artifacts/architecture/architecture-borala-2026-08-07/ARCHITECTURE-SPINE.md) — invariantes, stack e fronteiras técnicas aprovadas.
 - [Solution Design](./_bmad-output/planning-artifacts/architecture/architecture-borala-2026-08-07/SOLUTION-DESIGN.md) e [UML](./_bmad-output/planning-artifacts/architecture/architecture-borala-2026-08-07/UML.md) — detalhamento de runtime, domínio, persistência, segurança e implantação.
 - [SPEC do MVP](./_bmad-output/specs/spec-borala-mvp/SPEC.md) — contrato canônico de capacidades, restrições e não objetivos.
@@ -63,9 +63,7 @@ Adiado:
 
 ## Próximos passos
 
-1. Corrigir os achados críticos e altos da validação de UX, incluindo prova social, ordem que induz conformidade, privacidade, contraste e contratos de acessibilidade.
-2. Revalidar os spines de UX e promover a direção visual aprovada para um artefato durável de handoff.
-3. Executar `[CE] Create Epics and Stories` com `bmad-create-epics-and-stories`.
-4. Executar `[IR] Check Implementation Readiness` com `bmad-check-implementation-readiness` para conferir o alinhamento entre PRD, UX, arquitetura e histórias.
-5. Executar `[SP] Sprint Planning` com `bmad-sprint-planning`.
-6. Implementar cada história pelo ciclo Create Story → Validate Story → Dev Story → Code Review, com TDD e testes E2E.
+1. Executar `[CE] Create Epics and Stories` com `bmad-create-epics-and-stories`.
+2. Executar `[IR] Check Implementation Readiness` com `bmad-check-implementation-readiness` para conferir o alinhamento entre PRD, UX, arquitetura e histórias.
+3. Executar `[SP] Sprint Planning` com `bmad-sprint-planning`.
+4. Implementar cada história pelo ciclo Create Story → Validate Story → Dev Story → Code Review, com TDD e testes E2E.

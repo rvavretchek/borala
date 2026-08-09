@@ -2,84 +2,79 @@
 
 ## Overall verdict
 
-O par cobre bem as seis jornadas do PRD, preserva “organizar sem governar” e tem forma editorial adequada, mas ainda não é um contrato limpo para arquitetura e story-dev. O principal risco é mecânico: quatro fontes normativas do frontmatter não resolvem; além disso, requisitos/capabilities não têm rastreabilidade até passos dos fluxos, componentes essenciais e estados por superfície estão incompletos, e decisões visuais/behaviorais load-bearing permanecem como `[ASSUMPTION]` ou `Open Questions`.
+O par está pronto para handoff: fontes, tokens, componentes, estados, forma documental e referências load-bearing agora compõem um contrato coerente para arquitetura e story-dev. Não restam achados críticos, altos ou médios; os dois achados baixos são melhorias futuras de manutenção documental e não bloqueiam implementação.
 
-## 1. Flow coverage — broken
+## 1. Flow coverage — adequate
 
-Foram extraídos das fontes seis jornadas (`UJ-1`–`UJ-6`), onze capabilities (`CAP-1`–`CAP-11`), vinte e dois requisitos funcionais (`FR-1`–`FR-22`) e dez NFRs (`NFR-1`–`NFR-10`). As seis UJs possuem protagonista nomeado, passos numerados, clímax e falha aplicável em `EXPERIENCE.md`; as requirements e capabilities, porém, não são ligadas nominalmente aos fluxos ou aos passos que as realizam.
-
-### Findings
-
-- **[high]** `CAP-1`–`CAP-11`, `FR-1`–`FR-22` e `NFR-1`–`NFR-10` não têm Key Flow próprio nem uma matriz explícita que demonstre cobertura por fluxo/passo; um consumidor não consegue distinguir cobertura intencional de coincidência textual (`EXPERIENCE.md`, `## Key Flows`; PRD `§4` e `§5`; SPEC `## Capabilities`). *Fix:* acrescentar rastreabilidade compacta requisito → UJ → passos/falha/estado, preservando os nomes verbatim; quando um requisito transversal não justificar fluxo próprio, declarar explicitamente onde ele é exercitado.
-
-## 2. Token completeness — adequate
-
-Todos os tokens de cor possuem hex; os objetos de tipografia, raios, espaçamento e componentes respeitam os tipos do spec. Todas as referências `{path.to.token}` encontradas nos dois spines resolvem. A completude mecânica é boa, mas um par de contraste load-bearing falha e a tipografia de produção continua provisória.
+Foram conferidas as seis jornadas (`UJ-1`–`UJ-6`), onze capabilities (`CAP-1`–`CAP-11`), vinte e dois requisitos funcionais (`FR-1`–`FR-22`) e dez NFRs (`NFR-1`–`NFR-10`). As seis UJs preservam os nomes da fonte, têm protagonista nomeado, passos numerados, clímax e falha; a matriz compacta liga todos os IDs de requisito a fluxos, estados ou componentes.
 
 ### Findings
 
-- **[high]** `{colors.accent-warm}` (`#F37735`) sobre `{colors.surface-raised}` mede aproximadamente `2,80:1` e sobre `{colors.surface-base}` aproximadamente `2,53:1`; ambos ficam abaixo de `3:1`, inclusive para o texto grande de `{typography.metric}` usado no agregado aprovado (`DESIGN.md`, `## Colors`, `## Typography`, `interest-envelope`). *Fix:* ajustar o laranja ou a superfície até pelo menos `3:1` para texto grande e registrar os pares/limiares verificados; se houver uso em texto normal, atingir `4,5:1`.
-- **[medium]** A fonte editorial de produção é declarada provisória (`Georgia`) e tamanhos críticos permanecem sem regra de escala/resposta além do empilhamento (`DESIGN.md`, `## Typography`; `EXPERIENCE.md`, `## Open Questions`). *Fix:* comprometer a família final ou declarar Georgia como decisão definitiva do MVP e especificar como os tokens escalam com zoom/texto ampliado.
+- **[low]** A rastreabilidade agrupa requisitos em intervalos (`FR-1–FR-3`, `FR-10–FR-11`, `NFR-1–NFR-3`), de modo que uma extração mecânica não demonstra individualmente qual passo ou estado realiza cada requisito (`EXPERIENCE.md`, `## Rastreabilidade compacta`). *Fix:* desdobrar os intervalos em uma linha por FR/NFR quando a geração de stories exigir rastreabilidade requisito a requisito.
 
-## 3. Component coverage — thin
+## 2. Token completeness — strong
 
-Os dez componentes nomeados no frontmatter de `DESIGN.md` têm linha visual em `DESIGN.md.Components` e linha comportamental correspondente em `EXPERIENCE.md.Component Patterns`. A simetria nominal é forte, mas diversas peças essenciais usadas nas superfícies e estados não foram elevadas a componentes com contrato bilateral.
-
-### Findings
-
-- **[high]** Campos de Data/Horário/Nick/local, resumo de validação, controle de compartilhamento/copiar, ação de rota externa, lista nominal de `Topo` e revisão/confirmação consciente são usados como elementos load-bearing, mas não possuem componente visual e comportamental pareado (`EXPERIENCE.md`, IA, State Patterns e Interaction Primitives; `DESIGN.md`, `## Components`). *Fix:* nomear somente os componentes realmente reutilizáveis e adicionar, para cada um, anatomia/estados visuais no DESIGN e regras de comportamento/foco/erro no EXPERIENCE.
-- **[medium]** `brand-signature` diz “Linka identidade ao resumo”, expressão que pode ser lida como comportamento de link, enquanto o visual descreve apenas um logo e nenhum destino é especificado (`EXPERIENCE.md`, `Component Patterns.brand-signature`). *Fix:* trocar por “associa visualmente” ou definir destino, foco e nome acessível se a marca for acionável.
-
-## 4. State coverage — thin
-
-O spine cobre categorias globais úteis — cold-load, vazio, foco, envio, sucesso, erro/offline, validação, duplicidade, concorrência, tempo, identificação e estados terminais. A caminhada superfície por superfície, contudo, não fecha os estados esperados de todas as superfícies da IA.
+Todos os onze tokens de cor têm hex; tipografia, raios, espaçamento e objetos de componente respeitam o tipo esperado, e todas as referências `{path.to.token}` resolvem. `interest-envelope.foreground` agora aponta para `{colors.ink-primary}`, coerente com a tabela visual e com a redução de saliência do agregado.
 
 ### Findings
 
-- **[high]** `Criar Rolê`, `Identificação + Nick`, `Rolê identificado`, `Detalhe da Opção` e `Histórico operacional` não têm cobertura explícita, por superfície, de cold-load, vazio, erro/retry, foco e indisponibilidade aplicáveis; o tratamento global não diz qual conteúdo permanece, qual ação volta a receber foco ou qual fallback cada superfície oferece (`EXPERIENCE.md`, `## Information Architecture` versus `## State Patterns`). *Fix:* substituir/estender a tabela por uma matriz superfície × estado aplicável, incluindo “não aplicável” consciente quando pertinente.
-- **[medium]** `Erro recuperável/offline` reúne falha transitória e ausência de conectividade num mesmo contrato, e `Permissão/identificação ausente` mistura autorização negada com porta de autenticação (`EXPERIENCE.md`, `## State Patterns`). *Fix:* separar offline, erro de servidor, sessão expirada/identificação ausente e permissão negada, com comportamento e microcopy próprios.
+Nenhum achado residual.
 
-## 5. Visual reference coverage — adequate
+## 3. Component coverage — strong
 
-Não existem diretórios `mockups/` ou `wireframes/`. Em `imports/`, os dois SVGs reais são ligados inline e recebem propósito específico; `.gitkeep` não é referência visual. A direção aprovada também é ligada e os spines-win-on-conflict são declarados uma vez.
+Os dezesseis componentes definidos no frontmatter aparecem com o mesmo nome e com regras reais em `DESIGN.md.Components` e `EXPERIENCE.md.Component Patterns`. Campos, validação, compartilhamento, rota externa e lista nominal possuem contratos bilaterais completos.
 
 ### Findings
 
-- **[medium]** A única tela aprovada continua em `.working/direction-assinatura-brinde-refinada.html`, não em `mockups/`, portanto o contrato de referência durável ainda depende de um artefato de exploração (`DESIGN.md`, `## Brand & Style`). *Fix:* promover a direção aprovada a `mockups/` e atualizar o link inline, mantendo `.working/` para estudos.
-- **[low]** `.working/directions-convite.html` e `.working/directions-convite-logos.html` foram lidos como contexto histórico relevante, mas não são mencionados como explorações rejeitadas; a trilha entre alternativas e decisão depende apenas do memlog (`.working/`; `DESIGN.md`, `## Brand & Style`). *Fix:* ou mantê-los explicitamente como working não normativo sem promoção, ou registrar uma breve referência de rejeição na seção Inspiration/Anti-patterns.
+Nenhum achado residual.
+
+## 4. State coverage — strong
+
+As seis superfícies da IA são percorridas por uma matriz explícita de carregamento, vazio, erro/retry, foco/retorno e indisponível/terminal. Offline, erro de servidor, identificação ausente e permissão negada são separados, e estados não aplicáveis são declarados conscientemente.
+
+### Findings
+
+Nenhum achado residual.
+
+## 5. Visual reference coverage — strong
+
+Os quatro arquivos em `mockups/` e os dois SVGs em `imports/` estão ligados inline, com finalidade identificável; a precedência dos spines é declarada e os arquivos-fonte soltos são classificados como históricos. Convite e Organização usam a frase factual em `ink-primary`/16 px; Interesse Geral está fora do `interest-envelope`; e o Convite não antecipa `Quem já topou?` à resposta.
+
+### Findings
+
+Nenhum achado residual.
 
 ## 6. Bloat & overspecification — adequate
 
-A estrutura é majoritariamente escaneável e usa tabelas onde ajudam. Não há narrativa decorativa extensa nem especificação pixel a pixel disseminada; ainda assim, parte do contrato de produto foi reescrita dentro do spine de experiência.
+O documento usa tabelas para contratos repetidos e mantém as decisões operacionais próximas das superfícies que afetam. Há repetição deliberada de privacidade, concorrência e precedência, mas ela ancora consequências de UX e não impede consumo.
 
 ### Findings
 
-- **[medium]** Precedência de estados, regras temporais, idempotência, concorrência e proibições de domínio são parcialmente restatadas em várias seções sem IDs de origem; isso aumenta risco de drift em relação ao PRD/SPEC (`EXPERIENCE.md`, Foundation, IA, Component Patterns, State Patterns e Interaction Primitives). *Fix:* manter no spine apenas a consequência de UX e referenciar `FR-*`/`CAP-*` para a regra normativa, usando uma tabela de rastreabilidade em vez de repetição narrativa.
+- **[low]** Regras de cache/privacidade aparecem em Foundation, Privacy, State Patterns, Accessibility e rastreabilidade, aumentando o custo de manutenção conjunta (`EXPERIENCE.md`, `## Foundation`, `## Privacy, Authorization & Session`, `## State Patterns`, `## Accessibility Floor`). *Fix:* em futura edição, manter a regra completa em Privacy e fazer as outras seções apontarem para ela, preservando apenas a consequência local.
 
-## 7. Inheritance discipline — broken
+## 7. Inheritance discipline — strong
 
-Os nomes das seis UJs são preservados verbatim e os componentes mantêm nomes idênticos nos dois spines. Referências de tokens do EXPERIENCE resolvem no DESIGN. A herança falha, porém, no ponto mais básico: quatro caminhos normativos do frontmatter não resolvem a partir do diretório dos spines, e há um conflito load-bearing ainda não decidido com `FR-13`.
+Os seis caminhos de `sources` resolvem no filesystem; UJs e glossário operacional são consistentes; os nomes dos componentes coincidem entre spines; todas as referências de token resolvem. A decisão de cor do `interest-envelope` agora é única no frontmatter e na tabela visual.
 
 ### Findings
 
-- **[high]** Os caminhos para `SPEC.md`, `mvp-rules.md` e `state-machines.md` apontam para `specs/` na raiz, mas os arquivos reais estão em `_bmad-output/specs/`; o caminho `../../../../../CONSTITUTION.md` resolve fora da raiz do projeto, enquanto o arquivo real está em `borala/CONSTITUTION.md` (`DESIGN.md` e `EXPERIENCE.md`, frontmatter `sources`). *Fix:* a partir do diretório atual, usar `../../../specs/spec-borala-mvp/...` para a SPEC e companions e `../../../../CONSTITUTION.md` para a Constituição; validar todos por resolução filesystem antes de finalizar.
-- **[high]** `FR-13` diz que definir o Local “não exige confirmação adicional do sistema”, enquanto `Interaction Primitives` exige confirmação consciente e deixa como `[ASSUMPTION]` se uma revisão no mesmo gesto é permitida (`EXPERIENCE.md`, `## Interaction Primitives` e `## Open Questions`; PRD `FR-13`). *Fix:* resolver com produto antes do handoff e comprometer um único padrão — por exemplo, consequência inline no mesmo gesto, sem modal/segunda confirmação, se isso for confirmado como compatível.
-- **[medium]** O companion usa `Propor outro local`, enquanto PRD/EXPERIENCE alternam para `Criar Outro Rolê`; o resultado pode ser intenção de UX válida, mas não há mapeamento explícito entre os termos (`mvp-rules.md`, `## Declarações`; `EXPERIENCE.md`, Component Patterns e UJ-6). *Fix:* escolher o rótulo canônico de interface e registrar a equivalência ao termo normativo sem alternância silenciosa.
+Nenhum achado residual.
 
 ## 8. Shape fit — strong
 
-`DESIGN.md` segue integralmente a ordem canônica: Brand & Style, Colors, Typography, Layout & Spacing, Elevation & Depth, Shapes, Components, Do's and Don'ts. `EXPERIENCE.md` contém todos os defaults obrigatórios; Responsive & Platform e Inspiration & Anti-patterns estão presentes porque foram acionados por web responsiva e referências explícitas. `Open Questions` merece existir, mas revela decisões ainda não comprometidas.
+`DESIGN.md` segue a ordem canônica Brand & Style → Colors → Typography → Layout & Spacing → Elevation & Depth → Shapes → Components → Do's and Don'ts. `EXPERIENCE.md` contém todos os defaults obrigatórios, além de Responsive & Platform, Inspiration & Anti-patterns e seções específicas justificadas por privacidade e autorização.
 
 ### Findings
 
-- **[high]** Método de autenticação, tipografia final, largura/breakpoints, padrão compatível com `FR-13` e contraste permanecem abertos ou marcados `[ASSUMPTION]`; juntos impedem que consumidores implementem as superfícies de identidade, responsividade e ação crítica sem inventar decisões (`DESIGN.md`, Colors/Typography/Layout; `EXPERIENCE.md`, Foundation, Responsive & Platform, Interaction Primitives e Open Questions). *Fix:* resolver os bloqueadores de UX agora; encaminhar apenas decisões genuinamente arquiteturais com contrato de interface explícito e critérios que impeçam invenção downstream.
+Nenhum achado residual.
 
 ## Mechanical notes
 
-- Referências `{path.to.token}`: 20 únicas no DESIGN e 2 no EXPERIENCE; todas resolvem para tokens definidos.
-- Tokens de cor: 10/10 com hex. Pares medidos: `ink-primary/surface-base` `16,03:1`; `surface-raised/ink-primary` `17,74:1`; `ink-secondary/surface-base` `5,76:1`; `accent-cool/surface-raised` `4,70:1`; `accent-warm/surface-raised` `2,80:1`; `accent-warm/surface-base` `2,53:1`.
-- Componentes pareados existentes: 11/11 (`brand-signature`, `invitation-summary`, `interest-envelope`, `primary-action`, `access-gate-row`, `identity-gate`, `option-card`, `response-control`, `declaration-panel`, `operational-history`, `state-notice`); todos aparecem nos dois spines e no frontmatter.
-- Fontes do frontmatter: PRD e Product Brief resolvem; SPEC, dois companions e Constituição não resolvem pelos caminhos declarados.
-- Referências visuais: `imports/borala-logo-1.svg` e `imports/borala-logo-2.svg` ligadas inline; mock aprovado ligado em `.working/`; sem `mockups/` ou `wireframes/` promovidos.
-- Mermaid: nenhum bloco Mermaid nos spines; portanto não há sintaxe Mermaid a validar. A árvore textual da IA é legível, mas a renderização observada exibe mojibake no terminal; confirmar codificação UTF-8 no pipeline de consumo.
-- Contagem de findings: **critical 0 · high 7 · medium 6 · low 1**.
+- Fontes: 6/6 caminhos do frontmatter resolvem em ambos os spines.
+- Jornadas: 6/6 UJs com nome da fonte, protagonista, passos numerados, clímax e falha.
+- Tokens: 11/11 cores com hex; todas as referências `{path.to.token}` resolvem; sem conflito token/prosa conhecido.
+- Componentes: 16/16 pareados entre frontmatter, DESIGN e EXPERIENCE.
+- Estados: 6/6 superfícies da IA presentes na matriz.
+- Referências: 4/4 mocks e 2/2 imports ligados inline; Convite respeita a ordem resposta antes de lista nominal; `interest-envelope` contém somente a frase factual nos mocks aplicáveis.
+- Mermaid: não há bloco Mermaid; a árvore textual da IA é legível em UTF-8.
+- Contagem de findings: **critical 0 · high 0 · medium 0 · low 2**.

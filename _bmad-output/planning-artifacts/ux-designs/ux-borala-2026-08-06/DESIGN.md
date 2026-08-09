@@ -4,7 +4,7 @@ description: Identidade visual calorosa e editorial para organizar encontros sem
 status: final
 project: borala
 created: 2026-08-06
-updated: 2026-08-07
+updated: 2026-08-09
 sources:
   - ../../prds/prd-borala-2026-08-06/prd.md
   - ../../../specs/spec-borala-mvp/SPEC.md
@@ -36,7 +36,7 @@ spacing: { '1': '4px', '2': '8px', '3': '12px', '4': '16px', '5': '20px', '6': '
 components:
   brand-signature: { asset: 'imports/borala-logo-1.svg', width-mobile: '61px', height-mobile: '69px' }
   invitation-summary: { background: '{colors.surface-base}', foreground: '{colors.ink-primary}', accent-place: '{colors.accent-cool}' }
-  interest-envelope: { background: '{colors.surface-raised}', foreground: '{colors.accent-warm-text}', border: '{colors.border-soft}', radius: '{rounded.lg}' }
+  interest-envelope: { background: '{colors.surface-raised}', foreground: '{colors.ink-primary}', border: '{colors.border-soft}', radius: '{rounded.lg}' }
   primary-action: { background: '{colors.ink-primary}', foreground: '{colors.surface-raised}', radius: '{rounded.full}' }
   access-gate-row: { foreground: '{colors.ink-primary}', icon: '{colors.accent-cool}', divider: '{colors.border-strong}' }
   identity-gate: { background: '{colors.surface-raised}', border: '{colors.border-soft}', radius: '{rounded.md}' }
@@ -54,7 +54,7 @@ components:
 
 # Bora Lá — Design Spine
 
-> **Precedência normativa:** este spine vence qualquer mock, import ou estudo em caso de conflito. Somente os [mocks promovidos](mockups/) e o [logo aprovado](imports/borala-logo-1.svg) são referências visuais vigentes; o [símbolo exploratório](imports/borala-logo-2.svg) e todo conteúdo em `.working/` são históricos e não normativos.
+> **Precedência normativa:** este spine vence qualquer mock, import ou estudo em caso de conflito. Somente os [mocks promovidos](mockups/) e o [logo aprovado](imports/borala-logo-1.svg) são referências visuais vigentes; o [símbolo exploratório](imports/borala-logo-2.svg), todo conteúdo em `.working/` e os arquivos-fonte `BoraLá_Logo_*` mantidos na raiz deste workspace são históricos e não normativos.
 
 ## Brand & Style
 
@@ -77,7 +77,7 @@ Matriz WCAG 2.2 AA verificada (texto normal):
 | `#A6400F` | `#FFFFFF` | 6,25:1 | texto funcional quente |
 | `#A6400F` | `#F8F3E8` | 5,65:1 | texto funcional quente |
 
-Foco usa `{colors.focus-outline}` com pelo menos 2 CSS px, offset de 2 px e contraste ≥3:1 contra superfícies adjacentes.
+Foco usa `{colors.focus-outline}` com pelo menos 2 CSS px, offset de 2 px e contraste ≥3:1 contra superfícies adjacentes. O contorno circunda o alvo inteiro e nenhum chassi, contêiner ou `overflow` pode recortá-lo.
 
 ## Typography
 
@@ -89,13 +89,11 @@ Mobile-first, uma coluna, com breakpoints fixos em **640 px** e **1024 px**. At�
 
 Convite: assinatura → contexto → nome → local → data/hora → agregado público → participação. Data/hora empilham quando texto ou viewport exigirem. Não usar alturas fixas, corte de conteúdo ou rolagem horizontal em superfícies de produção.
 
-## Visual Primitives
-
-### Elevation & Depth
+## Elevation & Depth
 
 Hierarquia vem de tipo, espaço, bordas e superfícies. `interest-envelope` não possui sombra. Elevação jamais sinaliza liderança, preferência ou validade social.
 
-### Shapes
+## Shapes
 
 Invólucros usam `{rounded.md}`/`{rounded.lg}`; ações usam `{rounded.full}`. Círculos compactos de ícone não são medalhas. Alvos interativos têm 44 × 44 CSS px; quando esse tamanho for impossível, têm no mínimo 24 × 24 CSS px, com espaçamento conforme WCAG 2.5.8.
 
@@ -105,7 +103,7 @@ Invólucros usam `{rounded.md}`/`{rounded.lg}`; ações usam `{rounded.full}`. C
 |---|---|
 | `brand-signature` | Logo íntegro, não acionável por padrão e com texto alternativo “Bora Lá”. |
 | `invitation-summary` | Leitura vertical; plano vigente precede histórico e contagens. |
-| `interest-envelope` | Unidade textual inseparável “7 pessoas marcaram Topo ou Tudo bem”; número e “pessoas” próximos; sem sombra, barra ou tendência. |
+| `interest-envelope` | Frase factual inseparável “7 pessoas marcaram Topo ou Tudo bem”, em `{typography.body-strong}` e `{colors.ink-primary}`; sem métrica ampliada, título interrogativo, sombra, barra ou tendência. |
 | `primary-action` | Um CTA principal por contexto; foco externo visível. |
 | `access-gate-row` | Toda a linha é um controle; o cadeado decorativo usa `aria-hidden`, e o requisito de acesso está escrito no nome do controle. |
 | `identity-gate` | Porta de e-mail/código e Nick; não expõe associação entre identidades. |

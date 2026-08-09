@@ -3,7 +3,7 @@ name: Bora Lá
 status: final
 project: borala
 created: 2026-08-06
-updated: 2026-08-07
+updated: 2026-08-09
 sources:
   - ../../prds/prd-borala-2026-08-06/prd.md
   - ../../../specs/spec-borala-mvp/SPEC.md
@@ -91,7 +91,7 @@ Informal, clara, factual e operacional. Dizer o que foi registrado, nunca o que 
 |---|---|
 | `brand-signature` | Associa visualmente a marca; não é link por padrão. |
 | `invitation-summary` | Resolve estado/autorização antes dos dados; ordem Nome → Local → Data/Hora → agregado. |
-| `interest-envelope` | Exibe apenas o agregado `Topo + Tudo bem`; não é acionável nem serve como justificativa de Declaração. |
+| `interest-envelope` | Exibe apenas a frase factual `{N} pessoas marcaram Topo ou Tudo bem`; não usa pergunta, não é acionável e não serve como justificativa de Declaração. |
 | `primary-action` | Controle nativo; ocupado evita repetição; sucesso só após persistência. |
 | `access-gate-row` | Link/botão nativo com nome completo, ex. `Dar o seu pitaco — requer identificação`; preserva intenção. |
 | `identity-gate` | E-mail e código com mensagens neutras; troca/sair limpa dados; Nick duplicado só informa indisponibilidade. |
@@ -155,6 +155,10 @@ WCAG 2.2 AA. Teclado completo; HTML nativo primeiro; 44 × 44 CSS px; foco confo
 - retorno da identificação: foco no destino da intenção restaurada;
 - mudança remota: não rouba foco; anuncia um resumo e oferece uma ação explícita para atualizar o estado;
 - foco nunca fica oculto: usar `scroll-margin` e reposicionamento após transição.
+
+Regiões vivas são montadas antes da operação e recebem apenas a atualização de conteúdo. Mensagens completas usam `aria-atomic=true`; `role=alert` não repete `aria-live`. Confirmações de persistência e cópia usam `status`/polite. Diálogos de identidade, cancelamento ou revisão usam `role=dialog`, `aria-modal=true`, título visível associado, foco inicial interno, ciclo de `Tab`, fechamento por `Escape` quando seguro e retorno ao acionador.
+
+Privacidade é verificada na resposta, não apenas no CSS: a prévia pública não contém Nick, autoria, momento detalhado, histórico ou payload protegido no HTML/JSON. Estados público e identificado são respostas mutuamente exclusivas.
 
 ## Responsive & Platform
 

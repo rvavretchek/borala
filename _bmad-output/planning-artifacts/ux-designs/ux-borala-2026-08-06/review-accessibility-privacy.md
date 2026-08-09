@@ -1,105 +1,93 @@
-# Revisão adversarial — Acessibilidade e privacidade
+# Revalidação — Acessibilidade e privacidade
 
-**Escopo:** `DESIGN.md`, `EXPERIENCE.md`, Constituição, PRD final, SPEC e companions, memlog, imports SVG e mock aprovado `direction-assinatura-brinde-refinada.html`.
+**Escopo:** `DESIGN.md`, `EXPERIENCE.md` e os quatro mocks promovidos em `mockups/`.
 
-**Lente:** produto consumidor; WCAG 2.2 AA comportamental, teclado, foco, leitor de tela, toque, zoom/reflow, movimento, contraste, acesso progressivo, identidade contextual e estados prioritários.
+**Lente:** WCAG 2.2 AA comportamental, teclado, foco, leitor de tela, toque, zoom/reflow, contraste, acesso progressivo, identidade contextual, autoria e estados prioritários.
 
-**Resultado:** **requer correções antes de finalizar**. Foram encontrados 2 achados altos, 7 médios e 3 baixos. Os spines não foram alterados.
+**Executado em:** 2026-08-09.
 
-## Achados altos
+## Veredito
 
-### A1. O laranja aprovado falha contraste nos usos textuais comprometidos
+**PASS.** Os dois achados altos e os sete achados médios do parecer anterior foram incorporados aos contratos normativos. Os três bloqueadores residuais de `mockups/convite.html` também foram resolvidos. Não há achado crítico ou alto aberto nesta lente.
 
-- **Evidência/local:** `DESIGN.md:21`, `DESIGN.md:83-86`, `DESIGN.md:140`, `DESIGN.md:144`, `DESIGN.md:172`; mock aprovado `.interest strong` e `.kicker` usam `#F37735` sobre branco ou papel quente.
-- **Medição:** `#F37735` sobre `#FFFFFF` = **2,80:1**; sobre `#F8F3E8` = **2,53:1**. Falha WCAG 1.4.3 inclusive para texto grande (mínimo 3:1). O número agregado de 32 px e os rótulos pequenos ficam fora de AA.
-- **Impacto:** baixa visão, telas sob luz externa e deficiências de percepção de cor; a métrica central pode ficar ilegível.
-- **Correção:** preservar `accent-warm` como marca/decoração, mas criar um token textual laranja escuro que alcance ao menos 4,5:1 nos fundos usados (ou 3:1 somente quando comprovadamente texto grande). Aplicar esse token ao número, `pessoas`, kicker e qualquer texto funcional. Registrar uma matriz de pares de cor aprovada; a verificação de contraste não pode permanecer Open Question na finalização.
+O gate aprova os artefatos para handoff sob acessibilidade e privacidade. As observações residuais abaixo são melhorias de fidelidade dos mocks, não bloqueadores; os spines já definem o comportamento exigido para produção e vencem os mocks em caso de conflito.
 
-### A2. Autoria do cancelamento pode vazar Nick na visão pública
+## Revalidação dos bloqueadores do Convite
 
-- **Evidência/local:** `EXPERIENCE.md:46-51` afirma prévia pública sem dados pessoais; `EXPERIENCE.md:98`, `115`, `216` manda mostrar autoria/momento no cancelamento ao abrir. O PRD FR-2 proíbe autoria na prévia pública (`prd.md:84-90`), enquanto FR-22 exige Nick e momento no cancelamento (`prd.md:283-292`) sem autorizar sua exposição antes da identificação. `mvp-rules.md:21-22` só libera autorias depois da identificação.
-- **Impacto:** qualquer portador do link pode descobrir o Nick contextual de quem cancelou, contrariando privacidade por padrão e acesso progressivo.
-- **Correção:** definir duas variantes explícitas. **Pública:** `Rolê cancelado`, sem Nick, momento detalhado, plano antigo ou histórico. **Identificada e antes do Limite Final:** pode mostrar Nick e momento conforme FR-22. Depois do Limite Final, sempre somente `Este Rolê terminou.`. Aplicar a mesma separação a Substituído, conflitos e demais autorias.
+### 1. Reflow e corte de conteúdo — resolvido
 
-## Achados médios
+- A altura fixa de 738 px foi substituída por `min-height` e o `overflow:hidden` foi removido de `mockups/convite.html`.
+- O media query não reinstala altura fixa.
+- `DESIGN.md` proíbe altura fixa, corte e rolagem horizontal; `EXPERIENCE.md` exige reflow a 320 CSS px, zoom de 400%, orientação retrato/paisagem, strings longas e ajustes de espaçamento de texto.
 
-### M1. Reflow está limitado a zoom de 200%, abaixo do teste necessário para conteúdo responsivo
+### 2. Texto informativo essencial — resolvido
 
-- **Evidência/local:** `EXPERIENCE.md:138` compromete somente zoom a 200%; `DESIGN.md:156` fala em empilhar Data/Hora sem critérios; mock usa viewport fixo de 360 × 738 px, `overflow:hidden` em `.phone` e `.screen`.
-- **Impacto:** a 400%/viewport equivalente a 320 CSS px, conteúdo e ações podem ser cortados ou exigir rolagem bidimensional; o mock já oculta overflow vertical.
-- **Correção:** exigir reflow sem perda de conteúdo/ação e sem rolagem em duas dimensões a 320 CSS px (salvo exceções WCAG), zoom de navegador a 400%, orientação retrato/paisagem e conteúdo com strings longas. Proibir altura fixa e `overflow:hidden` em superfícies de produção. Adicionar suporte aos ajustes de espaçamento de texto de WCAG 1.4.12.
+- `brand-caption`, rótulos de fatos e aviso de acesso usam 13 px ou mais.
+- A frase agregada usa 16 px e deixou de separar a explicação essencial em texto reduzido.
+- `DESIGN.md` mantém 13 px como piso para texto informativo essencial e 16 px para corpo.
 
-### M2. Gestão de foco e anúncios assíncronos está vaga e pode causar silêncio ou duplicidade
+### 3. Separação público × identificado — resolvido
 
-- **Evidência/local:** `EXPERIENCE.md:98` diz “recebe foco quando necessário”; `106` só afirma que atualizações não roubam foco; `135` reúne persistência, erro e conflito em `aria-live` sem prioridade ou destino. Não há regra para modal/confirmação, erro de formulário, retorno da identificação, conflito concorrente ou troca de estado terminal.
-- **Impacto:** pessoas com leitor de tela podem não perceber mudanças críticas, ouvir mensagens duas vezes ou perder a posição de navegação.
-- **Correção:** especificar por evento: sucesso assíncrono em `role=status`/polite; erro bloqueante e conflito em `role=alert` sem duplicar texto; erro de submit move foco ao resumo com links para campos; diálogo move foco ao título/primeiro controle, prende foco e devolve ao acionador; retorno da identificação restaura a intenção e posiciona foco no destino; mudança remota não rouba foco, mas anuncia resumo e oferece atualização consciente.
+- A variante identificada e o Nick “Bia” foram removidos do mock público.
+- O Convite público não contém Nick, autoria, momento detalhado nem histórico.
+- `EXPERIENCE.md` torna as respostas pública e identificada mutuamente exclusivas e exige verificar a ausência de dados protegidos no HTML/JSON, não apenas no CSS.
 
-### M3. Os controles essenciais ainda não têm contrato semântico
+## Contratos aprovados
 
-- **Evidência/local:** `EXPERIENCE.md:92`, `95`, `121`, `132-137`; mock renderiza `access-gate-row` como `<div class="locked">`, apesar de ser acionável no spine. As quatro Respostas não definem `fieldset/legend`, grupo de rádio, nome/estado acessível ou operação por setas. Histórico e lista de `Topo` só são descritos como “compreensíveis”.
-- **Impacto:** controles podem ser inacessíveis por teclado e leitor de tela mesmo mantendo a aparência aprovada.
-- **Correção:** exigir `button`/`a` nativos para linhas de acesso, com toda a linha acionável; Respostas como grupo nomeado de seleção única (`fieldset` + `legend` e radios, ou padrão ARIA completo); listas como listas; autoria + instante em uma frase/estrutura legível; valor anterior com texto “anterior/substituído”, nunca apenas tachado; estado ativo/inativo/fechado exposto programaticamente.
+### Contraste e foco
 
-### M4. Cadeado pode produzir nome duplicado ou ambíguo
+- O laranja de marca `#F37735` ficou restrito a marca e decoração; texto funcional usa `#A6400F`, com pares documentados acima de 4,5:1.
+- O foco tem espessura mínima de 2 CSS px, offset de 2 px, contraste mínimo de 3:1, circunda o alvo inteiro e não pode ser recortado.
+- Estados e seleção não dependem apenas de cor.
 
-- **Evidência/local:** `DESIGN.md:174`, `188`; `EXPERIENCE.md:92`, `136`; mock usa um `role=img` nomeado dentro de uma linha que já tem texto, e a linha não é controle.
-- **Impacto:** leitor de tela pode anunciar “Quem já topou? Requer identificação” como elementos desconectados, ou repetir o requisito para cada ícone; usuários de comando por voz não têm alvo coerente.
-- **Correção:** tornar a linha um único link/botão com nome completo, por exemplo `Quem já topou? Requer identificação`; deixar SVG/círculo `aria-hidden=true`. Usar ícone nomeado apenas se ele for o único portador do requisito, o que não é recomendado aqui. O cadeado nunca deve ser o único sinal visual/textual de acesso.
+### Semântica e nomes acessíveis
 
-### M5. Alvos de toque e foco visual continuam como suposição, sem cobertura de espaçamento e ocultação
+- Linhas protegidas são controles nativos; o requisito de identificação está visível no texto e o cadeado é decorativo com `aria-hidden`.
+- Respostas usam `fieldset`, `legend` e radios nativos, com as quatro alternativas estruturalmente equivalentes.
+- Lista de Nicks e histórico têm estrutura de lista; valor anterior recebe rótulo textual em vez de depender de tachado.
+- Alvos interativos seguem 44 × 44 CSS px como requisito do produto, com piso normativo e espaçamento de WCAG 2.5.8 quando a exceção for necessária.
 
-- **Evidência/local:** `EXPERIENCE.md:133` deixa 44 × 44 CSS px como `[ASSUMPTION]`; `DESIGN.md` não define espessura/offset do foco. O mock tem links identificados com padding pequeno e não prova 44 px; foco não é estilizado.
-- **Impacto:** ações pequenas ou próximas podem falhar WCAG 2.5.8 e uso móvel; foco pode ficar encoberto por cabeçalho ou contêiner.
-- **Correção:** transformar 44 × 44 em requisito do produto (mais forte que o mínimo de 24 × 24 da WCAG 2.2), incluindo linhas de acesso e chips; quando tecnicamente impossível, garantir mínimo 24 × 24 e espaçamento conforme 2.5.8. Definir indicador de foco com contraste ≥3:1, espessura/área compatível com 2.4.11/2.4.13 e `scroll-margin` para não ficar encoberto.
+### Foco, regiões vivas e erros
 
-### M6. Sessão, cache e navegação de retorno podem reexpor dados após logout, expiração ou troca de estado
+- Sucessos assíncronos e confirmação de cópia/persistência usam `status`/polite; conflito ou erro bloqueante usa um único `alert`.
+- Regiões são montadas antes da operação, recebem atualização de conteúdo e usam `aria-atomic=true` para mensagens completas.
+- Submit inválido leva foco a um resumo com links para os campos; diálogos têm nome, modalidade, foco inicial, ciclo de Tab, Escape quando seguro e retorno ao acionador.
+- Atualização remota anuncia o resumo sem roubar foco e oferece atualização consciente.
 
-- **Evidência/local:** `EXPERIENCE.md:104`, `109`, `114-117`, `148` protege apenas a renderização inicial; não há contrato para Back/Forward Cache, cache HTTP/service worker, armazenamento local, abas antigas, logout, troca de conta ou dispositivo compartilhado. O PRD NFR-9 exige cessar acesso detalhado imediatamente após o Limite Final.
-- **Impacto:** Nicks, respostas, local, URLs, autorias e histórico podem reaparecer via botão Voltar, snapshot de aba ou cache depois de perder autorização/expirar.
-- **Correção:** exigir revalidação de autorização e estado prioritário ao abrir, restaurar aba, `pageshow`, voltar ao foreground e antes de renderizar dados sensíveis; limpar memória/UI ao logout, troca de identidade, expiração e terminalidade; não persistir conteúdo protegido em storage do cliente no MVP; definir política de cache de respostas autenticadas e testes de bfcache. Preservação local de formulário não pode incluir credenciais nem sobreviver à troca de identidade.
+### Privacidade, autoria e estados
 
-### M7. Saída para mapas/compartilhamento não explicita divulgação a terceiros
+- A matriz de audiência e tempo separa explicitamente público, identificado antes do Limite Final e expirado.
+- Cancelado público mostra somente `Rolê cancelado.`; autoria e momento aparecem apenas para pessoa identificada antes do limite; após o limite, aparece somente `Este Rolê terminou.`.
+- Substituído público não revela autoria; conflito e correção nunca são públicos.
+- Autorização e precedência são revalidadas em cold-load, `pageshow`/BFCache, foreground, restauração de aba e antes de mutações.
+- Conteúdo protegido usa `no-store`, não é persistido por service worker ou storage do cliente e é limpo em logout, troca de identidade, expiração e terminalidade.
+- Saída para mapa e compartilhamento é explícita, informa divulgação ao terceiro quando necessário e não transmite Nicks ou Respostas.
 
-- **Evidência/local:** `EXPERIENCE.md:122-123` abre compartilhamento nativo e serviço externo de rota; Constituição IV exige finalidade comunicada e compartilhamento futuro com consentimento proporcional.
-- **Impacto:** endereço/local e possivelmente URL do Convite são enviados a aplicativos terceiros sem expectativa clara; em fallback de cópia, o link sensível pode permanecer no clipboard.
-- **Correção:** manter gesto explícito e rotular destino (`Abrir rota em…`, `Compartilhar convite`); antes de sair, informar de forma breve que o app escolhido receberá o endereço/link quando isso não for óbvio; nunca transmitir Nicks/respostas na mensagem; oferecer cópia consciente e feedback sem ler o clipboard; documentar que links externos abrem com proteção contra acesso à janela de origem.
+## Observações residuais não bloqueantes
 
-## Achados baixos
+### O1. Chassi decorativo ainda usa `overflow:hidden` em dois mocks — informativo
 
-### B1. Tamanhos de legenda muito pequenos elevam esforço de leitura
+`criar-role.html` e `plano-conflito.html` ainda aplicam `overflow:hidden` ao chassi `.phone`. Eles não têm altura fixa, os controles possuem recuo suficiente e nenhum foco é recortado no layout demonstrado. Trata-se apenas da moldura visual do aparelho, não de um padrão autorizado para produção. `organizacao.html` já removeu essa máscara, assim como `convite.html`.
 
-- **Evidência/local:** `DESIGN.md:49-59` define label em 11 px e caption em 10 px; mock chega a `.63rem` (~10 px) em explicações essenciais.
-- **Impacto:** embora WCAG não imponha tamanho mínimo, explicações sobre `Topo + Tudo bem` e privacidade ficam frágeis em celular.
-- **Correção:** usar pelo menos 12–14 px para texto informativo essencial, reservar 10–11 px a metadado não essencial e validar legibilidade com zoom/text spacing.
+### O2. Nomes contextuais em `organizacao.html` — resolvido
 
-### B2. A autenticação ainda não tem requisitos contra enumeração e exposição contextual
+Os dois botões visíveis “Detalhes do Local” agora usam `aria-labelledby` para compor o rótulo visível com o título da respectiva Opção. Os nomes resultantes distinguem `Bar do Zeca` de `Esquina do Pastel` e preservam o texto visível, em conformidade com WCAG 2.5.3. Em `plano-conflito.html`, cada “Editar detalhes” está dentro de uma variação independente e possui contexto de título imediatamente anterior; não há ambiguidade bloqueante na prancha.
 
-- **Evidência/local:** `EXPERIENCE.md:47`, `93`, `232` deixa método aberto e só protege Nick duplicado/credencial alheia.
-- **Impacto:** mensagens de login/recuperação podem confirmar existência de contato; alternância entre identidades pode associar Nicks indevidamente em dispositivo compartilhado.
-- **Correção:** carregar para arquitetura requisitos UX mínimos: mensagens neutras para envio/recuperação, contato mascarado apenas para o próprio titular após prova adequada, opção clara de sair/trocar identidade e nenhuma associação visível entre Nicks de Rolês diferentes.
+### O3. Estados dinâmicos são spine-only — informativo
 
-### B3. Movimento reduzido está correto, mas faltam flashing, autoplay e atualização visual contínua
+Os mocks são pranchas estáticas e não demonstram resumo de validação, live regions, diálogos, sessão expirada ou transições de cache. Isso não constitui lacuna de contrato: `EXPERIENCE.md` especifica esses estados. A implementação deve cobri-los com testes de teclado, leitor de tela, reflow, retorno por BFCache e inspeção do payload público.
 
-- **Evidência/local:** `EXPERIENCE.md:139` cobre `prefers-reduced-motion`, sem proibir flashes/autoplay nem orientar contagens atualizadas em tempo real.
-- **Impacto:** implementação futura pode introduzir animação de celebração ou atualização pulsante incompatível com a postura do produto e com acessibilidade.
-- **Correção:** proibir flashes, autoplay e animações indispensáveis; não animar contagens como celebração; quando números mudarem, atualizar texto discretamente e anunciar apenas se relevante à tarefa atual.
+## Evidência normativa
 
-## Pontos fortes preservados
+- WCAG 2.2: 1.4.3 Contraste mínimo, 1.4.10 Reflow, 1.4.12 Espaçamento de texto, 2.4.11 Foco não obscurecido, 2.5.8 Tamanho do alvo e 4.1.3 Mensagens de status — <https://www.w3.org/TR/WCAG22/>.
+- WAI — contraste mínimo: <https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum>.
+- WAI — reflow: <https://www.w3.org/WAI/WCAG22/Understanding/reflow>.
+- WAI — tamanho mínimo do alvo: <https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum>.
+- APG — grupo de radios: <https://www.w3.org/WAI/ARIA/apg/patterns/radio/>.
+- APG — diálogo modal: <https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/>.
 
-- Acesso progressivo e proibição de credenciais em qualquer visão estão bem estabelecidos.
-- Somente `Topo` revela Nick, com remoção atômica ao trocar a Resposta.
-- Estado Encerrado minimiza corretamente a saída para uma frase, sem detalhes ou reutilização.
-- Cold-load evita dados potencialmente antigos; concorrência impede sobrescrita silenciosa.
-- Seleção não depende só de cor, teclado é obrigatório e gestos ocultos/hover exclusivo são proibidos.
-- A direção evita ranking, quórum, urgência e prova social coercitiva.
+## Gate final da lente
 
-## Gate recomendado
+**PASS — acessibilidade e privacidade aprovadas para handoff, sem achados residuais de severidade baixa ou superior.**
 
-Antes de marcar os spines como `final`:
-
-1. resolver **A1** com tokens de contraste verificados;
-2. resolver **A2** com matriz público × identificado × expirado;
-3. incorporar contratos de reflow, foco, semântica e cache dos achados **M1–M6**;
-4. transformar contraste, alvo de toque e comportamento de foco de suposições/open questions em decisões testáveis;
-5. validar os mocks finais com teclado, leitor de tela, 320 CSS px/400%, texto espaçado, contraste automatizado + inspeção manual e restauração por Voltar/aba.
+Condição para a implementação: preservar a precedência dos spines e transformar os contratos de contraste, foco, semântica, audiência, cache e estados dinâmicos em critérios automatizados e testes manuais de aceitação.
