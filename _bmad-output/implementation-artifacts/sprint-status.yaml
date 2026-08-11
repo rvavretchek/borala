@@ -1,0 +1,90 @@
+# generated: 2026-08-11T12:06:23-03:00
+# last_updated: 2026-08-11T12:06:23-03:00
+# project: borala
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# DEFINIÇÕES DE STATUS:
+# =====================
+# Status do épico:
+#   - backlog: épico ainda não iniciado
+#   - in-progress: épico em desenvolvimento ativo
+#   - done: todas as histórias do épico concluídas
+#
+# Transições do épico:
+#   - backlog → in-progress: automaticamente quando a primeira história é criada
+#   - in-progress → done: manualmente quando todas as histórias chegam a done
+#
+# Status da história:
+#   - backlog: história existe somente no documento de épicos
+#   - ready-for-dev: arquivo dedicado da história foi criado
+#   - in-progress: implementação em andamento
+#   - review: pronta para revisão de código
+#   - done: história concluída
+#
+# Status da retrospectiva:
+#   - optional: pode ser realizada, mas não é obrigatória
+#   - done: retrospectiva concluída
+#
+# Status de item de ação:
+#   - open: compromisso ainda não tratado
+#   - in-progress: tratamento em andamento
+#   - done: item concluído
+#
+# NOTAS DO WORKFLOW:
+# ==================
+# - O épico passa a in-progress quando sua primeira história é criada.
+# - Histórias podem avançar em paralelo quando houver capacidade.
+# - A próxima história normalmente é criada após a anterior chegar a done.
+# - A implementação move a história para review antes da revisão de código.
+# - A retrospectiva pode acrescentar compromissos em action_items.
+
+generated: 2026-08-11T12:06:23-03:00
+last_updated: 2026-08-11T12:06:23-03:00
+project: borala
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  epic-1: backlog
+  1-1-abrir-a-base-executavel-do-bora-la: backlog
+  1-2-solicitar-acesso-por-email-com-resposta-neutra: backlog
+  1-3-confirmar-o-acesso-e-estabelecer-uma-sessao-privada: backlog
+  1-4-criar-um-role-comecando-pelas-pessoas: backlog
+  1-5-criar-um-role-comecando-por-um-local: backlog
+  1-6-abrir-a-previa-publica-minimizada-do-convite: backlog
+  1-7-entrar-em-um-role-com-nick-contextual: backlog
+  1-8-recuperar-a-participacao-e-corrigir-o-nick: backlog
+  1-9-compartilhar-manualmente-o-convite-vivo: backlog
+  epic-1-retrospective: optional
+
+  epic-2: backlog
+  2-1-registrar-e-alterar-o-interesse-geral: backlog
+  2-2-propor-uma-opcao-de-local: backlog
+  2-3-corrigir-ou-complementar-uma-opcao: backlog
+  2-4-inativar-e-reativar-uma-opcao: backlog
+  2-5-responder-sobre-cada-opcao: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-declarar-que-vai-ter-role: backlog
+  3-2-definir-uma-opcao-como-local-do-role: backlog
+  3-3-responder-durante-a-janela-permitida: backlog
+  3-4-tornar-visivel-um-conflito-concorrente: backlog
+  3-5-corrigir-detalhes-factuais-do-local: backlog
+  3-6-criar-outro-role-para-mudar-local-ou-data: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-alterar-o-horario-aproximado-dentro-da-janela: backlog
+  4-2-consultar-o-plano-vigente-e-abrir-uma-rota-externa: backlog
+  4-3-estender-o-limite-final: backlog
+  4-4-encerrar-e-minimizar-o-convite: backlog
+  4-5-cancelar-o-role: backlog
+  4-6-eliminar-dados-conforme-a-politica-de-retencao: backlog
+  4-7-executar-o-bora-la-em-runtime-seguro: backlog
+  4-8-implantar-uma-versao-com-troca-segura: backlog
+  4-9-proteger-e-restaurar-backups: backlog
+  epic-4-retrospective: optional
