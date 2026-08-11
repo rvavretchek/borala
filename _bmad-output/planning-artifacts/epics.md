@@ -96,7 +96,7 @@ NFR10: Usar Português do Brasil na interface e documentação e inglês em arqu
 
 ### Additional Requirements
 
-- AR1: Inicializar o projeto pelo Structural Seed arquitetural: aplicação React Router Framework Mode SSR, módulos `identity` e `outings`, composition root, migrations, testes, Cypress e diretórios operacionais. Esta é a base obrigatória da primeira história técnica.
+- AR1: Inicializar o projeto pelo Structural Seed arquitetural de forma incremental: a primeira história cria a aplicação React Router Framework Mode SSR, testes, Cypress e apenas os diretórios/abstrações com consumidor real; módulos `identity` e `outings`, composition root, migrations e diretórios operacionais entram na primeira história que efetivamente os consome.
 - AR2: Usar monólito modular com arquitetura hexagonal; domínio não pode importar HTTP, React, Kysely, MySQL, Resend ou infraestrutura.
 - AR3: Usar Node.js 24 LTS, React 19, React Router 8 Framework Mode, Vite 8 e TypeScript 6 com versões efetivas preservadas no `package-lock.json`.
 - AR4: Usar MySQL/InnoDB como única fonte transacional, Kysely/mysql2 apenas no adapter, migrations SQL versionadas, `READ COMMITTED`, strict mode, `utf8mb4` e instantes UTC em `DATETIME(6)`.
@@ -124,7 +124,7 @@ NFR10: Usar Português do Brasil na interface e documentação e inglês em arqu
 - AR26: Cobrir domínio/aplicação com Vitest, adapters/concorrência com MySQL real, UI/jornadas com Cypress e acessibilidade com axe-core, seguindo TDD vermelho-verde-refatoração.
 - AR27: Cobrir obrigatoriamente concorrência de declarações, respostas/inserts ausentes, cancelamento, extensões, replacement, timeout pós-commit, reuso de commandId, rotação HMAC e referências cruzadas.
 - AR28: Medir LCP público com build de produção, fixture fixa, Lighthouse mobile 4G/cache frio e vinte execuções; gate p75 ≤2,5s e validação posterior por RUM agregado sem identificadores.
-- AR29: CI deve bloquear merge em falha de formato, lint, tipos, regra de imports, testes, MySQL integration, Cypress/axe, Lighthouse, build ou scans.
+- AR29: CI deve bloquear merge em falha de qualquer gate aplicável ao incremento: formato, lint, tipos, regra de imports, testes, Cypress/axe, build e scans começam na primeira história; MySQL integration entra com o primeiro adapter MySQL e Lighthouse entra com a primeira superfície sujeita ao orçamento de desempenho, sem checks vazios ou simulados.
 - AR30: Publicar imagem ARM64 por SHA/digest; usar migrations expand/contract e deploy blue-green que só troca Caddy após readiness/smoke, preservando slot saudável para rollback.
 - AR31: Implementar backup automático OCI + dump lógico diário cifrado por `age`, sem SQL plaintext, com alvo de sete dias, RPO 24h/RTO 4h best effort e restore trimestral/antes do piloto.
 - AR32: Preservar o princípio `organizar sem governar` em regras, projeções, textos, métricas e testes; nenhuma contagem pode gerar decisão ou autoridade.
