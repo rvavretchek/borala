@@ -2,7 +2,7 @@
 title: "PRD: Bora Lá"
 status: final
 created: 2026-08-06
-updated: 2026-08-06
+updated: 2026-08-11
 ---
 
 # PRD: Bora Lá
@@ -41,7 +41,7 @@ Grupos recorrentes que organizam happy hours espontâneos em canais como WhatsAp
 ### 2.4 Jornadas principais
 
 - **UJ-1. João cria um rolê a partir das pessoas.** João inicia um happy hour no canal do grupo, identifica-se, escolhe `Primeiro, quem topa`, informa a data e aceita ou edita o nome sugerido. Ele compartilha o link e reconhece valor quando as adesões deixam de estar dispersas na conversa.
-- **UJ-2. Ana entra por um convite e sinaliza sua disposição.** Ana abre o link, vê antes de se identificar o nome, a data, o horário humano e quantas pessoas estão entre `Topo` e `Tudo bem`. Após identificar-se e escolher um nick, vê os detalhes e responde a cada Opção. Seu nick aparece apenas quando responde `Topo`.
+- **UJ-2. Ana entra por um convite e sinaliza sua disposição.** Ana abre o link, vê antes de se identificar o nome, a data, o horário humano e quantas pessoas marcaram `Tô a fim` no Interesse Geral. Após identificar-se e escolher um nick, vê os detalhes e responde a cada Opção. Seu nick aparece apenas quando responde `Topo`.
 - **UJ-3. Bruno sugere um local sem apagar a história.** Bruno adiciona nome, endereço ou referência e URLs opcionais. O sistema avisa sobre possível duplicidade sem bloquear. Outra pessoa corrige um endereço; o valor anterior permanece visível no histórico com autoria.
 - **UJ-4. Carla registra que vai ter rolê.** Após a discussão externa, Carla declara `Vai ter rolê` e depois define uma Opção como Local do Rolê. O sistema não pede justificativa, quórum ou confirmação. Todos passam a ver o plano vigente e quem o declarou.
 - **UJ-5. Diego consulta o rolê tarde.** Diego abre o link durante o encontro e vê primeiro eventual cancelamento; caso esteja ativo, consulta local, endereço, URLs e rota. Ao fim do Limite Final, o link informa apenas que o Rolê terminou.
@@ -83,11 +83,12 @@ A pessoa deve comprovar uma Identidade Verificada e escolher um Nick antes de cr
 
 #### FR-2: Oferecer prévia pública do Convite
 
-Qualquer pessoa com um Convite Operacional pode ver nome, Data, Horário Aproximado, Local do Rolê quando definido e o total agregado de `Topo + Tudo bem`.
+Qualquer pessoa com um Convite Operacional pode ver nome, Data, Horário Aproximado, Local do Rolê quando definido e o total agregado de pessoas que marcaram `Tô a fim` no Interesse Geral.
 
 **Consequências testáveis:**
 - A prévia não mostra nicks, respostas individuais, autoria, histórico ou dados de contato.
 - Cancelamento vigente aparece antes de informações operacionais antigas.
+- O agregado conta Pessoas Convidadas distintas cujo Interesse Geral vigente é `Tô a fim`; `Ainda não sei`, ausência de Interesse Geral e Respostas sobre Opções não entram nessa contagem.
 
 #### FR-3: Identificar a Pessoa Convidada
 
@@ -301,7 +302,7 @@ Qualquer Pessoa Convidada pode cancelar um Rolê antes ou durante sua realizaç�
 - **NFR-6 — Desempenho percebido:** em conexão móvel 4G estável, a prévia pública e o plano vigente devem apresentar conteúdo principal em até 2,5 segundos no percentil 75, desconsiderando navegação de rota externa.
 - **NFR-7 — Confiabilidade:** uma ação confirmada pelo usuário deve aparecer após recarregar o Convite; falhas devem manter o estado anterior e permitir nova tentativa sem duplicar o efeito.
 - **NFR-8 — Localização temporal:** regras de Data, Horário Aproximado e Limite Final devem usar um fuso persistido para o Rolê e permanecer corretas em mudança de dia.
-- **NFR-9 — Expiração e minimização:** após o Limite Final, o acesso público detalhado deve cessar imediatamente. O prazo de retenção técnica interna será definido antes da produção (OQ-2).
+- **NFR-9 — Expiração e minimização:** após o Limite Final, o acesso público detalhado deve cessar imediatamente. A retenção técnica interna segue a decisão resolvida em OQ-2.
 - **NFR-10 — Linguagem:** toda interface e documentação do MVP devem usar Português do Brasil e o vocabulário deste PRD.
 
 Os limiares de NFR-5 e NFR-6 são metas iniciais de qualidade adicionadas por este PRD e devem ser validados no planejamento técnico.
@@ -367,15 +368,15 @@ O MVP não registra comparecimento; portanto, a relação com presença será av
 
 ## 10. Questões abertas
 
-- **OQ-1:** quais métodos de autenticação equilibram melhor cobertura, custo, continuidade entre aparelhos e privacidade no MVP? Responsável: planejamento de arquitetura; resolver antes da implementação de FR-1 e FR-3.
-- **OQ-2:** qual prazo de retenção técnica interna e qual processo de eliminação serão usados após o Limite Final? Responsáveis: produto e arquitetura; resolver antes de produção.
-- **OQ-3:** qual backend atende melhor concorrência, privacidade e custo operacional? Responsável: arquitetura; em empate técnico, escolher Node.js.
+- **OQ-1 — Resolvida:** autenticação passwordless por e-mail com botão/link de continuidade e código alternativo de uso único; ambos convergem para o mesmo consumo seguro. Senha, SMS, WhatsApp e login social ficam fora do MVP.
+- **OQ-2 — Resolvida:** credenciais efêmeras elegíveis são eliminadas em até 24 horas; agregado do Rolê e Identity órfã, após 30 dias; logs técnicos, em 14 dias; backups seguem a política arquitetural de recuperação e retenção.
+- **OQ-3 — Resolvida:** Node.js 24 com React Router Framework Mode SSR e MySQL/InnoDB, conforme a arquitetura aprovada.
 - **OQ-4:** qual método será usado no teste-piloto para avaliar a influência percebida do produto no comparecimento sem coletar presença no MVP? Responsável: pesquisa de produto; resolver antes do piloto.
 
 ### 10.1 Prontidão para os próximos workflows
 
 - **Apto:** UX e arquitetura podem avançar com as regras de produto atuais.
-- **Bloqueado:** implementação de identidade depende de OQ-1; produção depende de OQ-2.
+- **Apto para planejamento de implementação:** OQ-1, OQ-2 e OQ-3 foram resolvidas pela arquitetura. OQ-4 permanece como gate anterior ao piloto, não à implementação do produto.
 
 ## 11. Índice de suposições
 

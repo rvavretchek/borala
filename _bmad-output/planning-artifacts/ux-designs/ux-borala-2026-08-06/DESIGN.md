@@ -4,7 +4,7 @@ description: Identidade visual calorosa e editorial para organizar encontros sem
 status: final
 project: borala
 created: 2026-08-06
-updated: 2026-08-09
+updated: 2026-08-11
 sources:
   - ../../prds/prd-borala-2026-08-06/prd.md
   - ../../../specs/spec-borala-mvp/SPEC.md
@@ -103,7 +103,7 @@ Invólucros usam `{rounded.md}`/`{rounded.lg}`; ações usam `{rounded.full}`. C
 |---|---|
 | `brand-signature` | Logo íntegro, não acionável por padrão e com texto alternativo “Bora Lá”. |
 | `invitation-summary` | Leitura vertical; plano vigente precede histórico e contagens. |
-| `interest-envelope` | Frase factual inseparável “7 pessoas marcaram Topo ou Tudo bem”, em `{typography.body-strong}` e `{colors.ink-primary}`; sem métrica ampliada, título interrogativo, sombra, barra ou tendência. |
+| `interest-envelope` | Frase factual inseparável “7 pessoas marcaram Tô a fim.”, em `{typography.body-strong}` e `{colors.ink-primary}`; sem métrica ampliada, título interrogativo, sombra, barra ou tendência. |
 | `primary-action` | Um CTA principal por contexto; foco externo visível. |
 | `access-gate-row` | Toda a linha é um controle; o cadeado decorativo usa `aria-hidden`, e o requisito de acesso está escrito no nome do controle. |
 | `identity-gate` | Porta de e-mail/código e Nick; não expõe associação entre identidades. |

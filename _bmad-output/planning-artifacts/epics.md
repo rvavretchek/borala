@@ -30,7 +30,7 @@ Este documento reúne os requisitos que orientarão a decomposição do Bora Lá
 
 FR1: Exigir Identidade Verificada e Nick contextual antes de criar um Rolê, sem expor credenciais em superfícies públicas ou de participantes.
 
-FR2: Exibir no Convite público operacional apenas nome, Data, Horário Aproximado, Local quando definido e agregado permitido, resolvendo estados terminais antes de informações antigas.
+FR2: Exibir no Convite público operacional apenas nome, Data, Horário Aproximado, Local quando definido e o agregado de Pessoas Convidadas distintas cujo Interesse Geral vigente é `Tô a fim`, resolvendo estados terminais antes de informações antigas.
 
 FR3: Permitir que uma Pessoa Convidada prove sua identidade, escolha Nick único no Rolê, recupere a mesma identidade em outro aparelho com a mesma credencial e corrija o Nick com auditoria.
 
@@ -143,7 +143,7 @@ UX-DR5: Implementar `brand-signature` com logo aprovado, texto alternativo `Bora
 
 UX-DR6: Implementar `invitation-summary` resolvendo audiência/estado antes dos dados e apresentando Nome → Local → Data/Hora → agregado permitido.
 
-UX-DR7: Implementar `interest-envelope` somente como frase factual `{N} pessoas marcaram Topo ou Tudo bem`, em corpo/ink-primary, sem título interrogativo, número ampliado, sombra, tendência, barra ou uso para justificar Declaração.
+UX-DR7: Implementar `interest-envelope` somente como frase factual `{N} pessoas marcaram Tô a fim.`, derivada exclusivamente de `GeneralInterest.INTERESTED`, em corpo/ink-primary, sem título interrogativo, número ampliado, sombra, tendência, barra ou uso para justificar Declaração.
 
 UX-DR8: Implementar `primary-action` nativo com estado ocupado que evita repetição e confirmação de sucesso somente após persistência.
 
@@ -462,7 +462,7 @@ Para continuar minha intenção original em uma sessão privada e segura.
 **Quando** uma requisição autenticada for processada
 **Então** o servidor deve recuperar apenas a `Identity` correspondente
 **E** o módulo `outings` deve receber somente `identityId`, nunca e-mail, alias ou dados do challenge
-**E** logout futuro deve poder revogar a sessão no servidor.
+**E** a sessão deve poder ser revogada no servidor e deixar de autorizar requisições imediatamente após a revogação.
 
 **Dado** uma intenção preservada antes da autenticação
 **Quando** a sessão for estabelecida
@@ -593,11 +593,6 @@ Para iniciar a organização a partir de uma ideia concreta sem torná-la venced
 **E** não acessa a URL durante a validação
 **E** preserva somente o valor necessário para apresentação e abertura segura.
 
-**Dado** que os dados sugerem possível duplicidade com uma Opção existente na mesma criação
-**Quando** a verificação determinística é executada
-**Então** a interface apresenta um aviso não bloqueante
-**E** não destaca, reordena ou seleciona automaticamente nenhuma Opção.
-
 **Dado** que altero o ponto de partida antes de enviar o formulário
 **Quando** volto para “Primeiro, quem topa”
 **Então** os dados específicos do local deixam de integrar o comando
@@ -647,7 +642,7 @@ Para entender o básico do Rolê sem expor informações de participantes.
 
 **Dado** que existe um agregado público permitido
 **Quando** ele é apresentado
-**Então** utiliza somente a frase factual `{N} pessoas marcaram Topo ou Tudo bem`
+**Então** utiliza somente a frase factual `{N} pessoas marcaram Tô a fim.`
 **E** aparece em tipografia de corpo e cor de texto principal
 **E** não usa pergunta, número ampliado, laranja funcional, tendência, barra, ranking, maioria ou recomendação.
 
@@ -665,12 +660,6 @@ Para entender o básico do Rolê sem expor informações de participantes.
 **Quando** a rota pública é acessada
 **Então** a resposta não revela se um `eventId`, pessoa ou Rolê específico existe
 **E** apresenta uma mensagem segura em Português do Brasil.
-
-**Dado** um estado terminal ou operacional mais recente
-**Quando** a projeção pública é resolvida
-**Então** a precedência aplicada é `Cancelado → Substituído → Encerrado → Em andamento → Definido → Ocorrência declarada → Organização`
-**E** a decisão de audiência e estado ocorre antes da leitura dos campos exibíveis
-**E** informações antigas nunca aparecem antes do aviso vigente.
 
 **Dado** que a página pública é carregada, restaurada pelo BFCache ou trazida novamente ao primeiro plano
 **Quando** seu estado precisa ser confirmado
@@ -694,7 +683,7 @@ Para entender o básico do Rolê sem expor informações de participantes.
 **Dado** a implementação desta história
 **Quando** os contratos e testes forem executados
 **Então** testes negativos comprovam a ausência de campos proibidos nas respostas públicas
-**E** testes cobrem token válido e inválido, dois modos de horário, estado vazio, agregado factual, precedência de estados, BFCache, acessibilidade e desempenho
+**E** testes cobrem token válido e inválido, dois modos de horário, estado vazio, agregado factual, BFCache, acessibilidade e desempenho nos estados alcançáveis pelo Epic 1
 **E** a rastreabilidade comprova FR2 e parte de FR17, além de NFR1, NFR5, NFR6, AR9–AR12, AR17, AR25, AR28 e UX-DR3–UX-DR9, UX-DR19–UX-DR26 e UX-DR28.
 
 ### História 1.7: Entrar em um Rolê com Nick contextual
@@ -901,11 +890,6 @@ Para chamar outras pessoas sem transformar a mensagem compartilhada em fonte def
 **Então** a mensagem é construída a partir da projeção vigente revalidada
 **E** cancelamento, substituição ou encerramento têm precedência sobre dados antigos.
 
-**Dado** que o Rolê está cancelado, substituído ou encerrado
-**Quando** tento compartilhar
-**Então** a mensagem respeita a minimização e a terminalidade do estado
-**E** nunca reutiliza silenciosamente nome, Local, data, horário ou detalhes que deixaram de ser publicáveis.
-
 **Dado** que outra pessoa abre o endereço recebido
 **Quando** o Convite é carregado
 **Então** o servidor resolve o estado atual do Rolê
@@ -918,7 +902,7 @@ Para chamar outras pessoas sem transformar a mensagem compartilhada em fonte def
 
 **Dado** a implementação desta história
 **Quando** os testes e a rastreabilidade forem revisados
-**Então** devem cobrir Web Share, fallback de cópia, cancelamento, falha, ausência de leitura do clipboard, conteúdo permitido, estados terminais, revalidação e abertura do Convite vigente
+**Então** devem cobrir Web Share, fallback de cópia, cancelamento da interface nativa, falha, ausência de leitura do clipboard, conteúdo permitido, revalidação e abertura do Convite vigente nos estados do Epic 1
 **E** testes negativos comprovam a ausência de dados identificados e linguagem de autoridade
 **E** a rastreabilidade comprova FR5 e completa o fluxo do Epic 1, além de NFR1, NFR5–NFR7, AR10–AR12, AR25, AR32, UX-DR16, UX-DR19–UX-DR22, UX-DR24–UX-DR26 e UX-DR28.
 
@@ -958,11 +942,6 @@ Para sinalizar interesse sem escolher um local específico.
 **Então** nenhuma `VenueResponse` é criada, alterada ou removida
 **E** o Interesse Geral não seleciona, ordena ou legitima uma Opção.
 
-**Dado** que o Local já foi definido
-**Quando** tento alterar ou limpar o Interesse Geral
-**Então** o valor aparece somente para leitura
-**E** o servidor rejeita a mutação sem modificar o estado.
-
 **Dado** que a mesma alteração é repetida ou ocorre conflito de versão
 **Quando** o servidor processa o comando
 **Então** aplica idempotência e CAS sem duplicar auditoria
@@ -970,7 +949,7 @@ Para sinalizar interesse sem escolher um local específico.
 
 **Dado** a implementação desta história
 **Quando** os testes forem executados
-**Então** devem cobrir definir, trocar, limpar, recarregar, concorrência, agregado com zero ou várias Opções e separação de `VenueResponse`
+**Então** devem cobrir definir, trocar, limpar, recarregar, concorrência, agregado com zero ou várias Opções e separação de `VenueResponse` durante a Organização
 **E** a rastreabilidade comprova FR6, NFR2–NFR4, NFR7, AR13–AR15, AR32 e UX-DR7, UX-DR19–UX-DR22 e UX-DR28.
 
 ### História 2.2: Propor uma Opção de local
@@ -1099,11 +1078,6 @@ Para refletir sua disponibilidade sem excluir respostas ou histórico.
 **Então** não há perda de respostas
 **E** a pessoa recebe o estado vigente caso sua operação não seja mais permitida.
 
-**Dado** que o Local já foi definido
-**Quando** tento inativar ou reativar uma Opção
-**Então** o servidor rejeita a mutação
-**E** todas as Opções permanecem fechadas com dados preservados.
-
 **Dado** que a mesma ação é repetida
 **Quando** o comando idempotente é processado
 **Então** retorna o estado confirmado sem duplicar eventos
@@ -1111,7 +1085,7 @@ Para refletir sua disponibilidade sem excluir respostas ou histórico.
 
 **Dado** a implementação desta história
 **Quando** os testes forem executados
-**Então** devem cobrir inativação, reativação, posição original, filtros, concorrência, estado fechado, auditoria e recarga
+**Então** devem cobrir inativação, reativação, posição original, filtros, concorrência durante a Organização, auditoria e recarga
 **E** a rastreabilidade comprova FR9, NFR2–NFR4, NFR7, AR13–AR16, AR26–AR27, AR32, UX-DR12 e UX-DR18–UX-DR28.
 
 ### História 2.5: Responder sobre cada Opção
@@ -1162,7 +1136,7 @@ Para expressar minha disposição sobre os locais sem que o sistema decida pelo 
 **Então** CAS e unicidade preservam uma única resposta vigente
 **E** a operação conflitante recebe o estado atual sem sobrescrita silenciosa.
 
-**Dado** que uma resposta disputa com a inativação ou o fechamento da Opção
+**Dado** que uma resposta disputa com a inativação da Opção
 **Quando** a transação obtém os locks canônicos
 **Então** somente ações ainda permitidas são confirmadas
 **E** respostas já persistidas nunca são excluídas.
@@ -1179,7 +1153,7 @@ Para expressar minha disposição sobre os locais sem que o sistema decida pelo 
 
 **Dado** a implementação desta história
 **Quando** os testes forem executados
-**Então** devem cobrir inserção ausente, troca entre todos os valores, remoção nominal ao sair de `Topo`, múltiplas Opções, concorrência, inativação simultânea, ordem, teclado e reflow
+**Então** devem cobrir inserção ausente, troca entre todos os valores, remoção nominal ao sair de `Topo`, múltiplas Opções, concorrência, inativação simultânea, ordem, teclado e reflow durante a Organização
 **E** a rastreabilidade comprova FR10 e completa FR6–FR10 do Epic 2, além de NFR2–NFR5, NFR7, AR13–AR16, AR26–AR27, AR32 e UX-DR12–UX-DR14, UX-DR19–UX-DR25 e UX-DR28.
 
 ## Epic 3: Registrar o combinado e resolver mudanças
@@ -1266,6 +1240,21 @@ Para registrar diretamente o plano vigente do encontro.
 **Então** aguarda as operações anteriores e fecha as janelas de forma serializada
 **E** nenhum dado confirmado é perdido.
 
+**Dado** que uma Resposta disputa com a definição do Local
+**Quando** as transações seguem a ordem canônica de locks
+**Então** somente ações ainda permitidas são confirmadas
+**E** a Resposta confirmada antes da definição é preservada sem impedir o fechamento.
+
+**Dado** que o Local foi definido
+**Quando** alguém tenta inativar ou reativar uma das Opções fechadas
+**Então** o servidor rejeita a mutação
+**E** todas as Opções permanecem fechadas com dados, Respostas e histórico preservados.
+
+**Dado** que o Local foi definido
+**Quando** alguém tenta alterar ou limpar o Interesse Geral
+**Então** o valor aparece somente para leitura
+**E** o servidor rejeita a mutação sem modificar o estado.
+
 **Dado** que o mesmo Local é definido novamente com intenção equivalente
 **Quando** o comando é repetido
 **Então** retorna o resultado vigente sem duplicar declaração ou auditoria.
@@ -1282,7 +1271,7 @@ Para registrar diretamente o plano vigente do encontro.
 
 **Dado** a implementação desta história
 **Quando** os testes forem executados
-**Então** devem cobrir os dois estados de origem, Opção ativa e inativa, referência `AfterWork`, horário explícito, locks, repetição e referências cruzadas
+**Então** devem cobrir os dois estados de origem, Opção ativa e inativa, referência `AfterWork`, horário explícito, locks, repetição, fechamento do Interesse Geral e referências cruzadas
 **E** a rastreabilidade comprova FR13 e parte de FR17, além de NFR2–NFR4, NFR7–NFR8, AR13–AR18, AR26–AR27, AR32, UX-DR6, UX-DR12, UX-DR15 e UX-DR18–UX-DR28.
 
 ### História 3.3: Responder durante a janela permitida
@@ -1481,6 +1470,11 @@ Para preservar a história anterior sem misturar dois encontros socialmente dife
 **Então** a substituição e o endereço do Convite vigente aparecem antes de qualquer informação antiga
 **E** autoria, respostas e histórico permanecem ausentes da resposta pública.
 
+**Dado** que uma Pessoa Convidada compartilha o Convite substituído
+**Quando** a mensagem é construída
+**Então** contém somente o Convite vivo e o estado factual de substituição
+**E** não reutiliza Local, Data, horário ou detalhes operacionais antigos.
+
 **Dado** que uma pessoa abre o novo Convite
 **Quando** ainda não participa do novo Rolê
 **Então** precisa estabelecer sua participação contextual
@@ -1493,7 +1487,7 @@ Para preservar a história anterior sem misturar dois encontros socialmente dife
 
 **Dado** a implementação desta história
 **Quando** os testes forem executados
-**Então** devem cobrir mudança de Local, mudança de Data, ausência de heranças, rollback, concorrência, idempotência, Convite anterior e entrada no novo Rolê
+**Então** devem cobrir mudança de Local, mudança de Data, ausência de heranças, rollback, concorrência, idempotência, Convite anterior, compartilhamento factual e entrada no novo Rolê
 **E** a rastreabilidade comprova FR16 e completa FR11–FR16 do Epic 3, além de NFR1–NFR5, NFR7, AR9–AR16, AR26–AR27, AR32 e UX-DR19–UX-DR28.
 
 ## Epic 4: Acompanhar o Rolê até seu encerramento
@@ -1560,7 +1554,7 @@ Para chegar ao Local correto sem depender de mensagens antigas.
 **Então** vejo primeiro Local vigente, endereço ou referência, URLs e Horário Aproximado
 **E** correções confirmadas substituem visualmente os valores antigos.
 
-**Dado** que o Rolê foi cancelado ou substituído
+**Dado** que o Rolê foi substituído
 **Quando** o Convite é aberto
 **Então** o aviso vigente aparece antes de qualquer plano anterior
 **E** ações incompatíveis deixam de ser oferecidas.
@@ -1631,7 +1625,7 @@ Para manter o Convite útil quando o encontro durar mais.
 **Então** essas janelas não são reabertas
 **E** somente a disponibilidade operacional do Convite é prolongada.
 
-**Dado** que `Clock >= finalLimit`, ou o Rolê está cancelado ou substituído
+**Dado** que `Clock >= finalLimit` ou o Rolê está substituído
 **Quando** tento estender o limite
 **Então** o servidor rejeita a mutação terminal.
 
@@ -1667,7 +1661,7 @@ Para não acessar dados pessoais ou operacionais que perderam sua finalidade.
 **Então** o servidor retorna o estado encerrado
 **E** a interface limpa dados identificados e substitui a tela pelo aviso terminal.
 
-**Dado** que o Rolê havia sido cancelado ou substituído antes do limite
+**Dado** que o Rolê havia sido substituído antes do limite
 **Quando** o relógio alcança o Limite Final
 **Então** a minimização pós-limite prevalece
 **E** a resposta passa a conter somente `Este Rolê terminou.`.
@@ -1676,13 +1670,18 @@ Para não acessar dados pessoais ou operacionais que perderam sua finalidade.
 **Quando** a guarda temporal é aplicada
 **Então** a mutação é recusada sem criar recibo enganoso ou reabrir estado.
 
+**Dado** que alguém recebeu ou compartilhou anteriormente o endereço do Convite
+**Quando** abre esse endereço após o Limite Final
+**Então** o servidor resolve somente `Este Rolê terminou.`
+**E** a projeção encerrada não oferece controle de compartilhamento com dados operacionais antigos.
+
 **Dado** que o encerramento é apresentado
 **Quando** utilizo teclado, leitor de tela, 320 CSS px ou zoom de 400%
 **Então** a mensagem permanece clara, focável quando necessário e sem conteúdo cortado.
 
 **Dado** a implementação desta história
 **Quando** os testes forem executados
-**Então** devem atravessar o limite em todos os estados, inspecionar negativamente HTML/JSON/cache e testar ações tardias, BFCache e limpeza de memória
+**Então** devem atravessar o limite nos estados já implementados, inspecionar negativamente HTML/JSON/cache e testar ações tardias, Convite compartilhado, BFCache e limpeza de memória
 **E** a rastreabilidade comprova FR21, NFR1–NFR3, NFR5, NFR7–NFR9, AR10–AR12, AR17–AR18, AR26–AR27 e UX-DR19–UX-DR26 e UX-DR28.
 
 ### História 4.5: Cancelar o Rolê
@@ -1728,6 +1727,11 @@ Para interromper novas ações e comunicar esse fato de forma inequívoca.
 **Então** recebe o estado confirmado sem duplicar auditoria
 **E** uma intenção divergente é rejeitada.
 
+**Dado** que uma Pessoa Convidada compartilha o Convite cancelado antes do Limite Final
+**Quando** a mensagem é construída
+**Então** contém somente o Convite vivo e o estado factual de cancelamento
+**E** não reutiliza Local, Data, horário ou detalhes operacionais antigos.
+
 **Dado** que `Clock >= finalLimit`
 **Quando** o Convite cancelado é consultado
 **Então** a minimização apresenta somente `Este Rolê terminou.`.
@@ -1738,7 +1742,7 @@ Para interromper novas ações e comunicar esse fato de forma inequívoca.
 
 **Dado** a implementação desta história
 **Quando** os testes forem executados
-**Então** devem cobrir cancelamento em todos os estados operacionais, concorrência, repetição, projeções pública e identificada, pós-limite, foco e impossibilidade de restauração
+**Então** devem cobrir cancelamento em todos os estados operacionais, concorrência, repetição, projeções pública e identificada, compartilhamento factual, pós-limite, foco e impossibilidade de restauração
 **E** a rastreabilidade comprova FR22, NFR1–NFR5, NFR7, AR10, AR13–AR18, AR26–AR27, AR32, UX-DR15, UX-DR18–UX-DR28.
 
 ### História 4.6: Eliminar dados conforme a política de retenção
@@ -1781,7 +1785,6 @@ Para que o Convite não se torne um arquivo permanente da vida social do grupo.
 **Dado** os prazos operacionais
 **Quando** a retenção é auditada
 **Então** logs técnicos não ultrapassam 14 dias
-**E** backups não ultrapassam o limite arquitetural aplicável
 **E** o estado público detalhado já havia cessado imediatamente no Limite Final.
 
 **Dado** a implementação desta história
@@ -1789,11 +1792,11 @@ Para que o Convite não se torne um arquivo permanente da vida social do grupo.
 **Então** devem cobrir bordas de 24 horas e 30 dias, lotes, retry, concorrência, rollback, revalidação, ausência de órfãos e logs por allowlist
 **E** a rastreabilidade comprova NFR1, NFR3–NFR4, NFR9, AR21–AR22, AR25–AR27 e AR32.
 
-### História 4.7: Publicar e recuperar o Bora Lá com segurança
+### História 4.7: Executar o Bora Lá em runtime seguro
 
-Como responsável pela operação do Bora Lá,
-Quero implantar, atualizar e recuperar o serviço de forma verificável,
-Para disponibilizar o MVP sem aceitar conexão insegura ou perda silenciosa de dados.
+Como pessoa responsável pela operação do Bora Lá,
+Quero executar a aplicação e a manutenção em um runtime isolado com conexão segura ao banco,
+Para disponibilizar o serviço sem aceitar privilégios ou transporte desnecessários.
 
 **Critérios de aceitação:**
 
@@ -1803,9 +1806,14 @@ Para disponibilizar o MVP sem aceitar conexão insegura ou perda silenciosa de d
 **E** a mesma imagem oferece os processos `web` e `maintenance`.
 
 **Dado** o ambiente Oracle Linux 9 ARM64
-**Quando** o serviço é provisionado
+**Quando** o runtime é provisionado
 **Então** executa rootless sob o usuário dedicado `borala`, via Podman e Quadlet
-**E** utiliza filesystem read-only, capabilities removidas e portas locais dos slots `blue` e `green`.
+**E** utiliza filesystem read-only, capabilities removidas e somente os bind mounts explicitamente autorizados.
+
+**Dado** os processos `web` e `maintenance`
+**Quando** suas unidades são inspecionadas
+**Então** não utilizam socket ou daemon privilegiado
+**E** publicam o serviço web somente em uma porta de loopback destinada ao slot.
 
 **Dado** qualquer processo que acessa MySQL
 **Quando** estabelece a conexão
@@ -1813,21 +1821,61 @@ Para disponibilizar o MVP sem aceitar conexão insegura ou perda silenciosa de d
 **E** readiness falha quando `Ssl_cipher` está vazio
 **E** não existe fallback para `PREFERRED`, plaintext ou validação parcial.
 
-**Dado** um novo digest pronto para implantação
-**Quando** o fluxo blue-green é executado
-**Então** valida versão do MySQL, TLS, migration e slot inativo
-**E** executa readiness e smoke antes de trocar o upstream do Caddy
-**E** mantém o slot saudável anterior disponível para rollback.
+**Dado** o host ou o banco indisponível
+**Quando** readiness é executada
+**Então** o processo não é anunciado como pronto
+**E** logs por allowlist não expõem credenciais, endpoints sensíveis ou conteúdo de domínio.
 
-**Dado** uma migration incompatível ou smoke test falho
+**Dado** a implementação desta história
+**Quando** os gates operacionais forem executados
+**Então** devem validar imagem ARM64, execução rootless, filesystem read-only, capabilities, portas locais e TLS fail-closed
+**E** a rastreabilidade comprova AR23–AR25, AR29 e os requisitos de segurança operacional relacionados.
+
+### História 4.8: Implantar uma versão com troca segura
+
+Como pessoa responsável pela operação do Bora Lá,
+Quero implantar um novo digest em um slot inativo antes de trocar o tráfego,
+Para atualizar o serviço com validação e rollback previsíveis.
+
+**Critérios de aceitação:**
+
+**Dado** um digest ARM64 aprovado
+**Quando** a implantação é iniciada
+**Então** verifica versão efetiva do MySQL, TLS, cipher e migration vigente
+**E** grava somente o digest aprovado no Quadlet do slot inativo.
+
+**Dado** o slot inativo atualizado
+**Quando** migrations forward-compatible, readiness e smoke são executados
+**Então** o Caddy só troca o upstream depois da aprovação de todos os gates
+**E** o slot saudável anterior permanece disponível para rollback.
+
+**Dado** uma migration incompatível, readiness ou smoke falho
 **Quando** a implantação é avaliada
 **Então** o tráfego não é trocado
-**E** migrations seguem expand/contract sem depender de downgrade destrutivo.
+**E** a falha não interrompe o slot vigente.
+
+**Dado** uma release que remove coluna, constraint ou semântica
+**Quando** a estratégia de migration é revisada
+**Então** usa expand/contract e elimina leitores ou escritores antigos em release anterior
+**E** não depende de downgrade destrutivo.
 
 **Dado** uma reinicialização do host
 **Quando** os serviços retornam
 **Então** Caddy e o slot ativo são restaurados por systemd e linger
 **E** nenhuma imagem `latest` ou atualização automática é puxada.
+
+**Dado** a implementação desta história
+**Quando** os testes de implantação forem executados
+**Então** devem cobrir sucesso, falha de migration, readiness, smoke, troca Caddy, rollback e reboot
+**E** a rastreabilidade comprova AR29–AR30 e os contratos de implantação de AR23–AR24.
+
+### História 4.9: Proteger e restaurar backups
+
+Como pessoa responsável pela operação do Bora Lá,
+Quero produzir backups cifrados e comprovar sua restauração,
+Para reduzir o risco de perda silenciosa sem armazenar SQL em claro.
+
+**Critérios de aceitação:**
 
 **Dado** o job diário de backup
 **Quando** o dump é produzido
@@ -1840,7 +1888,12 @@ Para disponibilizar o MVP sem aceitar conexão insegura ou perda silenciosa de d
 **Então** artefatos incompletos são removidos com segurança
 **E** o dump válido mais recente e ao menos duas gerações são priorizados sem cobrança silenciosa.
 
-**Dado** um ensaio de restauração trimestral, anterior ao piloto ou após mudança relevante de schema
+**Dado** a política de retenção de backup
+**Quando** quota e gerações são avaliadas
+**Então** busca manter sete dias dentro do envelope gratuito e nunca ultrapassa 14 dias
+**E** alerta a 60% da quota antes de remover a geração válida mais antiga.
+
+**Dado** um ensaio trimestral, anterior ao piloto ou posterior a mudança relevante de schema
 **Quando** o backup é restaurado em ambiente limpo
 **Então** major do banco, TLS, migrations e smoke tests são validados
 **E** nenhuma chave privada de restauração reside na VM
@@ -1848,10 +1901,10 @@ Para disponibilizar o MVP sem aceitar conexão insegura ou perda silenciosa de d
 
 **Dado** os objetivos operacionais
 **Quando** continuidade e recuperação são avaliadas
-**Então** o backup busca retenção de sete dias, RPO de 24 horas e RTO de quatro horas em regime best effort
+**Então** o processo busca RPO de 24 horas e RTO de quatro horas em regime best effort
 **E** o risco de capacidade indisponível do ambiente gratuito permanece documentado e monitorado.
 
 **Dado** a implementação desta história
-**Quando** os gates de entrega são executados
-**Então** formato, lint, tipos, imports, testes, MySQL real, Cypress, axe, Lighthouse, build, scans, TLS, migration, backup e restore devem bloquear falhas relevantes
-**E** a rastreabilidade comprova AR23–AR25 e AR28–AR31, além dos requisitos operacionais e de segurança restantes do MVP.
+**Quando** os gates de backup e restauração forem executados
+**Então** devem cobrir sucesso, disco cheio, interrupção, reboot com `.part`, chave indisponível, quota e restauração limpa
+**E** a rastreabilidade comprova AR24–AR25, AR29, AR31 e os requisitos de retenção e recuperação restantes.

@@ -3,7 +3,7 @@ name: Bora Lá
 status: final
 project: borala
 created: 2026-08-06
-updated: 2026-08-09
+updated: 2026-08-11
 sources:
   - ../../prds/prd-borala-2026-08-06/prd.md
   - ../../../specs/spec-borala-mvp/SPEC.md
@@ -23,7 +23,7 @@ Web responsiva mobile-first em React.js. A pessoa alterna entre o Convite e o ca
 
 Princípio obrigatório: **organizar sem governar**. O produto registra estado; não infere consenso, maioria, quórum, vencedor, influência, legitimidade ou autoridade. Pessoa Criadora e Pessoa Convidada identificada têm exatamente os mesmos poderes após a criação. A conversa e a resolução social permanecem externas.
 
-Identificação do MVP: somente código de uso único por e-mail, sem senha, SMS, WhatsApp ou login social. Mensagens de envio e recuperação são neutras para impedir a enumeração de contas; o e-mail nunca aparece para participantes. Após a verificação, restaura-se a intenção original e cria-se ou recupera-se o Nick contextual.
+Identificação do MVP: e-mail com botão/link de continuidade e código alternativo de uso único; ambos convergem para o mesmo consumo seguro. Senha, SMS, WhatsApp e login social ficam fora do MVP. Mensagens de envio e recuperação são neutras para impedir a enumeração de contas; o e-mail nunca aparece para participantes. Após a verificação, restaura-se a intenção original e cria-se ou recupera-se o Nick contextual.
 
 ## Information Architecture
 
@@ -32,7 +32,7 @@ Bora Lá
 ├── Criar Rolê (dois começos equivalentes)
 └── Convite
     ├── Prévia pública
-    ├── Identificação por e-mail + código + Nick
+    ├── Identificação por e-mail + link ou código alternativo + Nick
     └── Rolê identificado
         ├── Estado/plano vigente
         ├── Interesse Geral
@@ -44,8 +44,8 @@ Bora Lá
 | Superfície | Entrega e limite |
 |---|---|
 | Criar Rolê | Data, Horário Aproximado, nome e dois começos com peso igual; criação exige identidade. |
-| Prévia pública | Nome, Local ou indicação de Local em aberto, Data, Horário Aproximado e `Topo + Tudo bem`; sem Nick, autoria, respostas individuais ou histórico. |
-| Identificação + Nick | E-mail → código único → Nick; retorno à ação protegida que motivou a identificação. |
+| Prévia pública | Nome, Local ou indicação de Local em aberto, Data, Horário Aproximado e total de pessoas que marcaram `Tô a fim` no Interesse Geral; sem Nick, autoria, respostas individuais ou histórico. |
+| Identificação + Nick | E-mail → link de continuidade ou código alternativo → Nick; retorno à ação protegida que motivou a identificação. |
 | Rolê identificado | Estado ou plano vigente, detalhes, participação, autorias e ações válidas. `Dar o seu pitaco` precede `Quem já topou?`. |
 | Detalhe da Opção | Informações vigentes, autoria, estado, quatro Respostas, Nicks apenas de `Topo`, correções e histórico. |
 | Histórico | Sequência factual secundária, sem reputação ou restauração terminal. |
@@ -77,7 +77,7 @@ Revalidar autorização, identidade e precedência antes de renderizar dados pro
 
 Informal, clara, factual e operacional. Dizer o que foi registrado, nunca o que “o grupo quis”. Usar Rolê, Organização, Opção, Resposta, Declaração, Pessoa Criadora, Pessoa Convidada, Local em aberto e Local do Rolê. Evitar votação, candidato, voto, aprovado, vencedor e “o grupo escolheu”.
 
-- Agregado: `7 pessoas marcaram Topo ou Tudo bem.`
+- Agregado: `7 pessoas marcaram Tô a fim.`
 - Substituído público: `Existe Outro Rolê ligado a este.`
 - Substituído identificado: `Existe Outro Rolê ligado a este. Registrado por {Nick}, {momento}.`
 - Concorrência: `O Rolê mudou enquanto você fazia isso. Sua tentativa não substituiu o estado atual.`
@@ -91,10 +91,10 @@ Informal, clara, factual e operacional. Dizer o que foi registrado, nunca o que 
 |---|---|
 | `brand-signature` | Associa visualmente a marca; não é link por padrão. |
 | `invitation-summary` | Resolve estado/autorização antes dos dados; ordem Nome → Local → Data/Hora → agregado. |
-| `interest-envelope` | Exibe apenas a frase factual `{N} pessoas marcaram Topo ou Tudo bem`; não usa pergunta, não é acionável e não serve como justificativa de Declaração. |
+| `interest-envelope` | Exibe apenas a frase factual `{N} pessoas marcaram Tô a fim.`; não usa pergunta, não é acionável e não serve como justificativa de Declaração. O total vem exclusivamente de `GeneralInterest.INTERESTED`. |
 | `primary-action` | Controle nativo; ocupado evita repetição; sucesso só após persistência. |
 | `access-gate-row` | Link/botão nativo com nome completo, ex. `Dar o seu pitaco — requer identificação`; preserva intenção. |
-| `identity-gate` | E-mail e código com mensagens neutras; troca/sair limpa dados; Nick duplicado só informa indisponibilidade. |
+| `identity-gate` | E-mail, link de continuidade e código alternativo com mensagens neutras; ambos os meios convergem para a mesma confirmação segura; troca/sair limpa dados; Nick duplicado só informa indisponibilidade. |
 | `form-field` | `label` associado, ajuda via descrição, erro inline; mantém o valor em caso de falha, desde que a identidade permaneça a mesma. |
 | `validation-summary` | Em submit inválido recebe foco, lista links aos campos e não duplica mensagens em live region. |
 | `option-card` | Ordem canônica estável; estado exposto em texto e programaticamente; duplicidade avisa sem bloquear. |
@@ -167,7 +167,7 @@ Breakpoints, margens e larguras de coluna seguem exclusivamente `DESIGN.md > Lay
 ## Key Flows
 
 ### UJ-1. João cria um rolê a partir das pessoas
-**Passos:** 1. Identifica-se por e-mail/código, escolhe Nick e um dos dois começos equivalentes. 2. Informa Data, Hora e nome. 3. Registra Interesse Geral. 4. Compartilha manualmente.
+**Passos:** 1. Identifica-se por e-mail e confirma pelo link ou código alternativo, escolhe Nick e um dos dois começos equivalentes. 2. Informa Data, Hora e nome. 3. Registra Interesse Geral. 4. Compartilha manualmente.
 
 **Clímax:** um link vivo organiza sem criar dono.
 
@@ -225,7 +225,8 @@ Breakpoints, margens e larguras de coluna seguem exclusivamente `DESIGN.md > Lay
 | CAP-9; FR-22 | UJ-5; cancelamento público × identificado |
 | NFR-1–NFR-3 | cold-load, envio/retry, estado vigente e `primary-action` |
 | NFR-4–NFR-6 | Accessibility Floor, semântica, foco, reflow e contraste em DESIGN.md |
-| NFR-7–NFR-8 | mensagens neutras, sessão/cache e controles de share/rota |
+| NFR-7 | confirmação somente após persistência, retry idempotente, recarga e revalidação de sessão/cache |
+| NFR-8 | Data social, fuso persistido, Horário Aproximado e Limite Final nos fluxos UJ-1/UJ-5 |
 | NFR-9 | matriz expirada e Cache/BFCache |
 | NFR-10 | Foundation/IA, igualdade de poder, ordem estável e templates |
 

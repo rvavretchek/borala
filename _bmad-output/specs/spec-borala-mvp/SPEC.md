@@ -96,6 +96,7 @@ Em uma demonstração ponta a ponta, um criador inicia um rolê sem grupo prévi
 
 ## Open Questions
 
-- Quais métodos de autenticação verificável equilibram melhor cobertura, custo e continuidade entre aparelhos no MVP?
-- Qual backend atende melhor o domínio, a privacidade e a concorrência; se Node.js empatar tecnicamente, ele deve ser escolhido.
-- Qual prazo técnico de retenção interna será aplicado após o link deixar de expor detalhes?
+- **Resolvida:** autenticação passwordless por e-mail com botão/link de continuidade e código alternativo de uso único.
+- **Resolvida:** Node.js 24 com React Router Framework Mode SSR e MySQL/InnoDB.
+- **Resolvida:** credenciais efêmeras elegíveis em até 24 horas; agregado do Rolê e Identity órfã após 30 dias; logs técnicos em 14 dias; backups conforme a política arquitetural.
+- **Aberta até o piloto:** método de pesquisa para avaliar influência percebida no comparecimento sem coletar presença no produto.

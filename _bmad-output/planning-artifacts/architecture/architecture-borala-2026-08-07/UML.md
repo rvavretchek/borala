@@ -25,7 +25,7 @@ flowchart LR
     Operator[Operação técnica] -->|deploy, métricas e restore| BoraLa
     Operator -->|backup e recuperação| MySQL
 
-    note["O link descobre o Rolê; não autentica a pessoa.<br/>Quantos tão a fim? vem do Interesse Geral, não das Opções.<br/>O sistema organiza informação; não decide pelo grupo."]
+    note["O link descobre o Rolê; não autentica a pessoa.<br/>{N} pessoas marcaram Tô a fim. vem de GeneralInterest.INTERESTED, não das Opções.<br/>O sistema organiza informação; não decide pelo grupo."]
     note -.-> BoraLa
 ```
 

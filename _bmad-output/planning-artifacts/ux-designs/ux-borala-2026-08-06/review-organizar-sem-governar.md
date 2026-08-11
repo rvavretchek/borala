@@ -1,5 +1,7 @@
 # Revalidação adversarial — organizar sem governar
 
+> Nota de atualização (2026-08-11): a definição anterior do agregado foi substituída pela fonte canônica de Interesse Geral. As verificações abaixo foram atualizadas para refletir `{N} pessoas marcaram Tô a fim.`.
+
 ## Gate
 
 **PASS**
@@ -24,7 +26,7 @@ Critérios normativos:
 ### Prova social e significado do agregado
 
 - `DESIGN.md` exige frase factual inseparável em `{typography.body-strong}` e `{colors.ink-primary}`, sem métrica ampliada, pergunta, sombra, barra ou tendência.
-- `EXPERIENCE.md` fixa `{N} pessoas marcaram Topo ou Tudo bem`, não acionável e nunca usado como justificativa de Declaração.
+- `EXPERIENCE.md` fixa `{N} pessoas marcaram Tô a fim.`, não acionável e nunca usado como justificativa de Declaração.
 - `mockups/convite.html` e `mockups/organizacao.html` renderizam a frase completa em escala de corpo e tinta primária, sem destacar o número.
 - `mockups/organizacao.html` usa o título factual `Respostas registradas`; não resta ocorrência de `Quantos tão a fim?` nos mocks promovidos.
 

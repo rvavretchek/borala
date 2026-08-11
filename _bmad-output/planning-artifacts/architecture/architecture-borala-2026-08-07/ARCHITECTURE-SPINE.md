@@ -30,7 +30,7 @@ Este spine é o contrato de convergência para agentes implementadores e para re
 
 - A decisão direta de 2026-08-07 refina o contrato antigo de Correção: após a definição, editar nome, endereço ou URLs preserva o mesmo Local social; trocar Local ou Data exige `Criar Outro Rolê`. Antes da definição, detalhes da Opção podem ser alterados.
 - A decisão direta de 2026-08-07 define autenticação passwordless por e-mail com botão de continuidade e código alternativo; senha e fluxo exclusivamente por código não pertencem ao MVP.
-- A decisão direta de 2026-08-07 define `Quantos tão a fim?` pelo Interesse Geral, com a mesma semântica havendo ou não Opções; Respostas de Local não alimentam esse agregado.
+- A decisão consolidada em 2026-08-11 define `{N} pessoas marcaram Tô a fim.` pelo Interesse Geral, com a mesma semântica havendo ou não Opções; Respostas de Local não alimentam esse agregado.
 
 ## Design Paradigm
 

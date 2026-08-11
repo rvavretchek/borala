@@ -18,7 +18,7 @@ Este companion é parte normativa da [SPEC](./SPEC.md).
 
 | Situação | Regra |
 |---|---|
-| Antes da identificação | Mostrar nome, data, horário humano, local quando definido e total agregado de `Topo + Tudo bem`. |
+| Antes da identificação | Mostrar nome, data, horário humano, local quando definido e total agregado de Pessoas Convidadas distintas cujo Interesse Geral vigente é `Tô a fim`. `Ainda não sei`, ausência e Respostas sobre Opções não entram nessa contagem. |
 | Depois da identificação | Mostrar nicks, opções, contagens, autorias e ações permitidas. |
 | Contato | Nunca expor telefone, e-mail ou credencial. |
 | Nick | Exigir unicidade dentro do rolê; permitir correção auditada. |

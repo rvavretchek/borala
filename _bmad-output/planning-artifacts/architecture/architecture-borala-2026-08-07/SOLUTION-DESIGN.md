@@ -253,7 +253,7 @@ Não há listagem de Rolês por Identity.
 
 Antes de montar qualquer DTO, `Clock >= finalLimit` retorna exclusivamente `EndedInvitationView` com `Este Rolê terminou.`. Cancelamento, substituição e link do replacement só são projetados antes dessa borda.
 
-`interestedCount` usa `COUNT(DISTINCT participant_id)` sobre o estado vigente `GeneralInterest.INTERESTED`. A fórmula é idêntica com zero, uma ou várias Opções, que estejam ativas, inativas ou fechadas. `UNSURE`, ausência e qualquer `VenueResponse` não entram nessa conta. A frase pública pode dizer `{n} pessoas tão a fim`, sem ligar o número a uma Opção ou Declaração.
+`interestedCount` usa `COUNT(DISTINCT participant_id)` sobre o estado vigente `GeneralInterest.INTERESTED`. A fórmula é idêntica com zero, uma ou várias Opções, que estejam ativas, inativas ou fechadas. `UNSURE`, ausência e qualquer `VenueResponse` não entram nessa conta. A frase pública canônica é `{N} pessoas marcaram Tô a fim.`, sem ligar o número a uma Opção ou Declaração.
 
 ### 7.2 DTO identificado
 
