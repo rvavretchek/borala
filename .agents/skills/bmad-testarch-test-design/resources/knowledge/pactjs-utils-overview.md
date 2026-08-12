@@ -119,7 +119,10 @@ it('should get user by id', async () => {
 
 ```typescript
 import { Verifier } from '@pact-foundation/pact';
-import { buildVerifierOptions, createRequestFilter } from '@seontechnologies/pactjs-utils';
+import {
+  buildVerifierOptions,
+  createRequestFilter,
+} from '@seontechnologies/pactjs-utils';
 
 const opts = buildVerifierOptions({
   provider: 'my-api',
@@ -169,10 +172,11 @@ const opts: VerifierOptions = {
   pactBrokerToken: process.env.PACT_BROKER_TOKEN,
   publishVerificationResult: process.env.CI === 'true',
   providerVersion: process.env.GIT_SHA || 'dev',
-  consumerVersionSelectors: [{ mainBranch: true }, { deployedOrReleased: true }],
-  stateHandlers: {
-    /* ... */
-  },
+  consumerVersionSelectors: [
+    { mainBranch: true },
+    { deployedOrReleased: true },
+  ],
+  stateHandlers: {/* ... */},
   requestFilter: (req, res, next) => {
     /* ... */
   },
@@ -188,9 +192,7 @@ const opts = buildVerifierOptions({
   provider: 'my-api',
   port: '3001',
   includeMainAndDeployed: true,
-  stateHandlers: {
-    /* ... */
-  },
+  stateHandlers: {/* ... */},
   requestFilter: createRequestFilter({ tokenGenerator: () => 'token' }),
 });
 ```
@@ -210,7 +212,9 @@ provider.given('user exists', { id: 1 as unknown as JsonMap['id'] });
 // ✅ Automatic type conversion
 import { createProviderState } from '@seontechnologies/pactjs-utils';
 
-provider.given(...createProviderState({ name: 'user exists', params: { id: 1 } }));
+provider.given(
+  ...createProviderState({ name: 'user exists', params: { id: 1 } }),
+);
 ```
 
 _Source: @seontechnologies/pactjs-utils library, pactjs-utils README, pact-js-example-provider workflows_

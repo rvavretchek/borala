@@ -79,7 +79,10 @@ const batchTemplate = webhookTemplate<{
   data: { id: number };
 }>('movie.created.batch')
   .matchField('event', 'movie.created')
-  .matchPredicate(`data.id is ${id1} or ${id2}`, (p) => p.data.id === id1 || p.data.id === id2)
+  .matchPredicate(
+    `data.id is ${id1} or ${id2}`,
+    (p) => p.data.id === id1 || p.data.id === id2,
+  )
   .withTimeout(15_000)
   .withInterval(500)
   .build();
@@ -93,7 +96,10 @@ const highRatingTemplate = webhookTemplate<{
   data: { id: number; rating: number };
 }>('movie.created.high-rating')
   .matchField('event', 'movie.created')
-  .matchPredicate(`data.id is ${movieId} and data.rating >= 9`, (p) => p.data.id === movieId && p.data.rating >= 9)
+  .matchPredicate(
+    `data.id is ${movieId} and data.rating >= 9`,
+    (p) => p.data.id === movieId && p.data.rating >= 9,
+  )
   .withTimeout(10_000)
   .withInterval(500)
   .build();
@@ -135,7 +141,10 @@ webhookTemplate('slow.pipeline.event')
 > **Note**: `clone()` is available on the builder but is not used in the playwright-utils E2E suite. Use it when multiple tests share the same base template with slight field variations.
 
 ```typescript
-const base = webhookTemplate<OrderPayload>('order').matchField('event', 'order.completed');
+const base = webhookTemplate<OrderPayload>('order').matchField(
+  'event',
+  'order.completed',
+);
 
 const forOrderA = base.clone().matchField('data.orderId', 'A').build();
 const forOrderB = base.clone().matchField('data.orderId', 'B').build();

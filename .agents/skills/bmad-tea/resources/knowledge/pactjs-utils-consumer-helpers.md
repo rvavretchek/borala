@@ -136,8 +136,18 @@ import { createProviderState } from '@seontechnologies/pactjs-utils';
 // Some interactions require multiple provider states
 // Call .given() multiple times with different states
 await provider
-  .given(...createProviderState({ name: 'user is authenticated', params: { userId: 1 } }))
-  .given(...createProviderState({ name: 'movie with id 5 exists', params: { id: 5 } }))
+  .given(
+    ...createProviderState({
+      name: 'user is authenticated',
+      params: { userId: 1 },
+    }),
+  )
+  .given(
+    ...createProviderState({
+      name: 'movie with id 5 exists',
+      params: { id: 5 },
+    }),
+  )
   .uponReceiving('an authenticated request for movie 5')
   .withRequest({
     method: 'GET',
@@ -199,7 +209,10 @@ it('handles movie lookup scenarios', async () => {
     .given('movie exists')
     .uponReceiving('a request to get movie by id')
     .withRequest('GET', '/movies/1')
-    .willRespondWith(200, setJsonBody({ id: integer(1), name: string('The Matrix') }))
+    .willRespondWith(
+      200,
+      setJsonBody({ id: integer(1), name: string('The Matrix') }),
+    )
     .executeTest(async (mockServer) => {
       /* ... */
     });
@@ -223,7 +236,10 @@ it('gets a movie by id', async () => {
     .given('movie exists')
     .uponReceiving('a request to get movie by id')
     .withRequest('GET', '/movies/1')
-    .willRespondWith(200, setJsonBody({ id: integer(1), name: string('The Matrix') }))
+    .willRespondWith(
+      200,
+      setJsonBody({ id: integer(1), name: string('The Matrix') }),
+    )
     .executeTest(async (mockServer) => {
       /* ... */
     });
@@ -328,7 +344,9 @@ const STATES = {
   NO_USERS: 'no users exist',
 } as const;
 
-provider.given(...createProviderState({ name: STATES.USER_EXISTS, params: { id: 1 } }));
+provider.given(
+  ...createProviderState({ name: STATES.USER_EXISTS, params: { id: 1 } }),
+);
 ```
 
 ### Wrong: Repeating inline builder lambdas everywhere
@@ -353,8 +371,16 @@ provider.given(...createProviderState({ name: STATES.USER_EXISTS, params: { id: 
 ```typescript
 // ❌ PactV4 FFI non-deterministically drops one of these interactions ~1/N runs
 it('handles both success and empty list', async () => {
-  await pact.addInteraction().uponReceiving('get movie').withRequest(/* ... */).executeTest(/* ... */);
-  await pact.addInteraction().uponReceiving('empty list').withRequest(/* ... */).executeTest(/* ... */);
+  await pact
+    .addInteraction()
+    .uponReceiving('get movie')
+    .withRequest(/* ... */)
+    .executeTest(/* ... */);
+  await pact
+    .addInteraction()
+    .uponReceiving('empty list')
+    .withRequest(/* ... */)
+    .executeTest(/* ... */);
 });
 ```
 

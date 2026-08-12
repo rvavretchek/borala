@@ -14,11 +14,11 @@
 
 ### Personality Attributes
 
-| Attribute | Description | Expression |
-|-----------|-------------|------------|
-{{#each personality_attributes}}
-| **{{this.attribute}}** | {{this.description}} | {{this.expression}} |
-{{/each}}
+| Attribute                        | Description          | Expression          |
+| -------------------------------- | -------------------- | ------------------- |
+| {{#each personality_attributes}} |
+| **{{this.attribute}}**           | {{this.description}} | {{this.expression}} |
+| {{/each}}                        |
 
 ---
 
@@ -32,24 +32,26 @@
 
 ### Tone Spectrum
 
-| Dimension | Our Position | Example |
-|-----------|--------------|---------|
-| Formal ↔ Casual | {{formal_casual}} | {{formal_casual_example}} |
-| Serious ↔ Playful | {{serious_playful}} | {{serious_playful_example}} |
-| Technical ↔ Simple | {{technical_simple}} | {{technical_simple_example}} |
+| Dimension               | Our Position              | Example                           |
+| ----------------------- | ------------------------- | --------------------------------- |
+| Formal ↔ Casual         | {{formal_casual}}         | {{formal_casual_example}}         |
+| Serious ↔ Playful       | {{serious_playful}}       | {{serious_playful_example}}       |
+| Technical ↔ Simple      | {{technical_simple}}      | {{technical_simple_example}}      |
 | Reserved ↔ Enthusiastic | {{reserved_enthusiastic}} | {{reserved_enthusiastic_example}} |
 
 ### We Say / We Don't Say
 
 **We say:**
 {{#each we_say}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 **We don't say:**
 {{#each we_dont_say}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ---
 
@@ -57,11 +59,11 @@
 
 ### Supported Languages
 
-| Language | Priority | Coverage | Notes |
-|----------|----------|----------|-------|
-{{#each languages}}
-| {{this.language}} | {{this.priority}} | {{this.coverage}} | {{this.notes}} |
-{{/each}}
+| Language            | Priority          | Coverage          | Notes          |
+| ------------------- | ----------------- | ----------------- | -------------- |
+| {{#each languages}} |
+| {{this.language}}   | {{this.priority}} | {{this.coverage}} | {{this.notes}} |
+| {{/each}}           |
 
 ### Translation Approach
 
@@ -70,8 +72,9 @@
 ### Localization Notes
 
 {{#each localization_notes}}
+
 - **{{this.language}}:** {{this.note}}
-{{/each}}
+  {{/each}}
 
 ---
 
@@ -79,37 +82,41 @@
 
 ### UI Microcopy
 
-*Buttons, labels, error messages, system feedback*
+_Buttons, labels, error messages, system feedback_
 
 **Guidelines:**
 {{#each microcopy_guidelines}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 **Examples:**
-| Context | ✅ Do | ❌ Don't |
-|---------|-------|---------|
-{{#each microcopy_examples}}
-| {{this.context}} | {{this.do}} | {{this.dont}} |
-{{/each}}
+
+| Context                      | ✅ Do       | ❌ Don't      |
+| ---------------------------- | ----------- | ------------- |
+| {{#each microcopy_examples}} |
+| {{this.context}}             | {{this.do}} | {{this.dont}} |
+| {{/each}}                    |
 
 ### Marketing Content
 
-*Headlines, feature descriptions, value propositions*
+_Headlines, feature descriptions, value propositions_
 
 **Guidelines:**
 {{#each marketing_guidelines}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ### Informational Content
 
-*Service descriptions, about pages, FAQs*
+_Service descriptions, about pages, FAQs_
 
 **Guidelines:**
 {{#each informational_guidelines}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ---
 
@@ -126,6 +133,7 @@
 ### URL Structure
 
 **Pattern:**
+
 ```
 {{url_primary}}          → {{primary_language}}
 {{url_secondary}}        → {{secondary_language}}
@@ -139,34 +147,36 @@
 {{#each seo_keywords_by_language}}
 **{{this.language}}:**
 {{#each this.keywords}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 {{/each}}
 
 ### Local SEO
 
 {{#if is_local_business}}
-| Property | Value |
-|----------|-------|
-| **Business Name** | {{business_name}} |
-| **Address** | {{business_address}} |
-| **Phone** | {{business_phone}} |
-| **Email** | {{business_email}} |
-| **Opening Hours** | {{business_hours}} |
-| **Google Business Profile** | {{google_business_status}} |
-| **Business Category** | {{business_category}} |
-{{else}}
-*Not a local business — skip this section*
-{{/if}}
+
+| Property                                   | Value                      |
+| ------------------------------------------ | -------------------------- |
+| **Business Name**                          | {{business_name}}          |
+| **Address**                                | {{business_address}}       |
+| **Phone**                                  | {{business_phone}}         |
+| **Email**                                  | {{business_email}}         |
+| **Opening Hours**                          | {{business_hours}}         |
+| **Google Business Profile**                | {{google_business_status}} |
+| **Business Category**                      | {{business_category}}      |
+| {{else}}                                   |
+| _Not a local business — skip this section_ |
+| {{/if}}                                    |
 
 ### Structured Data Plan
 
-| Page Type | Schema Type | Key Properties |
-|-----------|-------------|----------------|
-{{#each structured_data_plan}}
-| {{this.page_type}} | {{this.schema_type}} | {{this.properties}} |
-{{/each}}
+| Page Type                      | Schema Type          | Key Properties      |
+| ------------------------------ | -------------------- | ------------------- |
+| {{#each structured_data_plan}} |
+| {{this.page_type}}             | {{this.schema_type}} | {{this.properties}} |
+| {{/each}}                      |
 
 ### Keyword Usage Guidelines
 
@@ -188,25 +198,29 @@
 
 **Must be prominent (visible immediately):**
 {{#each must_be_prominent}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 **Important but secondary:**
 {{#each secondary_content}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ### Navigation Principles
 
 {{#each navigation_principles}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ### Not Included
 
 {{#each not_included}}
+
 - {{this}}
-{{/each}}
+  {{/each}}
 
 ### Clarity Level
 
@@ -216,11 +230,11 @@
 
 ## Content Ownership
 
-| Content Type | Owner | Update Frequency |
-|--------------|-------|------------------|
-{{#each content_ownership}}
-| {{this.type}} | {{this.owner}} | {{this.frequency}} |
-{{/each}}
+| Content Type                | Owner          | Update Frequency   |
+| --------------------------- | -------------- | ------------------ |
+| {{#each content_ownership}} |
+| {{this.type}}               | {{this.owner}} | {{this.frequency}} |
+| {{/each}}                   |
 
 ---
 
@@ -229,8 +243,9 @@
 Before publishing any content, verify:
 
 {{#each writing_checklist}}
+
 - [ ] {{this}}
-{{/each}}
+      {{/each}}
 
 ---
 

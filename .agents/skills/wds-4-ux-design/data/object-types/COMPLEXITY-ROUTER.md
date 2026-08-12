@@ -215,38 +215,43 @@ Examples:
 
 <check if="state_count >= 3">
   <output>**📊 Multiple States Detected!**
-  
-  Let's document each state's visual appearance.</output>
-  
-  <ask>**For each state, I need:**
-  
-  {{#each states}}
-  **State {{index}}: {{state_name}}**
-  1. What does it look like? (colors, icons, layout)
-  2. What triggers this state?
-  3. Can it transition to other states?
-  
+
+Let's document each state's visual appearance.</output>
+
+<ask>**For each state, I need:**
+
+{{#each states}}
+**State {{index}}: {{state_name}}**
+
+1. What does it look like? (colors, icons, layout)
+2. What triggers this state?
+3. Can it transition to other states?
+
+{{/each}}
+
+**Do you have a storyboard sketch showing these states?**
+
+- Example: "Yes, see Sketches/booking-states.jpg"
+- If yes, provide filename
+- If no, I'll document from your descriptions
+
+Your input:</ask>
+
+<action>Capture visual states:
+{{#each states}}
+
+- State: {{state_name}}
+- Appearance: {{visual_description}}
+- Trigger: {{trigger_description}}
+- Transitions: {{transition_list}}
   {{/each}}
-  
-  **Do you have a storyboard sketch showing these states?**
-  - Example: "Yes, see Sketches/booking-states.jpg"
-  - If yes, provide filename
-  - If no, I'll document from your descriptions
-  
-  Your input:</ask>
-  
-  <action>Capture visual states:
-  {{#each states}}
-  - State: {{state_name}}
-  - Appearance: {{visual_description}}
-  - Trigger: {{trigger_description}}
-  - Transitions: {{transition_list}}
-  {{/each}}
-  
-  {{#if has_storyboard}}
-  - Storyboard: {{storyboard_file}}
-  {{/if}}
+
+{{#if has_storyboard}}
+
+- Storyboard: {{storyboard_file}}
+{{/if}}
   </action>
+
 </check>
 
 <output>**✅ Visual Design Captured**
@@ -403,24 +408,25 @@ Choice [1/2]:</ask>
 
 <check if="choice == 1">
   <output>**✅ Perfect! I'll create the three files.**
-  
-  **Next Steps:**
-  - Page file: Lightweight, just placement and config
-  - Component file: Visual design for Figma handoff
-  - Feature file: Logic for developer implementation
-  
-  This keeps everything organized and maintainable!</output>
-  
-  <action>Create three separate file specifications</action>
-  <action>Cross-reference between files</action>
+
+**Next Steps:**
+
+- Page file: Lightweight, just placement and config
+- Component file: Visual design for Figma handoff
+- Feature file: Logic for developer implementation
+
+This keeps everything organized and maintainable!</output>
+
+<action>Create three separate file specifications</action>
+<action>Cross-reference between files</action>
 </check>
 
 <check if="choice == 2">
   <ask>**What needs adjustment?**</ask>
-  
-  <action>Listen to feedback</action>
-  <action>Adjust file structure</action>
-  <action>Re-present summary</action>
+
+<action>Listen to feedback</action>
+<action>Adjust file structure</action>
+<action>Re-present summary</action>
 </check>
 
 </output>

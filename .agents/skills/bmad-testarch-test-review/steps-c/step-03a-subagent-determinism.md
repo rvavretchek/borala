@@ -85,14 +85,18 @@ if (testFileContent.includes('Math.random()')) {
 }
 
 // Check for Date.now()
-if (testFileContent.includes('Date.now()') || testFileContent.includes('new Date()')) {
+if (
+  testFileContent.includes('Date.now()') ||
+  testFileContent.includes('new Date()')
+) {
   violations.push({
     file: testFile,
     line: findLineNumber('Date.now()'),
     severity: 'HIGH',
     category: 'time-dependency',
     description: 'Test uses Date.now() or new Date() without mocking',
-    suggestion: 'Mock system time with test.useFakeTimers() or use fixed timestamps',
+    suggestion:
+      'Mock system time with test.useFakeTimers() or use fixed timestamps',
   });
 }
 
@@ -104,7 +108,8 @@ if (testFileContent.includes('waitForTimeout')) {
     severity: 'MEDIUM',
     category: 'hard-wait',
     description: 'Test uses waitForTimeout - creates flakiness',
-    suggestion: 'Replace with expect(locator).toBeVisible() or interceptNetworkCall-based network waits',
+    suggestion:
+      'Replace with expect(locator).toBeVisible() or interceptNetworkCall-based network waits',
   });
 }
 
@@ -119,7 +124,10 @@ Vitest configs vary widely — `defineConfig({ test: { ... } })`, `mergeConfig(b
 // Resolve the config file(s). For consumer: scripts.test:pact:consumer:run in package.json
 // usually points at `vitest run --config <path>`. For provider: `vitest run --config <path>`.
 // If neither script exists but `.pacttest.ts` files exist, default to 'vitest.config.pact.ts'.
-const configPath = resolveVitestConfigPath({ scriptName: 'test:pact:consumer:run', fallback: 'vitest.config.pact.ts' });
+const configPath = resolveVitestConfigPath({
+  scriptName: 'test:pact:consumer:run',
+  fallback: 'vitest.config.pact.ts',
+});
 const src = fs.readFileSync(configPath, 'utf8');
 
 // 1. Literal-match the two mandatory lines. Tolerate single or double quotes and whitespace.
@@ -128,13 +136,15 @@ const hasPoolForks = /\bpool\s*:\s*['"]forks['"]/.test(src);
 const hasSingleForkTrue = /\bsingleFork\s*:\s*true\b/.test(src);
 
 // 2. Flag settings that would defeat the rule if a human added them.
-const hasSequenceConcurrent = /\bsequence\s*:\s*\{[^}]*\bconcurrent\s*:\s*true/.test(src);
+const hasSequenceConcurrent =
+  /\bsequence\s*:\s*\{[^}]*\bconcurrent\s*:\s*true/.test(src);
 const hasHighMaxConcurrency = /\bmaxConcurrency\s*:\s*([2-9]|\d{2,})/.test(src);
 const hasHighMaxWorkers = /\bmaxWorkers\s*:\s*([2-9]|\d{2,})/.test(src);
 const hasIsolateFalse = /\bisolate\s*:\s*false\b/.test(src);
 
 // 3. mergeConfig / extends fallback — we cannot reliably follow imports. Emit LOW advisory.
-const usesMergeConfig = /\bmergeConfig\s*\(/.test(src) || /\bextends\s*:/.test(src);
+const usesMergeConfig =
+  /\bmergeConfig\s*\(/.test(src) || /\bextends\s*:/.test(src);
 
 // 4. File-count gating for the pool-forks rule.
 const pactTestCount = glob.sync('tests/contract/**/*.pacttest.ts').length;
@@ -159,7 +169,10 @@ const passedChecks = totalChecks - failedChecks;
 
 // Weight violations by severity
 const severityWeights = { HIGH: 10, MEDIUM: 5, LOW: 2 };
-const totalPenalty = violations.reduce((sum, v) => sum + severityWeights[v.severity], 0);
+const totalPenalty = violations.reduce(
+  (sum, v) => sum + severityWeights[v.severity],
+  0,
+);
 
 // Score: 100 - (penalty points)
 const score = Math.max(0, 100 - totalPenalty);

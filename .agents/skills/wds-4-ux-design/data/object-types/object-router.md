@@ -17,21 +17,22 @@
 
 <check if="horizontal_lines_detected">
   <output>**✓ TEXT ELEMENT DETECTED**
-  
-  I see horizontal line pairs in the sketch - this is text content.
-  
-  **Quick Detection:**
-  - **{{pair_count}} line pairs** → {{pair_count}} lines of text
-  - Routing to text analysis for detailed specification...
+
+I see horizontal line pairs in the sketch - this is text content.
+
+**Quick Detection:**
+
+- **{{pair_count}} line pairs** → {{pair_count}} lines of text
+- Routing to text analysis for detailed specification...
   </output>
-  
-  <action>Route immediately to `object-types/templates/heading-text.md`</action>
-  <action>Pass detected pairs to heading-text.md for analysis using guides/SKETCH-TEXT-ANALYSIS-GUIDE.md</action>
-  
-  **→ Loading text-specific instructions...**
-  
-  > **Reference:** Text detection rules in `TEXT-DETECTION-PRIORITY.md`, analysis methodology in `guides/SKETCH-TEXT-ANALYSIS-GUIDE.md`
-</check>
+
+<action>Route immediately to `object-types/templates/heading-text.md`</action>
+<action>Pass detected pairs to heading-text.md for analysis using guides/SKETCH-TEXT-ANALYSIS-GUIDE.md</action>
+
+**→ Loading text-specific instructions...**
+
+> **Reference:** Text detection rules in `TEXT-DETECTION-PRIORITY.md`, analysis methodology in `guides/SKETCH-TEXT-ANALYSIS-GUIDE.md`
+> </check>
 
 ---
 
@@ -97,35 +98,36 @@ Choice [1/2/3]:</ask>
 
 <check if="choice == 2">
   <ask>**What should I adjust in my interpretation?**
-  
-  Please clarify:</ask>
-  
-  <action>Listen to clarification</action>
-  <action>Adjust interpretation</action>
-  
-  <output>**Updated interpretation:**
-  
-  This {{adjusted_object_type}}:
-  - {{adjusted_purpose}}
-  
-  Correct now?</output>
-  
-  <action>Once confirmed, route to appropriate object-type file</action>
+
+Please clarify:</ask>
+
+<action>Listen to clarification</action>
+<action>Adjust interpretation</action>
+
+<output>**Updated interpretation:**
+
+This {{adjusted_object_type}}:
+
+- {{adjusted_purpose}}
+
+Correct now?</output>
+
+<action>Once confirmed, route to appropriate object-type file</action>
 </check>
 
 <check if="choice == 3">
   <ask>**What is this object?**
-  
-  Please describe what it is and what it does:</ask>
-  
-  <action>Listen to user description</action>
-  <action>Determine correct object type</action>
-  
-  <output>**Got it!** This is a {{corrected_object_type}}.
-  
-  I'll document it accordingly.</output>
-  
-  <action>Route to appropriate object-type file</action>
+
+Please describe what it is and what it does:</ask>
+
+<action>Listen to user description</action>
+<action>Determine correct object type</action>
+
+<output>**Got it!** This is a {{corrected_object_type}}.
+
+I'll document it accordingly.</output>
+
+<action>Route to appropriate object-type file</action>
 </check>
 
 ---

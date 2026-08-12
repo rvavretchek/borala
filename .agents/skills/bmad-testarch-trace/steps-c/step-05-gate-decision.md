@@ -96,14 +96,18 @@ const hasP1Requirements = (priorityBreakdown.P1.total || 0) > 0;
 const effectiveP1Coverage = hasP1Requirements ? p1Coverage : 100;
 const overallCoverage = stats.overall_coverage_percentage;
 const criticalGaps = (coverageMatrix.gap_analysis?.critical_gaps || []).length;
-const isUnresolved = (value) => typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
+const isUnresolved = (value) =>
+  typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
 const normalizeResolvedToken = (value) => {
   if (value === undefined || value === null) return null;
   const normalized = String(value).trim().toLowerCase();
-  if (!normalized || normalized === 'auto' || isUnresolved(normalized)) return null;
+  if (!normalized || normalized === 'auto' || isUnresolved(normalized))
+    return null;
   return normalized;
 };
-const oracleResolutionMode = normalizeResolvedToken(coverageMatrix.oracle?.resolution_mode) || 'formal_requirements';
+const oracleResolutionMode =
+  normalizeResolvedToken(coverageMatrix.oracle?.resolution_mode) ||
+  'formal_requirements';
 const coverageBasis =
   normalizeResolvedToken(coverageMatrix.coverage_basis) ||
   {
@@ -114,7 +118,9 @@ const coverageBasis =
   }[oracleResolutionMode] ||
   'acceptance_criteria';
 const oracleConfidence =
-  normalizeResolvedToken(coverageMatrix.oracle?.confidence || coverageMatrix.summary_confidence) ||
+  normalizeResolvedToken(
+    coverageMatrix.oracle?.confidence || coverageMatrix.summary_confidence,
+  ) ||
   {
     formal_requirements: 'high',
     spec_artifact: 'high',
@@ -122,7 +128,9 @@ const oracleConfidence =
     synthetic_source: 'medium',
   }[oracleResolutionMode] ||
   'medium';
-const syntheticOracle = coverageMatrix.oracle?.synthetic === true || ['synthetic_requirements', 'user_journeys'].includes(coverageBasis);
+const syntheticOracle =
+  coverageMatrix.oracle?.synthetic === true ||
+  ['synthetic_requirements', 'user_journeys'].includes(coverageBasis);
 const deriveActiveTestCasesFromRequirements = (requirements) => {
   const uniqueTests = new Map();
 
@@ -131,7 +139,9 @@ const deriveActiveTestCasesFromRequirements = (requirements) => {
       const stableId =
         test.id ||
         [test.file, test.title || test.name, test.line]
-          .filter((value) => value !== undefined && value !== null && value !== '')
+          .filter(
+            (value) => value !== undefined && value !== null && value !== '',
+          )
           .join(':') ||
         null;
 
@@ -154,7 +164,8 @@ const deriveActiveTestCasesFromRequirements = (requirements) => {
     });
   });
 
-  return [...uniqueTests.values()].filter((status) => status === 'active').length;
+  return [...uniqueTests.values()].filter((status) => status === 'active')
+    .length;
 };
 const summarizedTestInventory = coverageMatrix.test_inventory?.summary || null;
 const activeTestCases =
@@ -182,10 +193,16 @@ const normalizeBoolean = (value, defaultValue = true) => {
   return Boolean(value);
 };
 
-const collectionMode = String(!isUnresolved(coverageMatrix.collection_mode) ? coverageMatrix.collection_mode : 'contract_static')
+const collectionMode = String(
+  !isUnresolved(coverageMatrix.collection_mode)
+    ? coverageMatrix.collection_mode
+    : 'contract_static',
+)
   .trim()
   .toLowerCase();
-const rawAllowGate = !isUnresolved(coverageMatrix.allow_gate) ? coverageMatrix.allow_gate : true;
+const rawAllowGate = !isUnresolved(coverageMatrix.allow_gate)
+  ? coverageMatrix.allow_gate
+  : true;
 const allowGate = normalizeBoolean(rawAllowGate, true);
 const rawCollectionStatus =
   coverageMatrix.collection_status ||
@@ -242,12 +259,20 @@ if (!gateEligible) {
   // if a stakeholder-approved waiver applies (wired through config or user input upstream).
 
   // Oracle confidence overlay
-  if (syntheticOracle && gateDecision === 'PASS' && effectiveOracleConfidence !== 'high') {
+  if (
+    syntheticOracle &&
+    gateDecision === 'PASS' &&
+    effectiveOracleConfidence !== 'high'
+  ) {
     gateDecision = 'CONCERNS';
     rationale =
       `Coverage traced against inferred ${coverageBasis.replace('_', ' ')} with ${effectiveOracleConfidence} confidence. ` +
       `Base coverage meets PASS thresholds, but confidence is not high enough for an unconditional PASS.`;
-  } else if (syntheticOracle && effectiveOracleConfidence === 'low' && gateDecision === 'NOT_EVALUATED') {
+  } else if (
+    syntheticOracle &&
+    effectiveOracleConfidence === 'low' &&
+    gateDecision === 'NOT_EVALUATED'
+  ) {
     gateDecision = 'CONCERNS';
     rationale =
       `Coverage traced against inferred ${coverageBasis.replace('_', ' ')} with low confidence. ` +
@@ -279,7 +304,12 @@ const gateReport = {
         p1_coverage_target: '90%',
         p1_coverage_minimum: '80%',
         p1_coverage_actual: `${effectiveP1Coverage}%`,
-        p1_status: effectiveP1Coverage >= 90 ? 'MET' : effectiveP1Coverage >= 80 ? 'PARTIAL' : 'NOT_MET',
+        p1_status:
+          effectiveP1Coverage >= 90
+            ? 'MET'
+            : effectiveP1Coverage >= 80
+              ? 'PARTIAL'
+              : 'NOT_MET',
 
         overall_coverage_minimum: '80%',
         overall_coverage_actual: `${overallCoverage}%`,
@@ -287,7 +317,9 @@ const gateReport = {
       }
     : null,
 
-  uncovered_requirements: (coverageMatrix.gap_analysis?.critical_gaps || []).concat(coverageMatrix.gap_analysis?.high_gaps || []),
+  uncovered_requirements: (
+    coverageMatrix.gap_analysis?.critical_gaps || []
+  ).concat(coverageMatrix.gap_analysis?.high_gaps || []),
 
   recommendations: coverageMatrix.recommendations,
 };
@@ -310,7 +342,12 @@ const buildFallbackInventory = () => {
     unit: { tests: 0, criteria_covered: 0 },
     other: { tests: 0, criteria_covered: 0 }, // captures tests with unrecognized or empty level
   };
-  const coverageEligibleStatuses = new Set(['FULL', 'PARTIAL', 'UNIT-ONLY', 'INTEGRATION-ONLY']);
+  const coverageEligibleStatuses = new Set([
+    'FULL',
+    'PARTIAL',
+    'UNIT-ONLY',
+    'INTEGRATION-ONLY',
+  ]);
   const uniqueTests = new Map();
 
   (coverageMatrix.requirements || []).forEach((req) => {
@@ -318,7 +355,9 @@ const buildFallbackInventory = () => {
       const stableId =
         test.id ||
         [test.file, test.title || test.name, test.line]
-          .filter((value) => value !== undefined && value !== null && value !== '')
+          .filter(
+            (value) => value !== undefined && value !== null && value !== '',
+          )
           .join(':') ||
         null; // unresolvable — skip rather than manufacture a key
 
@@ -347,7 +386,12 @@ const buildFallbackInventory = () => {
         fixme: status === 'fixme',
         pending: status === 'pending',
         status: status,
-        blocker_reason: test.skip_reason || test.blocker_reason || test.fixme_reason || test.pending_reason || '',
+        blocker_reason:
+          test.skip_reason ||
+          test.blocker_reason ||
+          test.fixme_reason ||
+          test.pending_reason ||
+          '',
       });
     });
 
@@ -373,7 +417,9 @@ const buildFallbackInventory = () => {
 
   return {
     summary: {
-      files: [...new Set(deduplicatedTests.map((test) => test.file).filter(Boolean))].length,
+      files: [
+        ...new Set(deduplicatedTests.map((test) => test.file).filter(Boolean)),
+      ].length,
       cases: deduplicatedTests.length,
       skipped_cases: deduplicatedTests.filter((test) => test.skipped).length,
       fixme_cases: deduplicatedTests.filter((test) => test.fixme).length,
@@ -385,7 +431,9 @@ const buildFallbackInventory = () => {
       .map((test) => ({
         id: test.id,
         severity: test.status === 'skipped' ? 'high' : 'medium',
-        reason: test.blocker_reason || `Test marked ${test.status} during trace collection`,
+        reason:
+          test.blocker_reason ||
+          `Test marked ${test.status} during trace collection`,
         test_file: test.file,
         test_title: test.title,
       })),
@@ -393,8 +441,12 @@ const buildFallbackInventory = () => {
 };
 
 const fallbackInventory = buildFallbackInventory();
-const testInventory = coverageMatrix.test_inventory?.summary || fallbackInventory.summary;
-const blockers = coverageMatrix.blockers || coverageMatrix.test_inventory?.blockers || fallbackInventory.blockers;
+const testInventory =
+  coverageMatrix.test_inventory?.summary || fallbackInventory.summary;
+const blockers =
+  coverageMatrix.blockers ||
+  coverageMatrix.test_inventory?.blockers ||
+  fallbackInventory.blockers;
 
 const heuristicCounts = coverageMatrix.coverage_heuristics?.counts || {};
 const endpointGapCount = heuristicCounts.endpoints_without_tests ?? 0;
@@ -420,7 +472,11 @@ const e2eTraceSummary = {
   inventory_basis: coverageBasis,
   gate_basis: gateBasis,
   source_sha: sourceSha || '',
-  target: coverageMatrix.trace_target || { type: '{gate_type}', id: null, label: null },
+  target: coverageMatrix.trace_target || {
+    type: '{gate_type}',
+    id: null,
+    label: null,
+  },
   decision_mode: '{decision_mode}',
   evaluator: '{user_name}',
   confidence: effectiveOracleConfidence,
@@ -428,7 +484,8 @@ const e2eTraceSummary = {
     resolution_mode: oracleResolutionMode,
     confidence: effectiveOracleConfidence,
     sources: coverageMatrix.oracle?.sources || [],
-    external_pointer_status: coverageMatrix.oracle?.external_pointer_status || 'not_used',
+    external_pointer_status:
+      coverageMatrix.oracle?.external_pointer_status || 'not_used',
     synthetic: syntheticOracle,
   },
 
@@ -480,10 +537,22 @@ const e2eTraceSummary = {
 
   heuristics: {
     endpoint_gaps: endpointGapCount,
-    auth_negative_path_status: authGapCount === 0 ? 'present' : authGapCount <= 2 ? 'partial' : 'none',
-    error_path_status: errorPathGapCount === 0 ? 'present' : errorPathGapCount <= 2 ? 'partial' : 'none',
-    ui_journey_status: mapOptionalHeuristicStatus(uiJourneyGapCount, syntheticOracle),
-    ui_state_status: mapOptionalHeuristicStatus(uiStateGapCount, syntheticOracle),
+    auth_negative_path_status:
+      authGapCount === 0 ? 'present' : authGapCount <= 2 ? 'partial' : 'none',
+    error_path_status:
+      errorPathGapCount === 0
+        ? 'present'
+        : errorPathGapCount <= 2
+          ? 'partial'
+          : 'none',
+    ui_journey_status: mapOptionalHeuristicStatus(
+      uiJourneyGapCount,
+      syntheticOracle,
+    ),
+    ui_state_status: mapOptionalHeuristicStatus(
+      uiStateGapCount,
+      syntheticOracle,
+    ),
   },
 
   blockers: blockers,
@@ -506,14 +575,23 @@ if (gateEligible) {
     p1_coverage_target: '90%',
     p1_coverage_minimum: '80%',
     p1_coverage_actual: `${effectiveP1Coverage}%`,
-    p1_status: effectiveP1Coverage >= 90 ? 'MET' : effectiveP1Coverage >= 80 ? 'PARTIAL' : 'NOT_MET',
+    p1_status:
+      effectiveP1Coverage >= 90
+        ? 'MET'
+        : effectiveP1Coverage >= 80
+          ? 'PARTIAL'
+          : 'NOT_MET',
     overall_coverage_minimum: '80%',
     overall_coverage_actual: `${overallCoverage}%`,
     overall_status: overallCoverage >= 80 ? 'MET' : 'NOT_MET',
   };
 }
 
-fs.writeFileSync('{e2e_trace_summary_output}', JSON.stringify(e2eTraceSummary, null, 2), 'utf8');
+fs.writeFileSync(
+  '{e2e_trace_summary_output}',
+  JSON.stringify(e2eTraceSummary, null, 2),
+  'utf8',
+);
 console.log(`✅ e2e-trace-summary.json written to {e2e_trace_summary_output}`);
 ```
 
@@ -523,7 +601,10 @@ console.log(`✅ e2e-trace-summary.json written to {e2e_trace_summary_output}`);
 // Construct and write only when gate evaluation was performed and produced a meaningful decision.
 // gateDecisionSlim is intentionally inside this guard: e2eTraceSummary.gate_criteria is only
 // populated when gateEligible is true, so constructing it outside would throw when !gateEligible.
-if (gateEligible && ['PASS', 'CONCERNS', 'FAIL', 'WAIVED'].includes(gateDecision)) {
+if (
+  gateEligible &&
+  ['PASS', 'CONCERNS', 'FAIL', 'WAIVED'].includes(gateDecision)
+) {
   const gateDecisionSlim = {
     schema_version: '0.1.0',
     evaluated_at: e2eTraceSummary.snapshot_at,
@@ -539,7 +620,11 @@ if (gateEligible && ['PASS', 'CONCERNS', 'FAIL', 'WAIVED'].includes(gateDecision
     critical_open: e2eTraceSummary.risk_summary.critical_open,
     links: e2eTraceSummary.links,
   };
-  fs.writeFileSync('{gate_decision_output}', JSON.stringify(gateDecisionSlim, null, 2), 'utf8');
+  fs.writeFileSync(
+    '{gate_decision_output}',
+    JSON.stringify(gateDecisionSlim, null, 2),
+    'utf8',
+  );
   console.log(`✅ gate-decision.json written to {gate_decision_output}`);
 }
 ```

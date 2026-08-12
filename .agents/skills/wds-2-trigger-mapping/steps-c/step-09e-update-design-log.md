@@ -83,6 +83,7 @@ Add under the `## Progress` section (after the last entry):
 ```
 
 **Rules:**
+
 - List every artifact file - do not summarize with "etc."
 - Summary must mention specific insights, not generic statements
 - Use the actual date, not a placeholder
@@ -113,11 +114,13 @@ Output: "Design log updated. Phase 2: Trigger Mapping documented in _progress/00
 Display: "**Select an Option:** [C] Continue to UX Design Activation | [M] Return to Activity Menu"
 
 #### Menu Handling Logic:
+
 - IF C: Load and execute {nextStepFile}
 - IF M: Return to {activityWorkflowFile}
 - IF Any other comments or queries: help user respond then [Redisplay Menu Options]
 
 #### EXECUTION RULES:
+
 - ALWAYS halt and wait for user input after presenting menu
 - User can chat or ask questions - always respond and then redisplay menu options
 
@@ -130,6 +133,7 @@ ONLY WHEN user selects [C] will you load the next step file. Design log must be 
 ## 🚨 SYSTEM SUCCESS/FAILURE METRICS
 
 ### ✅ SUCCESS:
+
 - Design log read before updating
 - Progress entry appended (not overwriting)
 - All artifact files listed individually
@@ -139,6 +143,7 @@ ONLY WHEN user selects [C] will you load the next step file. Design log must be 
 - Design log saved
 
 ### ❌ SYSTEM FAILURE:
+
 - Overwriting existing entries
 - Using "etc." instead of listing all files
 - Generic summary statements

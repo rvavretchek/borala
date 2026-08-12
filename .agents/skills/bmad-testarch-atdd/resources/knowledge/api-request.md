@@ -64,7 +64,9 @@ import { test } from '@seontechnologies/playwright-utils/api-request/fixtures';
 import { z } from 'zod';
 
 // JSON Schema validation
-test('should validate response schema (JSON Schema)', async ({ apiRequest }) => {
+test('should validate response schema (JSON Schema)', async ({
+  apiRequest,
+}) => {
   const { status, body } = await apiRequest({
     method: 'GET',
     path: '/api/users/123',
@@ -381,7 +383,10 @@ test.describe('GraphQL API', () => {
 // Generated operation definition — structural typing, no import from playwright-utils needed
 // type OperationShape = { path: string; method: 'POST'|'GET'|'PUT'|'DELETE'|'PATCH'|'HEAD'; response: unknown; request: unknown; query?: unknown }
 
-import { test, expect } from '@seontechnologies/playwright-utils/api-request/fixtures';
+import {
+  test,
+  expect,
+} from '@seontechnologies/playwright-utils/api-request/fixtures';
 
 // --- Basic usage: operation replaces method + path ---
 test('should upsert person via operation overload', async ({ apiRequest }) => {
@@ -421,7 +426,10 @@ test('should fetch billing history with raw params', async ({ apiRequest }) => {
 });
 
 // --- Works with recurse (polling) ---
-test('should poll until person is reviewed', async ({ apiRequest, recurse }) => {
+test('should poll until person is reviewed', async ({
+  apiRequest,
+  recurse,
+}) => {
   await recurse(
     async () =>
       apiRequest({
@@ -515,7 +523,9 @@ try {
 **✅ Let retries happen, handle final failure:**
 
 ```typescript
-await expect(apiRequest({ method: 'GET', path: '/api/unstable' })).rejects.toThrow(); // Retries happen automatically, then final error caught
+await expect(
+  apiRequest({ method: 'GET', path: '/api/unstable' }),
+).rejects.toThrow(); // Retries happen automatically, then final error caught
 ```
 
 **❌ Disabling TypeScript benefits:**

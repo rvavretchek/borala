@@ -71,14 +71,27 @@ const subagentContext = {
 ```javascript
 const normalizeUserExecutionMode = (mode) => {
   if (typeof mode !== 'string') return null;
-  const normalized = mode.trim().toLowerCase().replace(/[-_]/g, ' ').replace(/\s+/g, ' ');
+  const normalized = mode
+    .trim()
+    .toLowerCase()
+    .replace(/[-_]/g, ' ')
+    .replace(/\s+/g, ' ');
 
   if (normalized === 'auto') return 'auto';
   if (normalized === 'sequential') return 'sequential';
-  if (normalized === 'subagent' || normalized === 'sub agent' || normalized === 'subagents' || normalized === 'sub agents') {
+  if (
+    normalized === 'subagent' ||
+    normalized === 'sub agent' ||
+    normalized === 'subagents' ||
+    normalized === 'sub agents'
+  ) {
     return 'subagent';
   }
-  if (normalized === 'agent team' || normalized === 'agent teams' || normalized === 'agentteam') {
+  if (
+    normalized === 'agent team' ||
+    normalized === 'agent teams' ||
+    normalized === 'agentteam'
+  ) {
     return 'agent-team';
   }
 
@@ -87,16 +100,26 @@ const normalizeUserExecutionMode = (mode) => {
 
 const normalizeConfigExecutionMode = (mode) => {
   if (mode === 'subagent') return 'subagent';
-  if (mode === 'auto' || mode === 'sequential' || mode === 'subagent' || mode === 'agent-team') {
+  if (
+    mode === 'auto' ||
+    mode === 'sequential' ||
+    mode === 'subagent' ||
+    mode === 'agent-team'
+  ) {
     return mode;
   }
   return null;
 };
 
 // Explicit user instruction in the active run takes priority over config.
-const explicitModeFromUser = normalizeUserExecutionMode(runtime.getExplicitExecutionModeHint?.() || null);
+const explicitModeFromUser = normalizeUserExecutionMode(
+  runtime.getExplicitExecutionModeHint?.() || null,
+);
 
-const requestedMode = explicitModeFromUser || normalizeConfigExecutionMode(subagentContext.config.execution_mode) || 'auto';
+const requestedMode =
+  explicitModeFromUser ||
+  normalizeConfigExecutionMode(subagentContext.config.execution_mode) ||
+  'auto';
 const probeEnabled = subagentContext.config.capability_probe;
 
 const supports = {
@@ -115,7 +138,11 @@ if (requestedMode === 'auto') {
   if (supports.agentTeam) resolvedMode = 'agent-team';
   else if (supports.subagent) resolvedMode = 'subagent';
   else resolvedMode = 'sequential';
-} else if (probeEnabled && requestedMode === 'agent-team' && !supports.agentTeam) {
+} else if (
+  probeEnabled &&
+  requestedMode === 'agent-team' &&
+  !supports.agentTeam
+) {
   resolvedMode = supports.subagent ? 'subagent' : 'sequential';
 } else if (probeEnabled && requestedMode === 'subagent' && !supports.subagent) {
   resolvedMode = 'sequential';
@@ -199,7 +226,9 @@ In `agent-team` and `subagent` modes, runtime decides worker scheduling and conc
 ### 5. Verify All Outputs Exist
 
 ```javascript
-const outputs = ['security', 'performance', 'reliability', 'scalability'].map((domain) => `/tmp/tea-nfr-${domain}-${timestamp}.json`);
+const outputs = ['security', 'performance', 'reliability', 'scalability'].map(
+  (domain) => `/tmp/tea-nfr-${domain}-${timestamp}.json`,
+);
 
 outputs.forEach((output) => {
   if (!fs.existsSync(output)) {

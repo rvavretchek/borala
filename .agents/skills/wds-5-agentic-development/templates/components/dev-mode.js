@@ -64,7 +64,10 @@ function initDevMode() {
   setupHoverHighlight(tooltip);
   setupClickCopy();
 
-  console.log('%c💡 Dev Mode available: Press Ctrl+E or click the Dev Mode button', 'color: #0066CC; font-weight: bold;');
+  console.log(
+    '%c💡 Dev Mode available: Press Ctrl+E or click the Dev Mode button',
+    'color: #0066CC; font-weight: bold;',
+  );
 }
 
 // ============================================================================
@@ -83,7 +86,10 @@ function setupKeyboardShortcuts() {
       shiftKeyPressed = true;
       document.body.classList.add('shift-held');
       if (devModeActive) {
-        console.log('%c⬆️ Shift held: Click any element to copy its Object ID', 'color: #10B981; font-weight: bold;');
+        console.log(
+          '%c⬆️ Shift held: Click any element to copy its Object ID',
+          'color: #10B981; font-weight: bold;',
+        );
       }
     }
 
@@ -99,7 +105,10 @@ function setupKeyboardShortcuts() {
       shiftKeyPressed = false;
       document.body.classList.remove('shift-held');
       if (devModeActive) {
-        console.log('%c⬇️ Shift released: Prototype works normally (hold Shift to copy)', 'color: #6b7280;');
+        console.log(
+          '%c⬇️ Shift released: Prototype works normally (hold Shift to copy)',
+          'color: #6b7280;',
+        );
       }
     }
   });
@@ -132,9 +141,18 @@ function setupToggleButton(toggleButton, tooltip) {
     console.log(`🔧 Dev Mode: ${devModeActive ? 'ACTIVATED' : 'DEACTIVATED'}`);
 
     if (devModeActive) {
-      console.log('%c🔧 DEV MODE ACTIVE', 'color: #0066CC; font-size: 16px; font-weight: bold;');
-      console.log('%c⚠️ Hold SHIFT + Click any element to copy its Object ID', 'color: #FFB800; font-size: 14px; font-weight: bold;');
-      console.log('%cWithout Shift: Prototype works normally', 'color: #6b7280;');
+      console.log(
+        '%c🔧 DEV MODE ACTIVE',
+        'color: #0066CC; font-size: 16px; font-weight: bold;',
+      );
+      console.log(
+        '%c⚠️ Hold SHIFT + Click any element to copy its Object ID',
+        'color: #FFB800; font-size: 14px; font-weight: bold;',
+      );
+      console.log(
+        '%cWithout Shift: Prototype works normally',
+        'color: #6b7280;',
+      );
       console.log('%cPress Ctrl+E to toggle Dev Mode', 'color: #6b7280;');
     } else {
       tooltip.style.display = 'none';
@@ -175,7 +193,9 @@ function setupHoverHighlight(tooltip) {
     currentHighlightedElement = element;
 
     // Show tooltip
-    const prefix = shiftKeyPressed ? '✓ Click to Copy: ' : '⬆️ Hold Shift + Click: ';
+    const prefix = shiftKeyPressed
+      ? '✓ Click to Copy: '
+      : '⬆️ Hold Shift + Click: ';
     tooltip.textContent = prefix + element.id;
     tooltip.style.display = 'block';
     tooltip.style.background = shiftKeyPressed ? '#10B981' : '#6b7280';
@@ -273,7 +293,11 @@ function isSystemElement(id) {
 }
 
 function isToggleButton(element) {
-  return element.id === 'dev-mode-toggle' || element.closest('#dev-mode-toggle') || element.classList.contains('dev-mode-toggle');
+  return (
+    element.id === 'dev-mode-toggle' ||
+    element.closest('#dev-mode-toggle') ||
+    element.classList.contains('dev-mode-toggle')
+  );
 }
 
 function isTypingInField() {
@@ -284,7 +308,12 @@ function isTypingInField() {
   const isEditable = activeElement.isContentEditable;
 
   // Check if user is currently typing in a form field
-  return tagName === 'input' || tagName === 'textarea' || tagName === 'select' || isEditable;
+  return (
+    tagName === 'input' ||
+    tagName === 'textarea' ||
+    tagName === 'select' ||
+    isEditable
+  );
 }
 
 function isFormElement(element) {
@@ -294,7 +323,12 @@ function isFormElement(element) {
   const isEditable = element.isContentEditable;
 
   // Check if the clicked element is a form element
-  return tagName === 'input' || tagName === 'textarea' || tagName === 'select' || isEditable;
+  return (
+    tagName === 'input' ||
+    tagName === 'textarea' ||
+    tagName === 'select' ||
+    isEditable
+  );
 }
 
 function highlightElement(element, isShiftHeld) {
@@ -336,7 +370,11 @@ function updateTooltipPosition(e, tooltip) {
 }
 
 function copyToClipboard(text) {
-  if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+  if (
+    typeof navigator !== 'undefined' &&
+    navigator.clipboard &&
+    navigator.clipboard.writeText
+  ) {
     navigator.clipboard
       .writeText(text)
       .then(() => {

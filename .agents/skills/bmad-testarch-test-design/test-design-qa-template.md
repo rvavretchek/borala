@@ -37,7 +37,7 @@ inputDocuments: []
 - P1 tests: ~{N} (important features, integration)
 - P2 tests: ~{N} (edge cases, regression)
 - P3 tests: ~{N} (exploratory, benchmarks)
-- **Total**: ~{N} tests (~{X}-{Y} weeks with 1 QA)
+- **Total**: ~~{N} tests (~~{X}-{Y} weeks with 1 QA)
 
 ---
 
@@ -348,7 +348,9 @@ import { test } from '@seontechnologies/playwright-utils/api-request/fixtures';
 import { expect } from '@playwright/test';
 
 // P0 critical test
-test('@P0 @API @Security unauthenticated request returns 401', async ({ apiRequest }) => {
+test('@P0 @API @Security unauthenticated request returns 401', async ({
+  apiRequest,
+}) => {
   const { status, body } = await apiRequest({
     method: 'POST',
     path: '/api/endpoint',
@@ -366,9 +368,7 @@ test('@P1 @Integration data syncs correctly', async ({ apiRequest }) => {
   await apiRequest({
     method: 'POST',
     path: '/api/seed',
-    body: {
-      /* test data */
-    },
+    body: {/* test data */},
   });
 
   // Validate

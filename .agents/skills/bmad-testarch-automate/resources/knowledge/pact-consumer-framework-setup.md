@@ -418,21 +418,37 @@ export const getMovieById = async (id: number) => {
 // tests/contract/consumer/get-movies.pacttest.ts
 import { MatchersV3 } from '@pact-foundation/pact';
 import type { V3MockServer } from '@pact-foundation/pact';
-import { createProviderState, setJsonBody, setJsonContent } from '../support/consumer-helpers';
+import {
+  createProviderState,
+  setJsonBody,
+  setJsonContent,
+} from '../support/consumer-helpers';
 import { movieExists } from '../support/provider-states';
 import { createPact } from '../support/pact-config';
 // Import REAL consumer code — this is what we're actually testing
-import { getMovies, getMovieById, setApiUrl } from '../../../src/api/movie-client';
+import {
+  getMovies,
+  getMovieById,
+  setApiUrl,
+} from '../../../src/api/movie-client';
 
 const { like, integer, string } = MatchersV3;
 
 const pact = createPact();
 
 describe('Movies API Consumer Contract', () => {
-  const movieWithId = { id: 1, name: 'The Matrix', year: 1999, rating: 8.7, director: 'Wachowskis' };
+  const movieWithId = {
+    id: 1,
+    name: 'The Matrix',
+    year: 1999,
+    rating: 8.7,
+    director: 'Wachowskis',
+  };
 
   it('should get a movie by ID', async () => {
-    const [stateName, stateParams] = createProviderState(movieExists(movieWithId));
+    const [stateName, stateParams] = createProviderState(
+      movieExists(movieWithId),
+    );
 
     await pact
       .addInteraction()
@@ -517,7 +533,10 @@ describe('Movies API Consumer Contract', () => {
 import path from 'node:path';
 import { PactV4 } from '@pact-foundation/pact';
 
-export const createPact = (overrides?: { consumer?: string; provider?: string }) =>
+export const createPact = (overrides?: {
+  consumer?: string;
+  provider?: string;
+}) =>
   new PactV4({
     dir: path.resolve(process.cwd(), 'pacts'),
     consumer: overrides?.consumer ?? 'MyConsumerApp',
@@ -532,7 +551,13 @@ export const createPact = (overrides?: { consumer?: string; provider?: string })
 // tests/contract/support/provider-states.ts
 import type { ProviderStateInput } from './consumer-helpers';
 
-export const movieExists = (movie: { id: number; name: string; year: number; rating: number; director: string }): ProviderStateInput => ({
+export const movieExists = (movie: {
+  id: number;
+  name: string;
+  year: number;
+  rating: number;
+  director: string;
+}): ProviderStateInput => ({
   name: 'An existing movie exists',
   params: movie,
 });
@@ -551,7 +576,8 @@ export const hasMovieWithId = (id: number): ProviderStateInput => ({
 // with '@seontechnologies/pactjs-utils' exports when available.
 
 type TemplateHeaders = Record<string, string | number | boolean>;
-type TemplateQueryValue = string | number | boolean | Array<string | number | boolean>;
+type TemplateQueryValue =
+  string | number | boolean | Array<string | number | boolean>;
 type TemplateQuery = Record<string, TemplateQueryValue>;
 
 export type ProviderStateInput = {
@@ -559,7 +585,9 @@ export type ProviderStateInput = {
   params: Record<string, unknown>;
 };
 
-type JsonMap = { [key: string]: boolean | number | string | null | JsonMap | Array<unknown> };
+type JsonMap = {
+  [key: string]: boolean | number | string | null | JsonMap | Array<unknown>;
+};
 type JsonContentBuilder = {
   headers: (headers: TemplateHeaders) => unknown;
   jsonBody: (body: unknown) => unknown;
@@ -576,14 +604,23 @@ export const toJsonMap = (obj: Record<string, unknown>): JsonMap =>
   Object.fromEntries(
     Object.entries(obj).map(([key, value]) => {
       if (value === null || value === undefined) return [key, 'null'];
-      if (typeof value === 'object' && !(value instanceof Date) && !Array.isArray(value)) return [key, JSON.stringify(value)];
-      if (typeof value === 'number' || typeof value === 'boolean') return [key, value];
+      if (
+        typeof value === 'object' &&
+        !(value instanceof Date) &&
+        !Array.isArray(value)
+      )
+        return [key, JSON.stringify(value)];
+      if (typeof value === 'number' || typeof value === 'boolean')
+        return [key, value];
       if (value instanceof Date) return [key, value.toISOString()];
       return [key, String(value)];
     }),
   );
 
-export const createProviderState = ({ name, params }: ProviderStateInput): [string, JsonMap] => [name, toJsonMap(params)];
+export const createProviderState = ({
+  name,
+  params,
+}: ProviderStateInput): [string, JsonMap] => [name, toJsonMap(params)];
 
 export const setJsonContent =
   ({ body, headers, query }: JsonContentInput) =>

@@ -36,7 +36,10 @@ Use `matcherDetails` to confirm the matchers were configured correctly. Use `rec
 ## Validating the Error Shape in Tests
 
 ```typescript
-import { WebhookTimeoutError, webhookTemplate } from '@seontechnologies/playwright-utils/webhook';
+import {
+  WebhookTimeoutError,
+  webhookTemplate,
+} from '@seontechnologies/playwright-utils/webhook';
 
 const neverArrivingTemplate = webhookTemplate('never.arrives')
   .matchField('event', 'event.that.never.happens')
@@ -44,7 +47,9 @@ const neverArrivingTemplate = webhookTemplate('never.arrives')
   .withInterval(100)
   .build();
 
-const [waitResult] = await Promise.allSettled([webhookRegistry.waitFor(neverArrivingTemplate)]);
+const [waitResult] = await Promise.allSettled([
+  webhookRegistry.waitFor(neverArrivingTemplate),
+]);
 
 expect(waitResult.status).toBe('rejected');
 if (waitResult.status !== 'rejected') {
@@ -83,7 +88,9 @@ const undeliveredDelete = webhookTemplate<{
   .withInterval(200)
   .build();
 
-const [waitResult] = await Promise.allSettled([webhookRegistry.waitFor(undeliveredDelete)]);
+const [waitResult] = await Promise.allSettled([
+  webhookRegistry.waitFor(undeliveredDelete),
+]);
 
 expect(waitResult.status).toBe('rejected');
 if (waitResult.status !== 'rejected') {
@@ -95,7 +102,9 @@ expect(error).toBeInstanceOf(WebhookTimeoutError);
 expect(error.totalReceived).toBeGreaterThanOrEqual(1);
 
 // The movie.created webhook that did arrive is visible in the error
-const createdWebhook = error.receivedWebhooks.find((w) => (w.body as { data: { id: number } }).data.id === movieId);
+const createdWebhook = error.receivedWebhooks.find(
+  (w) => (w.body as { data: { id: number } }).data.id === movieId,
+);
 expect(createdWebhook).toBeDefined();
 expect((createdWebhook!.body as { event: string }).event).toBe('movie.created');
 ```

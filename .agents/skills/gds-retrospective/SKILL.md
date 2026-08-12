@@ -8,6 +8,7 @@ description: 'Post-epic review to extract lessons and assess success. Use when t
 **Goal:** Post-epic review to extract lessons and assess success.
 
 **Your Role:** Developer facilitating retrospective.
+
 - No time estimates — NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed.
 - Communicate all responses in {communication_language} and language MUST be tailored to {game_dev_experience}
 - Generate all documents in {document_output_language}
@@ -25,22 +26,21 @@ description: 'Post-epic review to extract lessons and assess success. Use when t
   - Create natural back-and-forth with user actively participating
   - Show disagreements, diverse perspectives, authentic team dynamics
 
-
 ## Paths
 
 - `sprint_status_file` = `{implementation_artifacts}/sprint-status.yaml`
 
 ## Input Files
 
-| Input | Description | Path Pattern(s) | Load Strategy |
-|-------|-------------|------------------|---------------|
-| epics | The completed epic for retrospective | whole: `{planning_artifacts}/*epic*.md`, sharded_index: `{planning_artifacts}/*epic*/index.md`, sharded_single: `{planning_artifacts}/*epic*/epic-{{epic_num}}.md` | SELECTIVE_LOAD |
-| previous_retrospective | Previous epic's retrospective (optional) | `{implementation_artifacts}/**/epic-{{prev_epic_num}}-retro-*.md` | SELECTIVE_LOAD |
-| architecture | System architecture for context | whole: `{planning_artifacts}/*architecture*.md`, sharded: `{planning_artifacts}/*architecture*/*.md` | FULL_LOAD |
-| gdd | Game Design Document for context (primary design doc in GDS) | whole: `{planning_artifacts}/*gdd*.md`, sharded: `{planning_artifacts}/*gdd*/*.md` | FULL_LOAD |
-| narrative | Narrative design for context (optional, story-driven games) | whole: `{planning_artifacts}/*narrative*.md`, sharded: `{planning_artifacts}/*narrative*/*.md` | SELECTIVE_LOAD |
-| prd | Product requirements for context (optional — GDS PRDs exist for external-tool compatibility) | whole: `{planning_artifacts}/*prd*.md`, sharded: `{planning_artifacts}/*prd*/*.md` | SELECTIVE_LOAD |
-| document_project | Brownfield project documentation (optional) | sharded: `{planning_artifacts}/*.md` | INDEX_GUIDED |
+| Input                  | Description                                                                                  | Path Pattern(s)                                                                                                                                                    | Load Strategy  |
+| ---------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------- |
+| epics                  | The completed epic for retrospective                                                         | whole: `{planning_artifacts}/*epic*.md`, sharded_index: `{planning_artifacts}/*epic*/index.md`, sharded_single: `{planning_artifacts}/*epic*/epic-{{epic_num}}.md` | SELECTIVE_LOAD |
+| previous_retrospective | Previous epic's retrospective (optional)                                                     | `{implementation_artifacts}/**/epic-{{prev_epic_num}}-retro-*.md`                                                                                                  | SELECTIVE_LOAD |
+| architecture           | System architecture for context                                                              | whole: `{planning_artifacts}/*architecture*.md`, sharded: `{planning_artifacts}/*architecture*/*.md`                                                               | FULL_LOAD      |
+| gdd                    | Game Design Document for context (primary design doc in GDS)                                 | whole: `{planning_artifacts}/*gdd*.md`, sharded: `{planning_artifacts}/*gdd*/*.md`                                                                                 | FULL_LOAD      |
+| narrative              | Narrative design for context (optional, story-driven games)                                  | whole: `{planning_artifacts}/*narrative*.md`, sharded: `{planning_artifacts}/*narrative*/*.md`                                                                     | SELECTIVE_LOAD |
+| prd                    | Product requirements for context (optional — GDS PRDs exist for external-tool compatibility) | whole: `{planning_artifacts}/*prd*.md`, sharded: `{planning_artifacts}/*prd*/*.md`                                                                                 | SELECTIVE_LOAD |
+| document_project       | Brownfield project documentation (optional)                                                  | sharded: `{planning_artifacts}/*.md`                                                                                                                               | INDEX_GUIDED   |
 
 ## Required Inputs
 
@@ -492,6 +492,7 @@ Alice (Product Owner): "Good thinking - helps us connect what we learned to what
 - Deployment or environment setup
 
   <output>
+
 Amelia (Developer): "Alright, I've reviewed Epic {{next_epic_num}}: '{{next_epic_title}}'"
 
 Alice (Product Owner): "What are we looking at?"

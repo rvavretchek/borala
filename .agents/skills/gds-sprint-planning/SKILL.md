@@ -9,7 +9,6 @@ description: 'Generate sprint status tracking from epics. Use when the user says
 
 **Your Role:** You are a Developer generating and maintaining sprint tracking. Parse epic files, detect story statuses, and produce a structured sprint-status.yaml.
 
-
 ## Paths
 
 - `tracking_system` = `file-system`
@@ -22,9 +21,9 @@ description: 'Generate sprint status tracking from epics. Use when the user says
 
 ## Input Files
 
-| Input | Path | Load Strategy |
-|-------|------|---------------|
-| Epics | `{planning_artifacts}/*epic*.md` (whole) or `{planning_artifacts}/*epic*/*.md` (sharded) | FULL_LOAD |
+| Input | Path                                                                                     | Load Strategy |
+| ----- | ---------------------------------------------------------------------------------------- | ------------- |
+| Epics | `{planning_artifacts}/*epic*.md` (whole) or `{planning_artifacts}/*epic*/*.md` (sharded) | FULL_LOAD     |
 
 ## Context
 

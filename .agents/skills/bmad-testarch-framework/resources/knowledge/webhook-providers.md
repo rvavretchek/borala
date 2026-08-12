@@ -43,7 +43,11 @@ const webhookProviderFixture = base.extend<{
   },
 });
 
-const test = mergeTests(base, /* ...other fixtures... */ webhookFixture, webhookProviderFixture);
+const test = mergeTests(
+  base,
+  /* ...other fixtures... */ webhookFixture,
+  webhookProviderFixture,
+);
 
 // MockServer has no delete-by-ID on log entries — use full-reset
 test.use({ webhookConfig: { cleanupStrategy: 'full-reset' } });
@@ -66,7 +70,11 @@ const webhookProviderFixture = base.extend<{
   },
 });
 
-const test = mergeTests(base, /* ...other fixtures... */ webhookFixture, webhookProviderFixture);
+const test = mergeTests(
+  base,
+  /* ...other fixtures... */ webhookFixture,
+  webhookProviderFixture,
+);
 
 // Mockoon has no delete-by-ID on log entries — use full-reset
 test.use({ webhookConfig: { cleanupStrategy: 'full-reset' } });
@@ -84,7 +92,11 @@ Implement `WebhookProvider` for any backend that exposes a queryable request log
 
 ```typescript
 // support/providers/custom-webhook-provider.ts
-import type { WebhookProvider, ReceivedWebhook, WebhookQueryFilter } from '@seontechnologies/playwright-utils/webhook';
+import type {
+  WebhookProvider,
+  ReceivedWebhook,
+  WebhookQueryFilter,
+} from '@seontechnologies/playwright-utils/webhook';
 import type { APIRequestContext } from '@playwright/test';
 
 export class CustomWebhookProvider implements WebhookProvider {
@@ -93,12 +105,16 @@ export class CustomWebhookProvider implements WebhookProvider {
     private readonly request: APIRequestContext,
   ) {}
 
-  async getReceivedWebhooks(filter?: WebhookQueryFilter): Promise<ReceivedWebhook[]> {
+  async getReceivedWebhooks(
+    filter?: WebhookQueryFilter,
+  ): Promise<ReceivedWebhook[]> {
     const params = new URLSearchParams();
     if (filter?.since) params.set('since', filter.since.toISOString());
     if (filter?.method) params.set('method', filter.method);
 
-    const response = await this.request.get(`${this.baseUrl}/webhooks/received?${params}`);
+    const response = await this.request.get(
+      `${this.baseUrl}/webhooks/received?${params}`,
+    );
     const { webhooks } = await response.json();
     return webhooks.map((w: Record<string, unknown>) => ({
       id: String(w.id),

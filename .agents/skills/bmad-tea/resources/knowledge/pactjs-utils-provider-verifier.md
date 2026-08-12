@@ -27,7 +27,10 @@ Use `buildVerifierOptions`, `buildMessageVerifierOptions`, `handlePactBrokerUrlA
 
 ```typescript
 import { Verifier } from '@pact-foundation/pact';
-import { buildVerifierOptions, createRequestFilter } from '@seontechnologies/pactjs-utils';
+import {
+  buildVerifierOptions,
+  createRequestFilter,
+} from '@seontechnologies/pactjs-utils';
 import type { StateHandlers } from '@seontechnologies/pactjs-utils';
 
 const stateHandlers: StateHandlers = {
@@ -161,9 +164,7 @@ const opts = buildVerifierOptions({
   provider: 'SampleMoviesAPI',
   port: '3001',
   includeMainAndDeployed: !isBreakingChange, // false during breaking changes
-  stateHandlers: {
-    /* ... */
-  },
+  stateHandlers: {/* ... */},
 });
 // When includeMainAndDeployed is false (breaking change):
 //   selectors = [{ matchingBranch: true }]
@@ -313,15 +314,20 @@ const opts: VerifierOptions = {
   pactBrokerToken: process.env.PACT_BROKER_TOKEN,
   publishVerificationResult: process.env.CI === 'true',
   providerVersion: process.env.GIT_SHA || process.env.GITHUB_SHA || 'dev',
-  providerVersionBranch: process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME,
+  providerVersionBranch:
+    process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME,
   consumerVersionSelectors:
     process.env.PACT_BREAKING_CHANGE === 'true'
       ? [{ matchingBranch: true }]
-      : [{ matchingBranch: true }, { mainBranch: true }, { deployedOrReleased: true }],
-  pactUrls: process.env.PACT_PAYLOAD_URL ? [process.env.PACT_PAYLOAD_URL] : undefined,
-  stateHandlers: {
-    /* ... */
-  },
+      : [
+          { matchingBranch: true },
+          { mainBranch: true },
+          { deployedOrReleased: true },
+        ],
+  pactUrls: process.env.PACT_PAYLOAD_URL
+    ? [process.env.PACT_PAYLOAD_URL]
+    : undefined,
+  stateHandlers: {/* ... */},
   requestFilter: (req, res, next) => {
     req.headers['authorization'] = `Bearer ${process.env.TEST_TOKEN}`;
     next();
@@ -337,9 +343,7 @@ const opts = buildVerifierOptions({
   provider: 'my-api',
   port: '3001',
   includeMainAndDeployed: process.env.PACT_BREAKING_CHANGE !== 'true',
-  stateHandlers: {
-    /* ... */
-  },
+  stateHandlers: {/* ... */},
   requestFilter: createRequestFilter({
     tokenGenerator: () => process.env.TEST_TOKEN ?? 'test-token',
   }),
@@ -357,9 +361,7 @@ consumerVersionSelectors: [{ mainBranch: true }, { deployedOrReleased: true }],
 
 ```typescript
 // ✅ Selector strategy adapts to PACT_BREAKING_CHANGE env var
-const opts = buildVerifierOptions({
-  /* ... */
-});
+const opts = buildVerifierOptions({/* ... */});
 // Selectors chosen automatically based on environment
 ```
 

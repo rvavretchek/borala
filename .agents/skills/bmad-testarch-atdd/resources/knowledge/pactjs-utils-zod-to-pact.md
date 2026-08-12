@@ -66,7 +66,10 @@ await pact
 
 ```typescript
 // ✅ After — schema defines types, plain object provides examples
-import { zodToPactMatchers, setJsonContent } from '@seontechnologies/pactjs-utils';
+import {
+  zodToPactMatchers,
+  setJsonContent,
+} from '@seontechnologies/pactjs-utils';
 import { ConsumerMovieSchema } from '../helpers/consumer-schemas';
 
 await pact
@@ -79,7 +82,10 @@ await pact
     setJsonContent({
       body: {
         status: 200,
-        data: zodToPactMatchers(ConsumerMovieSchema, { id: 1, ...movieWithoutId }),
+        data: zodToPactMatchers(ConsumerMovieSchema, {
+          id: 1,
+          ...movieWithoutId,
+        }),
       },
     }),
   );
@@ -89,12 +95,21 @@ await pact
 
 ```typescript
 import { PactV4, MatchersV3 } from '@pact-foundation/pact';
-import { zodToPactMatchers, setJsonContent } from '@seontechnologies/pactjs-utils';
+import {
+  zodToPactMatchers,
+  setJsonContent,
+} from '@seontechnologies/pactjs-utils';
 import { ConsumerMovieSchema } from '../helpers/consumer-schemas';
 
 const { eachLike } = MatchersV3;
 const pact = new PactV4({ consumer: 'Movies Web', provider: 'Movies API' });
-const movie = { id: 1, name: 'My movie', year: 1999, rating: 8.5, director: 'John Doe' };
+const movie = {
+  id: 1,
+  name: 'My movie',
+  year: 1999,
+  rating: 8.5,
+  director: 'John Doe',
+};
 
 await pact
   .addInteraction()
@@ -106,7 +121,11 @@ await pact
     setJsonContent({
       body: {
         status: 200,
-        data: eachLike(zodToPactMatchers(ConsumerMovieSchema, movie) as Parameters<typeof eachLike>[0]),
+        data: eachLike(
+          zodToPactMatchers(ConsumerMovieSchema, movie) as Parameters<
+            typeof eachLike
+          >[0],
+        ),
       },
     }),
   );

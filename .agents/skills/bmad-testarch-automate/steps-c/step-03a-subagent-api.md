@@ -71,15 +71,11 @@ test.describe('[Feature] API Tests', () => {
     // Use apiRequest helper if Playwright Utils enabled
     // Otherwise use standard request fixture
     const response = await request.post('/api/endpoint', {
-      data: {
-        /* test data */
-      },
+      data: {/* test data */},
     });
 
     expect(response.status()).toBe(200);
-    expect(await response.json()).toMatchObject({
-      /* expected */
-    });
+    expect(await response.json()).toMatchObject({/* expected */});
   });
 
   test('[P1] should handle [error scenario]', async ({ request }) => {
@@ -214,9 +210,17 @@ Write JSON to temp file: `/tmp/tea-automate-api-tests-{{timestamp}}.json`
     }
   ],
   "fixture_needs": ["authToken", "userDataFactory", "productDataFactory"],
-  "knowledge_fragments_used": ["api-request", "data-factories", "api-testing-patterns"],
+  "knowledge_fragments_used": [
+    "api-request",
+    "data-factories",
+    "api-testing-patterns"
+  ],
   "provider_scrutiny": "completed",
-  "provider_files_read": ["server/src/routes/authHandlers.ts", "server/src/routes/checkoutHandlers.ts", "server/src/types/auth.ts"],
+  "provider_files_read": [
+    "server/src/routes/authHandlers.ts",
+    "server/src/routes/checkoutHandlers.ts",
+    "server/src/types/auth.ts"
+  ],
   "test_count": 12,
   "summary": "Generated 12 API test cases covering 3 features"
 }
@@ -229,9 +233,7 @@ Write JSON to temp file: `/tmp/tea-automate-api-tests-{{timestamp}}.json`
   "success": false,
   "subagent": "api-tests",
   "error": "Error message describing what went wrong",
-  "partial_output": {
-    /* any tests generated before error */
-  }
+  "partial_output": {/* any tests generated before error */}
 }
 ```
 

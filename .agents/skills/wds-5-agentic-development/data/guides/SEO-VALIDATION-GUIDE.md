@@ -16,12 +16,12 @@ The agent verifies all measurable SEO criteria using browser tools (Puppeteer, M
 
 ## When to Run SEO Validation
 
-| Trigger | Action |
-|---------|--------|
-| Public page section complete (4c/4d) | Run SEO checks before presenting |
-| Full page implementation complete | Run complete SEO audit |
-| Pre-deployment review | Full validation against spec + project brief |
-| Post-deployment verification | Validate live URL matches specification |
+| Trigger                              | Action                                       |
+| ------------------------------------ | -------------------------------------------- |
+| Public page section complete (4c/4d) | Run SEO checks before presenting             |
+| Full page implementation complete    | Run complete SEO audit                       |
+| Pre-deployment review                | Full validation against spec + project brief |
+| Post-deployment verification         | Validate live URL matches specification      |
 
 ---
 
@@ -344,48 +344,66 @@ const title = await page.title();
 console.log(`Title: "${title}" (${title.length} chars)`);
 
 // 2. Meta description
-const metaDesc = await page.$eval(
-  'meta[name="description"]',
-  el => el.content
-).catch(() => null);
+const metaDesc = await page
+  .$eval('meta[name="description"]', (el) => el.content)
+  .catch(() => null);
 console.log(`Meta desc: "${metaDesc}" (${metaDesc?.length || 0} chars)`);
 
 // 3. H1 count and content
-const h1s = await page.$$eval('h1', els => els.map(el => el.textContent.trim()));
+const h1s = await page.$$eval('h1', (els) =>
+  els.map((el) => el.textContent.trim()),
+);
 console.log(`H1 tags: ${h1s.length} — "${h1s.join('", "')}"`);
 
 // 4. Heading hierarchy
-const headings = await page.$$eval('h1,h2,h3,h4,h5,h6', els =>
-  els.map(el => ({ tag: el.tagName, text: el.textContent.trim().substring(0, 50) }))
+const headings = await page.$$eval('h1,h2,h3,h4,h5,h6', (els) =>
+  els.map((el) => ({
+    tag: el.tagName,
+    text: el.textContent.trim().substring(0, 50),
+  })),
 );
-console.log('Heading hierarchy:', headings.map(h => h.tag).join(' → '));
+console.log('Heading hierarchy:', headings.map((h) => h.tag).join(' → '));
 
 // 5. Images without alt
-const imagesNoAlt = await page.$$eval('img', els =>
-  els.filter(el => !el.hasAttribute('alt')).map(el => el.src)
+const imagesNoAlt = await page.$$eval('img', (els) =>
+  els.filter((el) => !el.hasAttribute('alt')).map((el) => el.src),
 );
 console.log(`Images without alt: ${imagesNoAlt.length}`);
 
 // 6. Open Graph tags
-const ogTags = await page.$$eval('meta[property^="og:"]', els =>
-  els.map(el => ({ property: el.getAttribute('property'), content: el.content }))
+const ogTags = await page.$$eval('meta[property^="og:"]', (els) =>
+  els.map((el) => ({
+    property: el.getAttribute('property'),
+    content: el.content,
+  })),
 );
 console.log(`OG tags: ${ogTags.length}`, ogTags);
 
 // 7. Structured data
-const jsonLd = await page.$$eval('script[type="application/ld+json"]', els =>
-  els.map(el => JSON.parse(el.textContent))
-).catch(() => []);
-console.log(`Structured data: ${jsonLd.length} blocks`, jsonLd.map(j => j['@type']));
+const jsonLd = await page
+  .$$eval('script[type="application/ld+json"]', (els) =>
+    els.map((el) => JSON.parse(el.textContent)),
+  )
+  .catch(() => []);
+console.log(
+  `Structured data: ${jsonLd.length} blocks`,
+  jsonLd.map((j) => j['@type']),
+);
 
 // 8. Canonical
-const canonical = await page.$eval('link[rel="canonical"]', el => el.href).catch(() => null);
+const canonical = await page
+  .$eval('link[rel="canonical"]', (el) => el.href)
+  .catch(() => null);
 console.log(`Canonical: ${canonical || 'MISSING'}`);
 
 // 9. Internal links
-const links = await page.$$eval('a[href]', els =>
-  els.filter(el => el.href.startsWith(window.location.origin))
-    .map(el => ({ text: el.textContent.trim().substring(0, 40), href: el.href }))
+const links = await page.$$eval('a[href]', (els) =>
+  els
+    .filter((el) => el.href.startsWith(window.location.origin))
+    .map((el) => ({
+      text: el.textContent.trim().substring(0, 40),
+      href: el.href,
+    })),
 );
 console.log(`Internal links: ${links.length}`);
 ```
@@ -453,16 +471,16 @@ Add SEO criteria to the story file's Agent-Verifiable section:
 ```markdown
 ### SEO Criteria (Public Pages)
 
-| # | Criterion | Expected | How to Verify |
-|---|-----------|----------|---------------|
-| S1 | Title tag | "Bilservice Öland \| Källa" ≤60 chars | Read document.title |
-| S2 | Meta description | 150-160 chars, keyword present | Read meta[name=description] |
-| S3 | H1 count | Exactly 1 | Count h1 elements |
-| S4 | H1 keyword | Contains "bilservice" | Read h1 textContent |
-| S5 | Heading hierarchy | H1→H2→H3, no skips | Scan all headings |
-| S6 | Image alt coverage | 100% images have alt | Check img elements |
-| S7 | OG tags | og:title, og:description, og:image | Check meta[property^=og:] |
-| S8 | Internal links | ≥ 2, descriptive text | Count and check a[href] |
+| #   | Criterion          | Expected                              | How to Verify               |
+| --- | ------------------ | ------------------------------------- | --------------------------- |
+| S1  | Title tag          | "Bilservice Öland \| Källa" ≤60 chars | Read document.title         |
+| S2  | Meta description   | 150-160 chars, keyword present        | Read meta[name=description] |
+| S3  | H1 count           | Exactly 1                             | Count h1 elements           |
+| S4  | H1 keyword         | Contains "bilservice"                 | Read h1 textContent         |
+| S5  | Heading hierarchy  | H1→H2→H3, no skips                    | Scan all headings           |
+| S6  | Image alt coverage | 100% images have alt                  | Check img elements          |
+| S7  | OG tags            | og:title, og:description, og:image    | Check meta[property^=og:]   |
+| S8  | Internal links     | ≥ 2, descriptive text                 | Count and check a[href]     |
 ```
 
 ---
@@ -522,16 +540,16 @@ seo_checks:
 
 ## Common Fixes (From 44 Real-World Audits)
 
-| Issue | Frequency | Fix Time | Fix |
-|-------|-----------|----------|-----|
-| Missing alt text | 85% | 1 min/image | Add descriptive alt attribute |
-| Missing meta description | 80% | 2 min/page | Add meta tag from spec |
-| H1 missing or wrong | 75% | 1 min | Add/fix h1 tag |
-| Missing OG tags | 70% | 3 min/page | Add og: meta tags from spec |
-| Missing structured data | 65% | 5 min/page | Add JSON-LD script |
-| Oversized images | 65% | 2 min/image | Compress + convert to WebP |
-| Non-descriptive links | 30% | 1 min/link | Rewrite anchor text |
-| Missing canonical | 40% | 1 min | Add link rel=canonical |
+| Issue                    | Frequency | Fix Time    | Fix                           |
+| ------------------------ | --------- | ----------- | ----------------------------- |
+| Missing alt text         | 85%       | 1 min/image | Add descriptive alt attribute |
+| Missing meta description | 80%       | 2 min/page  | Add meta tag from spec        |
+| H1 missing or wrong      | 75%       | 1 min       | Add/fix h1 tag                |
+| Missing OG tags          | 70%       | 3 min/page  | Add og: meta tags from spec   |
+| Missing structured data  | 65%       | 5 min/page  | Add JSON-LD script            |
+| Oversized images         | 65%       | 2 min/image | Compress + convert to WebP    |
+| Non-descriptive links    | 30%       | 1 min/link  | Rewrite anchor text           |
+| Missing canonical        | 40%       | 1 min       | Add link rel=canonical        |
 
 **Total estimated fix time for a typical page: 15-20 minutes**
 These are all preventable by validating during development.
@@ -548,4 +566,4 @@ These are all preventable by validating during development.
 
 ---
 
-*SEO validation during development = zero SEO issues at launch. Validate as you build.*
+_SEO validation during development = zero SEO issues at launch. Validate as you build._

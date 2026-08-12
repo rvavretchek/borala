@@ -46,7 +46,7 @@ inputDocuments: []
 
 - **Total risks**: {N}
 - **High-priority (≥6)**: {N} risks requiring immediate mitigation
-- **Test effort**: ~{N} tests (~{X} weeks for 1 QA, ~{Y} weeks for 2 QAs)
+- **Test effort**: ~~{N} tests (~~{X} weeks for 1 QA, ~{Y} weeks for 2 QAs)
 
 ---
 

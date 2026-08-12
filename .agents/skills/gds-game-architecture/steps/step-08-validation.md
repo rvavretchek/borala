@@ -96,14 +96,16 @@ How should we resolve these?
 Verifying every GDD requirement has architectural support:
 
 **Core Systems:**
-| System | Architecture Support | Status |
-| ------ | -------------------- | ------ |
-{{systems_coverage_table}}
+
+| System                     | Architecture Support | Status |
+| -------------------------- | -------------------- | ------ |
+| {{systems_coverage_table}} |
 
 **Technical Requirements:**
-| Requirement | How Addressed | Status |
-| ----------- | ------------- | ------ |
-{{requirements_coverage_table}}
+
+| Requirement                     | How Addressed | Status |
+| ------------------------------- | ------------- | ------ |
+| {{requirements_coverage_table}} |
 
 {{if_gaps_found}}
 **Gaps Found:**

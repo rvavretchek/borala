@@ -67,16 +67,16 @@ Component name:</ask>
 
 <check if="choice == 2">
   <ask>**New component name:**
-  
-  Suggested: `Input-{{input_type}}`
-  
-  Component name:</ask>
-  
-  <action>Store design_system_component</action>
-  <action>Store component_status = "new"</action>
-  <action>Mark for Design System addition in Phase 5</action>
-  
-  <output>✅ This input will be added to your Design System in Phase 5.</output>
+
+Suggested: `Input-{{input_type}}`
+
+Component name:</ask>
+
+<action>Store design_system_component</action>
+<action>Store component_status = "new"</action>
+<action>Mark for Design System addition in Phase 5</action>
+
+<output>✅ This input will be added to your Design System in Phase 5.</output>
 </check>
 
 <check if="choice == 3">

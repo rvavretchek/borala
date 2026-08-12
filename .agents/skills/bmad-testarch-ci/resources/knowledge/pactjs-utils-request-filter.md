@@ -24,15 +24,16 @@ Use `createRequestFilter` and `noOpRequestFilter` from `@seontechnologies/pactjs
 ### Example 1: Basic Auth Injection
 
 ```typescript
-import { buildVerifierOptions, createRequestFilter } from '@seontechnologies/pactjs-utils';
+import {
+  buildVerifierOptions,
+  createRequestFilter,
+} from '@seontechnologies/pactjs-utils';
 
 const opts = buildVerifierOptions({
   provider: 'SampleMoviesAPI',
   port: '3001',
   includeMainAndDeployed: true,
-  stateHandlers: {
-    /* ... */
-  },
+  stateHandlers: {/* ... */},
   requestFilter: createRequestFilter({
     // tokenGenerator returns raw token — filter adds "Bearer " prefix
     tokenGenerator: () => 'test-auth-token-123',
@@ -78,9 +79,7 @@ const opts = buildVerifierOptions({
   provider: 'SecureAPI',
   port: '3001',
   includeMainAndDeployed: true,
-  stateHandlers: {
-    /* ... */
-  },
+  stateHandlers: {/* ... */},
   requestFilter,
 });
 ```
@@ -88,16 +87,17 @@ const opts = buildVerifierOptions({
 ### Example 3: No-Auth Provider
 
 ```typescript
-import { buildVerifierOptions, noOpRequestFilter } from '@seontechnologies/pactjs-utils';
+import {
+  buildVerifierOptions,
+  noOpRequestFilter,
+} from '@seontechnologies/pactjs-utils';
 
 // For providers that don't require authentication
 const opts = buildVerifierOptions({
   provider: 'PublicAPI',
   port: '3001',
   includeMainAndDeployed: true,
-  stateHandlers: {
-    /* ... */
-  },
+  stateHandlers: {/* ... */},
   requestFilter: noOpRequestFilter,
 });
 
@@ -107,7 +107,10 @@ const opts = buildVerifierOptions({
 ### Example 4: Integration with buildVerifierOptions
 
 ```typescript
-import { buildVerifierOptions, createRequestFilter } from '@seontechnologies/pactjs-utils';
+import {
+  buildVerifierOptions,
+  createRequestFilter,
+} from '@seontechnologies/pactjs-utils';
 import type { StateHandlers } from '@seontechnologies/pactjs-utils';
 
 // Complete provider verification setup
@@ -211,9 +214,7 @@ async function setupVerifierOptions() {
     port: '3001',
     includeMainAndDeployed: true,
     requestFilter,
-    stateHandlers: {
-      /* ... */
-    },
+    stateHandlers: {/* ... */},
   });
 }
 

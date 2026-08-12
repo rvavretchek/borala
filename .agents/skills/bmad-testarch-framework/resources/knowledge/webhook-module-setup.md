@@ -57,7 +57,11 @@ const webhookProviderFixture = base.extend<{
   },
 });
 
-const test = mergeTests(base, /* ...other fixtures... */ webhookFixture, webhookProviderFixture);
+const test = mergeTests(
+  base,
+  /* ...other fixtures... */ webhookFixture,
+  webhookProviderFixture,
+);
 
 // MockServer has no delete-by-ID on log entries — use full-reset for explicit cleanup
 test.use({ webhookConfig: { cleanupStrategy: 'full-reset' } });
@@ -76,7 +80,11 @@ const webhookProviderFixture = base.extend<{
   },
 });
 
-const test = mergeTests(base, /* ...other fixtures... */ webhookFixture, webhookProviderFixture);
+const test = mergeTests(
+  base,
+  /* ...other fixtures... */ webhookFixture,
+  webhookProviderFixture,
+);
 
 // Mockoon has no delete-by-ID on log entries — use full-reset for explicit cleanup
 test.use({ webhookConfig: { cleanupStrategy: 'full-reset' } });

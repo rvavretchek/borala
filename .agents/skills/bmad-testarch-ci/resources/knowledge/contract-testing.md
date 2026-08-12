@@ -107,7 +107,9 @@ describe('User API Contract', () => {
         })
         .executeTest(async (mockServer) => {
           // Act & Assert: Consumer handles 404 gracefully
-          await expect(getUserById(999, { baseURL: mockServer.url })).rejects.toThrow('User not found');
+          await expect(
+            getUserById(999, { baseURL: mockServer.url }),
+          ).rejects.toThrow('User not found');
         });
     });
   });
@@ -645,9 +647,18 @@ export class ApiError extends Error {
  */
 export async function getUserById(
   id: number,
-  config?: AxiosRequestConfig & { retries?: number; retryDelay?: number; respectRateLimit?: boolean },
+  config?: AxiosRequestConfig & {
+    retries?: number;
+    retryDelay?: number;
+    respectRateLimit?: boolean;
+  },
 ): Promise<User> {
-  const { retries = 3, retryDelay = 1000, respectRateLimit = true, ...axiosConfig } = config || {};
+  const {
+    retries = 3,
+    retryDelay = 1000,
+    respectRateLimit = true,
+    ...axiosConfig
+  } = config || {};
 
   let lastError: Error;
 
@@ -660,13 +671,22 @@ export async function getUserById(
 
       // Handle rate limiting
       if (error.response?.status === 429) {
-        const retryAfter = parseInt(error.response.headers['retry-after'] || '60');
-        throw new ApiError('Too many requests', 'RATE_LIMIT_EXCEEDED', false, retryAfter);
+        const retryAfter = parseInt(
+          error.response.headers['retry-after'] || '60',
+        );
+        throw new ApiError(
+          'Too many requests',
+          'RATE_LIMIT_EXCEEDED',
+          false,
+          retryAfter,
+        );
       }
 
       // Retry on 500 errors
       if (error.response?.status === 500 && attempt < retries) {
-        await new Promise((resolve) => setTimeout(resolve, retryDelay * attempt));
+        await new Promise((resolve) =>
+          setTimeout(resolve, retryDelay * attempt),
+        );
         continue;
       }
 
@@ -747,8 +767,13 @@ function tagRelease(version: string, environment: 'staging' | 'production') {
 /**
  * Record deployment to environment
  */
-function recordDeployment(version: string, environment: 'staging' | 'production') {
-  console.log(`📝 Recording deployment of ${PACTICIPANT} v${version} to ${environment}`);
+function recordDeployment(
+  version: string,
+  environment: 'staging' | 'production',
+) {
+  console.log(
+    `📝 Recording deployment of ${PACTICIPANT} v${version} to ${environment}`,
+  );
 
   execFileSync(
     'pact-broker',
@@ -799,7 +824,9 @@ function cleanupOldPacts() {
  * Check deployment compatibility
  */
 function canIDeploy(version: string, toEnvironment: string): boolean {
-  console.log(`🔍 Checking if ${PACTICIPANT} v${version} can deploy to ${toEnvironment}`);
+  console.log(
+    `🔍 Checking if ${PACTICIPANT} v${version} can deploy to ${toEnvironment}`,
+  );
 
   try {
     execFileSync(
@@ -856,7 +883,9 @@ async function main() {
       break;
 
     default:
-      console.error('Unknown command. Use: tag-release | record-deployment | can-i-deploy | cleanup');
+      console.error(
+        'Unknown command. Use: tag-release | record-deployment | can-i-deploy | cleanup',
+      );
       process.exit(1);
   }
 }
@@ -957,7 +986,9 @@ Every Pact interaction MUST include a provider endpoint comment immediately abov
 
 ```typescript
 // Provider endpoint: server/src/routes/userRouteHandlers.ts -> GET /api/v2/users/:userId
-await provider.given('user with id 1 exists').uponReceiving('a request for user 1');
+await provider
+  .given('user with id 1 exists')
+  .uponReceiving('a request for user 1');
 ```
 
 **Format**: `// Provider endpoint: <relative-path-to-handler> -> <METHOD> <route-pattern>`

@@ -71,7 +71,9 @@ import { test, expect } from '@playwright/test';
 // import { apiRequest } from '@playwright-utils/api';
 
 test.describe('[Story Name] API Tests (ATDD)', () => {
-  test.skip('[P0] should register new user successfully', async ({ request }) => {
+  test.skip('[P0] should register new user successfully', async ({
+    request,
+  }) => {
     // THIS TEST WILL FAIL - Endpoint not implemented yet
     const response = await request.post('/api/users/register', {
       data: {
@@ -176,7 +178,10 @@ test.skip('[P0] should generate consumer contract for user registration', async 
       }),
     })
     .executeTest(async (mockServer) => {
-      const result = await registerUser({ email: 'newuser@example.com', password: 'SecurePass123!' }, { baseUrl: mockServer.url });
+      const result = await registerUser(
+        { email: 'newuser@example.com', password: 'SecurePass123!' },
+        { baseUrl: mockServer.url },
+      );
       expect(result.id).toEqual(expect.any(Number));
     });
 });
@@ -250,9 +255,7 @@ Write JSON to temp file: `/tmp/tea-atdd-api-tests-{{timestamp}}.json`
   "success": false,
   "subagent": "atdd-api-tests",
   "error": "Error message describing what went wrong",
-  "partial_output": {
-    /* any tests generated before error */
-  }
+  "partial_output": {/* any tests generated before error */}
 }
 ```
 

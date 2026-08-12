@@ -115,16 +115,16 @@ Component name:</ask>
 
 <check if="choice == 2">
   <ask>**New typography component name:**
-  
-  Suggested: `Typography-{{text_type}}` (e.g., Typography-H1, Typography-Body)
-  
-  Component name:</ask>
-  
-  <action>Store design_system_component</action>
-  <action>Store component_status = "new"</action>
-  <action>Mark for Design System addition in Phase 5</action>
-  
-  <output>✅ This typography style will be added to your Design System in Phase 5.</output>
+
+Suggested: `Typography-{{text_type}}` (e.g., Typography-H1, Typography-Body)
+
+Component name:</ask>
+
+<action>Store design_system_component</action>
+<action>Store component_status = "new"</action>
+<action>Mark for Design System addition in Phase 5</action>
+
+<output>✅ This typography style will be added to your Design System in Phase 5.</output>
 </check>
 
 <check if="choice == 3">
@@ -282,8 +282,8 @@ Would you like to use these, or provide your own?</output>
   <output>⚠️ **Length Warning:**
   - Sketch capacity: ~{{sketch_capacity}} characters
   - Your content: {{actual_chars}} characters
-  
-  Consider shortening or adjusting design.</output>
+
+Consider shortening or adjusting design.</output>
 </check>
 
 ---

@@ -96,9 +96,9 @@ Based on all documented content, synthesize an executive summary:
 {{if_mcps_selected}}
 The following MCP servers were selected during architecture to enhance AI-assisted development:
 
-| MCP Server | Purpose | Install Type |
-| ---------- | ------- | ------------ |
-{{mcp_table_rows}}
+| MCP Server         | Purpose | Install Type |
+| ------------------ | ------- | ------------ |
+| {{mcp_table_rows}} |
 
 **Setup:**
 {{mcp_setup_instructions}}

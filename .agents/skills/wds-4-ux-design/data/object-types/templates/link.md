@@ -58,16 +58,16 @@ Component name:</ask>
 
 <check if="choice == 2">
   <ask>**New component name:**
-  
-  Suggested: `Link-{{link_type}}` or `Link-{{style_variant}}`
-  
-  Component name:</ask>
-  
-  <action>Store design_system_component</action>
-  <action>Store component_status = "new"</action>
-  <action>Mark for Design System addition in Phase 5</action>
-  
-  <output>✅ This link style will be added to your Design System in Phase 5.</output>
+
+Suggested: `Link-{{link_type}}` or `Link-{{style_variant}}`
+
+Component name:</ask>
+
+<action>Store design_system_component</action>
+<action>Store component_status = "new"</action>
+<action>Mark for Design System addition in Phase 5</action>
+
+<output>✅ This link style will be added to your Design System in Phase 5.</output>
 </check>
 
 <check if="choice == 3">
