@@ -1,0 +1,13 @@
+build
+coverage
+cypress/screenshots
+cypress/videos
+node_modules
+package-lock.json
+_bmad
+_bmad-output
+design-artifacts
+.agents
+.claude
+.obsidian
+.qwen

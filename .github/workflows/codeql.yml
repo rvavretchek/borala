@@ -1,0 +1,23 @@
+name: CodeQL
+
+on:
+  pull_request:
+    branches: [dev, main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: Analisar JavaScript e TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obter o código
+        uses: actions/checkout@v4
+      - name: Inicializar CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+      - name: Analisar
+        uses: github/codeql-action/analyze@v3

@@ -2,7 +2,7 @@
 
 O Bora Lá ajuda grupos a transformar a intenção dispersa de fazer um happy hour em um encontro reconhecido como real — sem substituir o WhatsApp, controlar a conversa ou impor como amigos devem decidir.
 
-> Status: Brief, PRD, SPEC, UX e arquitetura concluídos e validados para handoff; MVP ainda não implementado.
+> Status: planejamento do MVP concluído e validado; a base executável SSR está em implementação na História 1.1.
 
 ## Proposta
 
@@ -61,9 +61,31 @@ Adiado:
 - Orientação a objetos com Clean Code, Object Calisthenics, SOLID, Lei de Demeter e composição sobre herança.
 - Runtime em Node.js, aplicação React Router em Framework Mode e persistência MySQL, conforme a arquitetura aprovada.
 
+## Executar localmente
+
+Pré-requisitos: Node.js `24.18.0` e npm. O arquivo `.node-version` pode ser usado por gerenciadores como o fnm.
+
+```powershell
+npm ci
+npm run dev
+```
+
+O servidor de desenvolvimento informa a URL local no terminal. Para validar a entrega completa:
+
+```powershell
+npm run format:check
+npm run lint
+npm run typecheck
+npm test
+npm run test:architecture
+npm run build
+npm run test:e2e
+```
+
+O comando `npm start` serve o build de produção previamente gerado. A integração contínua executa os mesmos gates em pull requests destinadas a `dev` e `main`, além de auditoria de dependências e CodeQL.
+
 ## Próximos passos
 
-1. Executar `[CE] Create Epics and Stories` com `bmad-create-epics-and-stories`.
-2. Executar `[IR] Check Implementation Readiness` com `bmad-check-implementation-readiness` para conferir o alinhamento entre PRD, UX, arquitetura e histórias.
-3. Executar `[SP] Sprint Planning` com `bmad-sprint-planning`.
-4. Implementar cada história pelo ciclo Create Story → Validate Story → Dev Story → Code Review, com TDD e testes E2E.
+1. Concluir e revisar a História 1.1, integrando a feature em `dev` após todos os gates passarem.
+2. Executar a História 1.2 conforme a ordem registrada no planejamento do sprint.
+3. Manter o ciclo Create Story → Validate Story → Dev Story → Code Review, com TDD e testes E2E, para cada incremento.

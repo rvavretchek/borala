@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [dev, main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Qualidade e build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obter o código
+        uses: actions/checkout@v4
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - name: Instalar dependências
+        run: npm ci
+      - name: Verificar vulnerabilidades altas
+        run: npm audit --audit-level=high
+      - name: Verificar formatação
+        run: npm run format:check
+      - name: Executar lint
+        run: npm run lint
+      - name: Verificar tipos
+        run: npm run typecheck
+      - name: Verificar fronteiras de imports
+        run: npm run test:architecture
+      - name: Executar testes automatizados
+        run: npm test
+      - name: Gerar build SSR
+        run: npm run build
+      - name: Executar Cypress e axe
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          wait-on: http://127.0.0.1:3000
+          browser: chrome

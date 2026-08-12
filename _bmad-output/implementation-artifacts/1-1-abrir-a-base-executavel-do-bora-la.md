@@ -1,6 +1,10 @@
+---
+baseline_commit: 8688a02463d849fd891143deb71902d0bc8fcfd0
+---
+
 # História 1.1: Abrir a base executável do Bora Lá
 
-Status: ready-for-dev
+Status: review
 
 ## História
 
@@ -80,45 +84,45 @@ Para ter uma base confiável para criar e acompanhar um Rolê.
 
 ## Tarefas e subtarefas
 
-- [ ] 1. Inicializar o projeto React Router Framework Mode SSR (CA: 1, 3)
-  - [ ] Criar o scaffold mínimo com Node.js 24 LTS, npm, TypeScript e React Router Framework Mode; não usar SPA Mode.
-  - [ ] Fixar versões exatas no `package.json`, gerar e versionar `package-lock.json` com `npm ci` como instalação canônica.
-  - [ ] Disponibilizar scripts executáveis para desenvolvimento, produção, formatação, lint, tipos, testes, verificação de imports, E2E e build.
-  - [ ] Registrar a versão mínima/exata de Node para clone limpo (`engines` e arquivo de versão apropriado).
+- [x] 1. Inicializar o projeto React Router Framework Mode SSR (CA: 1, 3)
+  - [x] Criar o scaffold mínimo com Node.js 24 LTS, npm, TypeScript e React Router Framework Mode; não usar SPA Mode.
+  - [x] Fixar versões exatas no `package.json`, gerar e versionar `package-lock.json` com `npm ci` como instalação canônica.
+  - [x] Disponibilizar scripts executáveis para desenvolvimento, produção, formatação, lint, tipos, testes, verificação de imports, E2E e build.
+  - [x] Registrar a versão mínima/exata de Node para clone limpo (`engines` e arquivo de versão apropriado).
 
-- [ ] 2. Implementar o shell e a rota inicial por SSR (CA: 2, 3, 4)
-  - [ ] Criar `app/root.tsx`, `app/routes.ts` e a rota inicial seguindo a API vigente do React Router 8.
-  - [ ] Entregar `<html lang="pt-BR">`, landmarks nativos, hierarquia de títulos coerente, marca Bora Lá e uma explicação factual curta no HTML retornado pelo servidor.
-  - [ ] Copiar somente o logo normativo `_bmad-output/planning-artifacts/ux-designs/ux-borala-2026-08-06/imports/borala-logo-1.svg` para um destino estável em `public/`, com texto alternativo `Bora Lá` e sem transformá-lo em link ou controle.
-  - [ ] Não adicionar CTA de criação, login ou Convite antes das histórias que entregam esses comportamentos.
-  - [ ] Se a rota consumir comportamento server-side, resolvê-lo pelo composition root; não criar um composition root vazio, caso de uso fictício ou service locator apenas para satisfazer a estrutura futura.
+- [x] 2. Implementar o shell e a rota inicial por SSR (CA: 2, 3, 4)
+  - [x] Criar `app/root.tsx`, `app/routes.ts` e a rota inicial seguindo a API vigente do React Router 8.
+  - [x] Entregar `<html lang="pt-BR">`, landmarks nativos, hierarquia de títulos coerente, marca Bora Lá e uma explicação factual curta no HTML retornado pelo servidor.
+  - [x] Copiar somente o logo normativo `_bmad-output/planning-artifacts/ux-designs/ux-borala-2026-08-06/imports/borala-logo-1.svg` para um destino estável em `public/`, com texto alternativo `Bora Lá` e sem transformá-lo em link ou controle.
+  - [x] Não adicionar CTA de criação, login ou Convite antes das histórias que entregam esses comportamentos.
+  - [x] Se a rota consumir comportamento server-side, resolvê-lo pelo composition root; não criar um composition root vazio, caso de uso fictício ou service locator apenas para satisfazer a estrutura futura.
 
-- [ ] 3. Aplicar os tokens visuais e a base responsiva (CA: 4, 5)
-  - [ ] Centralizar os tokens consumidos pela home em CSS: cores, tipo, espaçamento, raios e foco.
-  - [ ] Implementar uma coluna mobile-first com breakpoints de 640 px e 1024 px e largura máxima de 680 px.
-  - [ ] Impedir altura fixa, corte de conteúdo, rolagem horizontal e recorte do foco.
-  - [ ] Respeitar `prefers-reduced-motion`; não adicionar animação, autoplay ou flash sem necessidade.
+- [x] 3. Aplicar os tokens visuais e a base responsiva (CA: 4, 5)
+  - [x] Centralizar os tokens consumidos pela home em CSS: cores, tipo, espaçamento, raios e foco.
+  - [x] Implementar uma coluna mobile-first com breakpoints de 640 px e 1024 px e largura máxima de 680 px.
+  - [x] Impedir altura fixa, corte de conteúdo, rolagem horizontal e recorte do foco.
+  - [x] Respeitar `prefers-reduced-motion`; não adicionar animação, autoplay ou flash sem necessidade.
 
-- [ ] 4. Aplicar cabeçalhos de segurança a toda resposta HTML (CA: 6)
-  - [ ] Centralizar a política em código server-side e gerar um nonce criptográfico novo por resposta.
-  - [ ] Usar o mesmo nonce nos recursos emitidos pelo React Router e na diretiva `script-src`; não recorrer a `unsafe-inline` ou `unsafe-eval`.
-  - [ ] Configurar `default-src 'self'`, `base-uri 'none'`, `object-src 'none'`, `frame-ancestors 'none'`, `form-action 'self'` e allowlists mínimas para recursos realmente usados.
-  - [ ] Enviar `nosniff`, `Referrer-Policy: no-referrer` e Permissions Policy mínima, ao menos `camera=(), microphone=(), geolocation=()`.
-  - [ ] Preparar HSTS conforme AR12, habilitando-o somente no ambiente HTTPS cujo domínio tenha sido validado; não simular seu efeito no HTTP local.
-  - [ ] Garantir que nonce, CSP completa, dados pessoais e tokens não sejam registrados em logs.
+- [x] 4. Aplicar cabeçalhos de segurança a toda resposta HTML (CA: 6)
+  - [x] Centralizar a política em código server-side e gerar um nonce criptográfico novo por resposta.
+  - [x] Usar o mesmo nonce nos recursos emitidos pelo React Router e na diretiva `script-src`; não recorrer a `unsafe-inline` ou `unsafe-eval`.
+  - [x] Configurar `default-src 'self'`, `base-uri 'none'`, `object-src 'none'`, `frame-ancestors 'none'`, `form-action 'self'` e allowlists mínimas para recursos realmente usados.
+  - [x] Enviar `nosniff`, `Referrer-Policy: no-referrer` e Permissions Policy mínima, ao menos `camera=(), microphone=(), geolocation=()`.
+  - [x] Preparar HSTS conforme AR12, habilitando-o somente no ambiente HTTPS cujo domínio tenha sido validado; não simular seu efeito no HTTP local.
+  - [x] Garantir que nonce, CSP completa, dados pessoais e tokens não sejam registrados em logs.
 
-- [ ] 5. Implementar testes por TDD e gates locais (CA: 1–8)
-  - [ ] Escrever primeiro testes Vitest do documento SSR, do idioma, landmarks, conteúdo factual, logo e independência de hidratação.
-  - [ ] Testar os cabeçalhos no mecanismo global e também em uma resposta HTML 404; comprovar nonce novo por resposta e coerência entre header e markup.
-  - [ ] Criar teste/regra de fronteira de imports sem introduzir ferramenta adicional quando ESLint ou um teste simples bastar.
-  - [ ] Criar Cypress + axe para a home: WCAG AA, teclado/foco, 320 CSS px, zoom 400%, text spacing da WCAG 1.4.12 e string longa sem overflow.
-  - [ ] Comprovar build e smoke SSR de produção; interpretar reprodutibilidade como `npm ci` + lockfile + configuração determinística, sem exigir hash byte a byte não garantido pela toolchain.
+- [x] 5. Implementar testes por TDD e gates locais (CA: 1–8)
+  - [x] Escrever primeiro testes Vitest do documento SSR, do idioma, landmarks, conteúdo factual, logo e independência de hidratação.
+  - [x] Testar os cabeçalhos no mecanismo global e também em uma resposta HTML 404; comprovar nonce novo por resposta e coerência entre header e markup.
+  - [x] Criar teste/regra de fronteira de imports sem introduzir ferramenta adicional quando ESLint ou um teste simples bastar.
+  - [x] Criar Cypress + axe para a home: WCAG AA, teclado/foco, 320 CSS px, zoom 400%, text spacing da WCAG 1.4.12 e string longa sem overflow.
+  - [x] Comprovar build e smoke SSR de produção; interpretar reprodutibilidade como `npm ci` + lockfile + configuração determinística, sem exigir hash byte a byte não garantido pela toolchain.
 
-- [ ] 6. Configurar CI e documentação operacional mínima (CA: 1, 7, 8)
-  - [ ] Criar workflow para pull requests destinados a `dev` e `main`, com passos diagnosticáveis para formato, lint, TypeScript, imports, Vitest, Cypress/axe e build.
-  - [ ] Incluir `npm audit --audit-level=high` e análise CodeQL como scans iniciais; não adicionar banco, imagem OCI ou infraestrutura ainda sem consumidor.
-  - [ ] Atualizar `README.md` com pré-requisitos, comandos efetivamente disponíveis, estado atual e próximos passos já coerentes com a implementação.
-  - [ ] Não declarar branch protection concluída sem evidência da configuração externa; o repositório deve fornecer todos os checks necessários para ela.
+- [x] 6. Configurar CI e documentação operacional mínima (CA: 1, 7, 8)
+  - [x] Criar workflow para pull requests destinados a `dev` e `main`, com passos diagnosticáveis para formato, lint, TypeScript, imports, Vitest, Cypress/axe e build.
+  - [x] Incluir `npm audit --audit-level=high` e análise CodeQL como scans iniciais; não adicionar banco, imagem OCI ou infraestrutura ainda sem consumidor.
+  - [x] Atualizar `README.md` com pré-requisitos, comandos efetivamente disponíveis, estado atual e próximos passos já coerentes com a implementação.
+  - [x] Não declarar branch protection concluída sem evidência da configuração externa; o repositório deve fornecer todos os checks necessários para ela.
 
 ## Contexto para desenvolvimento
 
@@ -219,14 +223,57 @@ cypress/e2e/
 
 ### Modelo utilizado
 
-A preencher pelo agente de implementação.
+Codex (GPT-5)
 
 ### Referências de depuração
+
+- Fase vermelha confirmada: Vitest falhou inicialmente pela ausência de `app/root.tsx`.
+- O TypeScript 6 exigiu `rootDirs` para resolver os tipos gerados pelo React Router sem recorrer à opção depreciada `baseUrl`.
+- O Cypress local foi reinstalado após detectar cache corrompido; a variável externa `ELECTRON_RUN_AS_NODE=1` foi removida somente dos processos de teste.
+- O teste em modo de desenvolvimento localizou uma divergência no `<head>` durante a hidratação. Como a home não possui comportamento cliente, o bootstrap de hidratação foi removido deste incremento; o HTML permanece integralmente SSR e o E2E passou sem erro de console.
 
 ### Notas de conclusão
 
 - Análise completa do motor de contexto concluída; guia abrangente para desenvolvimento criado.
+- Scaffold React Router 8 Framework Mode SSR criado com Node 24.18.0, versões exatas e lockfile validado por `npm ci`.
+- Home em pt-BR entregue como HTML SSR estático, com marca normativa, conteúdo factual, tokens visuais e layout responsivo sem CTA antecipado.
+- Segurança de documento centralizada na entrada server-side, com CSP e nonce por resposta, proteção contra framing, `nosniff`, política de referência, Permissions Policy e HSTS condicionado a HTTPS validado.
+- TDD e gates concluídos: 5 testes Vitest, 3 cenários Cypress/axe, teste de fronteiras, lint, tipos, formatação, build SSR e `npm audit` com zero vulnerabilidades.
+- CI configurada para pull requests destinadas a `dev` e `main`, incluindo gates de qualidade, Cypress/axe, auditoria e CodeQL.
 
 ### Lista de arquivos
 
-- A preencher pelo agente de implementação.
+- `.github/workflows/ci.yml`
+- `.github/workflows/codeql.yml`
+- `.gitignore`
+- `.node-version`
+- `.nvmrc`
+- `.prettierignore`
+- `.prettierrc.json`
+- `README.md`
+- `_bmad-output/implementation-artifacts/1-1-abrir-a-base-executavel-do-bora-la.md`
+- `_bmad-output/implementation-artifacts/sprint-status.yaml`
+- `app/entry.server.tsx`
+- `app/root.tsx`
+- `app/routes.ts`
+- `app/routes/home.tsx`
+- `app/server/security/document-security.server.ts`
+- `app/styles/app.css`
+- `cypress.config.ts`
+- `cypress/e2e/home-accessibility.cy.ts`
+- `cypress/support/e2e.ts`
+- `cypress/support/index.d.ts`
+- `eslint.config.js`
+- `package-lock.json`
+- `package.json`
+- `public/borala-logo.svg`
+- `react-router.config.ts`
+- `tests/architecture/import-boundaries.test.ts`
+- `tests/routes/home-ssr.test.tsx`
+- `tests/server/security-headers.test.ts`
+- `tsconfig.json`
+- `vite.config.ts`
+
+## Registro de alterações
+
+- 2026-08-11 — Base executável SSR da História 1.1 implementada, validada e preparada para revisão.
