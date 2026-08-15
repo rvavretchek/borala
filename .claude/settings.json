@@ -1,4 +1,25 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(uv run _bmad/scripts/memlog.py *)",
+      "Bash(uv run --python 3.11 _bmad/scripts/memlog.py *)",
+      "Bash(PYTHONIOENCODING=utf-8 uv run --python 3.11 _bmad/scripts/memlog.py *)",
+      "Bash(PYTHONIOENCODING=utf-8 uv run _bmad/scripts/memlog.py *)",
+      "Bash(PYTHONUTF8=1 PYTHONIOENCODING=utf-8 uv run _bmad/scripts/memlog.py *)",
+      "Bash(python _bmad/scripts/memlog.py *)",
+      "Bash(python3 _bmad/scripts/memlog.py *)",
+      "Bash(uv run _bmad/scripts/resolve_customization.py *)",
+      "Bash(uv run --python 3.11 _bmad/scripts/resolve_customization.py *)",
+      "Bash(PYTHONIOENCODING=utf-8 uv run --python 3.11 _bmad/scripts/resolve_customization.py *)",
+      "Bash(PYTHONIOENCODING=utf-8 uv run _bmad/scripts/resolve_customization.py *)",
+      "Bash(python _bmad/scripts/resolve_customization.py *)",
+      "Bash(python3 _bmad/scripts/resolve_customization.py *)",
+      "Bash(uv run _bmad/scripts/resolve_config.py *)",
+      "Bash(uv run --python 3.11 _bmad/scripts/resolve_config.py *)",
+      "Bash(PYTHONIOENCODING=utf-8 uv run --python 3.11 _bmad/scripts/resolve_config.py *)",
+      "Bash(PYTHONIOENCODING=utf-8 uv run _bmad/scripts/resolve_config.py *)"
+    ]
+  },
   "hooks": {
     "SessionStart": [
       {
