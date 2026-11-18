@@ -59,6 +59,20 @@ describe('página inicial', () => {
     );
   });
 
+  it('reflui a 400% de zoom sem perda de conteúdo ou rolagem horizontal', () => {
+    cy.document().then((document) => {
+      document.documentElement.style.zoom = '4';
+    });
+
+    cy.document().then((document) => {
+      expect(document.documentElement.scrollWidth).to.be.at.most(
+        document.documentElement.clientWidth,
+      );
+    });
+    cy.get('.purpose').should('exist');
+    cy.get('.brand-signature img').should('exist');
+  });
+
   it('reflui com espaçamento de texto ampliado sem rolagem horizontal', () => {
     cy.document().then((document) => {
       const style = document.createElement('style');

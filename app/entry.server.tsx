@@ -7,6 +7,9 @@ import { renderToPipeableStream } from 'react-dom/server';
 
 import { createDocumentSecurity } from './server/security/document-security.server';
 
+// O framework usa `streamTimeout` para decidir entre `onShellReady` e
+// `onAllReady`. Esta história entrega o documento completo por SSR, por isso
+// sempre se espera `onAllReady`; o timeout real coincide com o export.
 export const streamTimeout = 5_000;
 
 export default function handleRequest(
@@ -34,7 +37,7 @@ export default function handleRequest(
     let shellRendered = false;
     let timeoutId: ReturnType<typeof setTimeout> | undefined = setTimeout(
       () => abort(),
-      streamTimeout + 1_000,
+      streamTimeout,
     );
 
     const { pipe, abort } = renderToPipeableStream(
@@ -66,12 +69,17 @@ export default function handleRequest(
           );
         },
         onShellError(error: unknown) {
+          clearTimeout(timeoutId);
+          timeoutId = undefined;
           reject(error);
         },
-        onError(error: unknown) {
+        onError() {
           responseStatusCode = 500;
+          // Não se registra o objeto de erro: pode conter URL, cabeçalhos ou
+          // dados sensibles. A história exige que nenhum log inclua dado
+          // pessoal ou token (AC6).
           if (shellRendered) {
-            console.error(error);
+            console.error('Erro durante o renderizado SSR');
           }
         },
       },

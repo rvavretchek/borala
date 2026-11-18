@@ -20,7 +20,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['app/routes/**/*.{ts,tsx}', 'app/ui/**/*.{ts,tsx}'],
+    files: ['app/root.tsx', 'app/routes/**/*.{ts,tsx}', 'app/ui/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
         'error',

@@ -4,7 +4,7 @@ baseline_commit: 8688a02463d849fd891143deb71902d0bc8fcfd0
 
 # História 1.1: Abrir a base executável do Bora Lá
 
-Status: review
+Status: done
 
 ## História
 
@@ -274,6 +274,33 @@ Codex (GPT-5)
 - `tsconfig.json`
 - `vite.config.ts`
 
+## Review Findings
+
+### decision-needed
+
+- [x] [Review][Decision] `scripts/repair-python3-command.ps1` e `.claude/settings.json` estão fora do escopo da História 1.1 — a história não menciona reparo do comando python3 nem configuração do Claude Code; são utilitários de ambiente/BMAD. **Resolvido 2026-09-04: manter na branch** — são utilitários de ambiente necessários para o desenvolvimento local.
+
+### patch
+
+- [x] [Review][Patch] Zoom 400% não coberto por teste E2E [cypress/e2e/home-accessibility.cy.ts] — a história exige zoom 400% (AC5); o teste cobre 320px e text spacing, mas não zoom. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] `streamTimeout` exportado não é usado pelo framework; timeout real é `streamTimeout + 1000` [app/entry.server.tsx:10,35-38] — o React Router espera `streamTimeout` para decidir entre `onShellReady`/`onAllReady`; aqui sempre usa `onAllReady`, tornando o export enganoso. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] `onShellError` não limpa `timeoutId` [app/entry.server.tsx:68-70] — se o shell falhar, o timer continua até disparar `abort()` (no-op), vazando o timer. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] `console.error(error)` pode vazar dados sensíveis em logs [app/entry.server.tsx:74] — a história exige "nenhum cabeçalho ou log deve incluir dado pessoal ou token sensível" (AC6); o erro pode conter URL/headers. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] `vite.config.ts` sem `resolve.alias` para `~/*` [vite.config.ts] — `tsconfig.json` define o alias, mas o Vite test não; imports com `~/` falhariam nos testes. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] `eslint.config.js` não cobre `app/root.tsx` na regra `no-restricted-imports` [eslint.config.js:23] — `app/root.tsx` poderia importar de `server/` sem violar lint; o teste de arquitetura também não cobre. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] `h1` com `line-height: 1` pode cortar diacríticos [app/styles/app.css:97] — "Bora Lá" com "á" em Georgia/Cambria pode ser cortado visualmente. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] `text-size-adjust: 100%` ausente [app/styles/app.css] — iOS Safari pode ajustar o tamanho do texto em landscape. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] script `ci` local não inclui `test:architecture` nem `test:e2e` [package.json:21] — o CI workflow roda, mas o script local é incompleto. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] `BORALA_VALIDATED_HTTPS` não documentada no README [app/entry.server.tsx:19] — variável de ambiente para HSTS sem documentação. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] `tests/server/security-headers.test.ts` não testa `X-Frame-Options: DENY` [tests/server/security-headers.test.ts] — o header é setado mas não verificado. **Resolvido 2026-09-04.**
+- [x] [Review][Patch] `test:e2e` não roda `build` antes [package.json:20] — `npm run test:e2e` falha se o build não existir. **Resolvido 2026-09-04.**
+
+### defer
+
+- [x] [Review][Defer] ErrorBoundary sem `role="alert"` [app/root.tsx:24-45] — deferred, pre-existing: melhoria de acessibilidade não bloqueante para esta história.
+- [x] [Review][Defer] `cy.request` verifica `scripts.length === 0` [cypress/e2e/home-accessibility.cy.ts:35] — deferred, pre-existing: frágil para futuras histórias com hidratação.
+
 ## Registro de alterações
 
 - 2026-08-11 — Base executável SSR da História 1.1 implementada, validada e preparada para revisão.
+- 2026-09-04 — Code review integrado (Blind Hunter, Edge Case Hunter, Acceptance Auditor) registrado.

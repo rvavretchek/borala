@@ -22,6 +22,7 @@ describe('document security', () => {
       "frame-ancestors 'none'",
     );
     expect(first.headers.get('X-Content-Type-Options')).toBe('nosniff');
+    expect(first.headers.get('X-Frame-Options')).toBe('DENY');
     expect(first.headers.get('Referrer-Policy')).toBe('no-referrer');
     expect(first.headers.get('Permissions-Policy')).toBe(
       'camera=(), microphone=(), geolocation=()',

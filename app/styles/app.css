@@ -37,6 +37,8 @@
 
 html {
   background: var(--color-page);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -94,7 +96,7 @@ h1 {
   font-family: Georgia, Cambria, serif;
   font-size: clamp(2rem, 7vw, 3.5rem);
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .purpose,

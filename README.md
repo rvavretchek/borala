@@ -20,6 +20,7 @@ O princípio central é **organizar sem governar**.
 
 ## Documentação
 
+- [Relatório de status](./docs/relatorio-status-2026-09-03.md) — resumo do que já foi realizado e próximos passos.
 - [Product Brief](./_bmad-output/planning-artifacts/briefs/brief-borala-2026-08-06/brief.md) — problema, público, proposta e visão.
 - [PRD](./_bmad-output/planning-artifacts/prds/prd-borala-2026-08-06/prd.md) — requisitos funcionais e não funcionais, métricas, riscos e escopo.
 - [Experiência UX](./_bmad-output/planning-artifacts/ux-designs/ux-borala-2026-08-06/EXPERIENCE.md) e [Design](./_bmad-output/planning-artifacts/ux-designs/ux-borala-2026-08-06/DESIGN.md) — jornadas, padrões de interação e direção visual aprovados para handoff.
@@ -83,6 +84,10 @@ npm run test:e2e
 ```
 
 O comando `npm start` serve o build de produção previamente gerado. A integração contínua executa os mesmos gates em pull requests destinadas a `dev` e `main`, além de auditoria de dependências e CodeQL.
+
+### Variáveis de ambiente
+
+- `BORALA_VALIDATED_HTTPS` — quando definida como `true`, habilita `Strict-Transport-Security` (HSTS) nas respostas HTML. Deve ser ativada somente em ambientes HTTPS cujo domínio tenha sido validado; no HTTP local deve permanecer ausente.
 
 ## Próximos passos
 
